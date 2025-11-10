@@ -5,7 +5,7 @@ const INITIAL_HEX_SIZE = 130;
 const MIN_SCALE = 100;
 const MAX_SCALE = 300;
 
-export const InGame = () => {
+export const GameBoard = () => {
     const transX = 700;
     const transY = 250;
     return (
