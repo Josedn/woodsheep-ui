@@ -1,4 +1,4 @@
-export function App() {
+export function Example() {
     return (
         <div className="main-wrapper">
             <div id="board-viewport" className="sea-color unselectable">
