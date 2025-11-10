@@ -54,19 +54,20 @@ const drawTile = (transX: number, transY: number, scale: number, tile: Tile) => 
     const id = `tile-x-${hexCoordinate.x}y-${hexCoordinate.y}z-${hexCoordinate.z}`;
     const style = `transform: translate(${tileX}px, ${tileY}px); width: ${width}px; height: ${width}px;`;
     const number = tile.number;
-
-    let dots = [];
     const numDots = 6 - Math.abs(number - 7);
 
+    const isRedNumber = number == 6 || number == 8;
+
+    const dots = [];
     for (let i = 0; i < numDots; i++) {
-        dots.push(<div key={i} className="circle number-dot red-number-dot" style="height: 3.25px; width: 3.25px; margin-right: 1.08333px;"></div>);
+        dots.push(<div key={i} className={"circle number-dot" + (isRedNumber ? " red-number-dot" : "")} style="height: 3.25px; width: 3.25px; margin-right: 1.08333px;"></div>);
     }
 
     return (
         <div className="hexagon-wrapper" id={`${id}-wrapper`} style={style}>
             <div className={"hexagon " + calculateTileClassName(tile.tileType)} id={id} />
             <div className="circle number-circle number-circle-color" style="transform: translate(43.55px, -84.5px); width: 39px; height: 39px; font-size: 22.75px;">
-                <span className="unselectable red-number" style="line-height: 39px;">
+                <span className={"unselectable" + (isRedNumber ? " red-number" : "")} style="line-height: 39px;">
                     {number}
                 </span>
                 <br />
