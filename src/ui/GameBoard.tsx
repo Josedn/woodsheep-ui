@@ -1,13 +1,20 @@
-import { Tile, TileType, hexToCartesian } from "../engine/Tile";
+import { Intersection } from "../engine/Intersection";
+import { Tile, TileType, findCenter, hexToCartesian } from "../engine/Tile";
 
 const TILE_SCALE = 0.95;
 const INITIAL_HEX_SIZE = 130;
 const MIN_SCALE = 100;
 const MAX_SCALE = 300;
 
+const SETTLEMENT_SCALE = 0.2;
+const CITY_SCALE = 0.25;
+const SELECTABLE_AREA_SCALE = 0.25;
+const SETTLEMENT_SVG_WIDTH = 16;
+const CITY_SVG_WIDTH = 100;
+
 export const GameBoard = () => {
-    const transX = 700;
-    const transY = 250;
+    const transX = 0;
+    const transY = 0;
     return (
         <div className="main-wrapper">
             <div id="board-viewport" className="sea-color unselectable">
@@ -21,6 +28,8 @@ export const GameBoard = () => {
                 {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -1, z: 0 }, 6, TileType.DESERT))}
                 {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: -1, z: 0 }, 6, TileType.BRICK))}
                 {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -2, z: 0 }, 6, TileType.WOOD))}
+                {drawIntersection(transX, transY, INITIAL_HEX_SIZE, new Intersection({ x: 1, y: -2, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), true)}
+                {drawPath(transX, transY)}
             </div>
         </div>
     );
@@ -42,6 +51,48 @@ const calculateTileClassName = (tileType: TileType): string => {
             return "desert-color";
     }
     return "";
+};
+
+const drawPath = (transX: number, transY: number) => {
+    return (
+        <>
+            <div
+                className="path-select"
+                id="path-x-2y-1_3333333333333333z-0_6666666666666666-to-x-2y-0_6666666666666666z-0_3333333333333333-select"
+                style="transform: translate(1079.72px, 442.55px) rotate(1.0472rad);width: 71.3028px;height: 7.15px;        "
+            ></div>
+            <div
+                className="path"
+                id="path-x-2y-1_3333333333333333z-0_6666666666666666-to-x-2y-0_6666666666666666z-0_3333333333333333"
+                style="transform: translate(1079.72px, 442.55px) rotate(1.0472rad);width: 71.3028px;height: 7.15px;background-color: rgb(191, 39, 32);        "
+            ></div>
+            <div
+                className="path-select highlighted-path"
+                id="path-x-0_6666666666666666y-1z-2_3333333333333335-to-x-0_6666666666666666y-1_3333333333333333z-2-select"
+                style="          transform: translate(741.965px, 442.55px) rotate(-1.0472rad); width: 71.3028px; height: 7.15px;"
+            ></div>
+            <div className="path" id="path-x-0_6666666666666666y-1z-2_3333333333333335-to-x-0_6666666666666666y-1_3333333333333333z-2"></div>
+        </>
+    );
+};
+
+const drawIntersection = (transX: number, transY: number, scale: number, intersection: Intersection, highlighted: boolean) => {
+    const hexCoordinate = findCenter(intersection.coord1, intersection.coord2, intersection.coord3);
+    const id = `intersection-x-${hexCoordinate.x}y-${hexCoordinate.y}z-${hexCoordinate.z}`.replace(/[.]/g, "_");
+    const displacement = hexToCartesian(hexCoordinate);
+
+    var width = scale * SELECTABLE_AREA_SCALE;
+    var x = transX + displacement.x * scale + (Math.sqrt(3) * scale) / 4 - width / 4 - 0.02 * scale;
+    var y = transY + displacement.y * scale + scale / 4 - width / 2;
+
+    const style = `transform: translate(${x}px, ${y}px); width: ${width}px; height: ${width}px;`;
+
+    return (
+        <>
+            <div className={"intersection-select circle" + (highlighted ? " highlighted" : "")} id={`${id}-select`} style={style}></div>
+            <div className="intersection" id={id}></div>
+        </>
+    );
 };
 
 const drawTile = (transX: number, transY: number, scale: number, tile: Tile) => {

@@ -47,3 +47,18 @@ export const hexToCartesian = (hexCoordinates: HexCoordinate): CartesianCoordina
     const y = X_UNIT_VEC.y * hexCoordinates.x + Y_UNIT_VEC.y * hexCoordinates.y + Z_UNIT_VEC.y * hexCoordinates.z;
     return { x: x, y: y };
 };
+
+/*
+ * Finds the center of three hex coordinates
+ * @param c1 - the first hex coordinate
+ * @param c1 - the second hex coordinate
+ * @param c1 - the third hex coordinate
+ * @return the center of the three hex coordinates, as a hex coordinate
+ */
+export const findCenter = (c1: HexCoordinate, c2: HexCoordinate, c3: HexCoordinate) => {
+    var x = (c1.x + c2.x + c3.x) / 3;
+    var y = (c1.y + c2.y + c3.y) / 3;
+    var z = (c1.z + c2.z + c3.z) / 3;
+
+    return { x: x, y: y, z: z };
+};
