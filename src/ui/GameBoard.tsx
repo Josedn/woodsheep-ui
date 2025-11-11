@@ -82,16 +82,16 @@ const drawPath = (transX: number, transY: number, scale: number, path: Path, hig
     const id = ("path-x-" + start.x + "y-" + start.y + "z-" + start.z + "-to-x-" + end.x + "y-" + end.y + "z-" + end.z).replace(/[.]/g, "_");
 
     // Move road to correct section of board
-    var cartesianStart = hexToCartesian(start);
-    var cartesianEnd = hexToCartesian(end);
-    var x = transX + cartesianStart.x * scale + (Math.sqrt(3) * scale) / 4;
-    var y = transY + cartesianStart.y * scale + scale / 4;
+    const cartesianStart = hexToCartesian(start);
+    const cartesianEnd = hexToCartesian(end);
+    let x = transX + cartesianStart.x * scale + (Math.sqrt(3) * scale) / 4;
+    let y = transY + cartesianStart.y * scale + scale / 4;
 
-    var deltaX = cartesianEnd.x - cartesianStart.x;
-    var deltaY = cartesianEnd.y - cartesianStart.y;
+    const deltaX = cartesianEnd.x - cartesianStart.x;
+    const deltaY = cartesianEnd.y - cartesianStart.y;
 
     // Find angle of road
-    var angle = Math.atan(deltaY / deltaX);
+    let angle = Math.atan(deltaY / deltaX);
     if (deltaX < 0) {
         angle = angle + Math.PI;
     }
@@ -101,8 +101,8 @@ const drawPath = (transX: number, transY: number, scale: number, path: Path, hig
     }
 
     // Find exact size of road div
-    var length = (scale / Math.sqrt(3)) * ROAD_LENGTH_SCALE;
-    var height = scale * ROAD_WIDTH_SCALE;
+    const length = (scale / Math.sqrt(3)) * ROAD_LENGTH_SCALE;
+    const height = scale * ROAD_WIDTH_SCALE;
 
     // Offset road to be centered based on its angle
     x = x + 0.04 * scale;
@@ -135,9 +135,9 @@ const drawIntersection = (transX: number, transY: number, scale: number, interse
     const id = `intersection-x-${hexCoordinate.x}y-${hexCoordinate.y}z-${hexCoordinate.z}`.replace(/[.]/g, "_");
     const displacement = hexToCartesian(hexCoordinate);
 
-    var width = scale * SELECTABLE_AREA_SCALE;
-    var x = transX + displacement.x * scale + (Math.sqrt(3) * scale) / 4 - width / 4 - 0.02 * scale;
-    var y = transY + displacement.y * scale + scale / 4 - width / 2;
+    const width = scale * SELECTABLE_AREA_SCALE;
+    const x = transX + displacement.x * scale + (Math.sqrt(3) * scale) / 4 - width / 4 - 0.02 * scale;
+    const y = transY + displacement.y * scale + scale / 4 - width / 2;
 
     const style = `transform: translate(${x}px, ${y}px); width: ${width}px; height: ${width}px;`;
 
