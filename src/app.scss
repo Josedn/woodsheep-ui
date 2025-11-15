@@ -1,10 +1,14 @@
 body {
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #177fde;
+    background-color: #a1afda;
     color: #333;
     font-size: 14px;
     line-height: 1.42857143;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .main-wrapper {
@@ -13,4 +17,74 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.game-board {
+    width: 70%;
+    height: 100vh;
+}
+
+.game-board__generic-box {
+    border-radius: 4px;
+    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
+    padding: 7px 7px 7px 14px;
+    border: 1px solid beige;
+}
+
+.game-board__card-holder {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    bottom: 0;
+}
+
+.game-controls {
+    display: flex;
+    background-color: black;
+    width: 30%;
+    height: 100vh;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+}
+
+.game-controls__log {
+    display: flex;
+    height: 250px;
+    width: 100%;
+}
+
+.game-controls__chat {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.game-controls__bank {
+    height: 75px;
+    display: flex;
+    position: relative;
+    gap: 7px;
+    justify-content: space-between;
+    width: 100%;
+    user-select: none;
+}
+
+.game-controls__players {
+    display: flex;
+    height: 300px;
+    width: 100%;
+}
+
+.game {
+    background-color: #177fde;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
