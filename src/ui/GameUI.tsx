@@ -1,3 +1,39 @@
+import bankIcon from "../assets/ui/bank.825b2690b4b1b694d646.svg";
+import cardLumber from "../assets/ui/card_lumber.cf22f8083cf89c2a29e7.svg";
+import cardWool from "../assets/ui/card_wool.17a6dea8d559949f0ccc.svg";
+import cardBrick from "../assets/ui/card_brick.5950ea07a7ea01bc54a5.svg";
+import cardOre from "../assets/ui/card_ore.117f64dab28e1c987958.svg";
+import cardGrain from "../assets/ui/card_grain.09c9d82146a64bce69b5.svg";
+import cardDevelopment from "../assets/ui/card_devcardback.92569a1abd04a8c1c17e.svg";
+import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
+
+const generateCardStack = (count: number, imgSrc: string) => {
+    return (
+        <div className="game-controls__card-stack">
+            {/* First card — only show if count ≥ 15 */}
+            {count >= 13 && (
+                <div className="game-controls__card-container">
+                    <img className="game-controls__card" src={imgSrc} />
+                </div>
+            )}
+
+            {/* Second card — only show if count ≥ 10 */}
+            {count >= 8 && (
+                <div className="game-controls__card-container">
+                    <img className="game-controls__card" src={imgSrc} />
+                </div>
+            )}
+            <div className={"game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "")}>
+                <img className="game-controls__card" src={imgSrc}></img>
+                <div className="game-controls__card-count-badge">
+                    <img className="game-controls__card-count-badge-background" src={badgeBackgroundBlue}></img>
+                    <div className="game-controls__card-count">{count}</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export const GameUI = () => {
     return (
         <>
@@ -20,7 +56,17 @@ export const GameUI = () => {
                 <div className="game-controls">
                     <div className="game-controls__log generic-box">Log</div>
                     <div className="game-controls__chat generic-box">Chat</div>
-                    <div className="game-controls__bank generic-box">Bank</div>
+                    <div className="game-controls__bank generic-box">
+                        <img src={bankIcon} className="game-controls__bank-icon"></img>
+                        <div className="game-controls__bank-row">
+                            {generateCardStack(18, cardLumber)}
+                            {generateCardStack(8, cardBrick)}
+                            {generateCardStack(18, cardWool)}
+                            {generateCardStack(0, cardGrain)}
+                            {generateCardStack(18, cardOre)}
+                            {generateCardStack(2, cardDevelopment)}
+                        </div>
+                    </div>
                     <div className="game-controls__players generic-box">Players</div>
                 </div>
             </div>

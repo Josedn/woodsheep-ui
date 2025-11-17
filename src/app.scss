@@ -83,13 +83,88 @@ body {
 }
 
 .game-controls__bank {
-    height: 75px;
     display: flex;
     position: relative;
     gap: 7px;
     justify-content: space-between;
     width: 100%;
     user-select: none;
+}
+
+.game-controls__bank-row {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.game-controls__bank-icon {
+    align-self: center;
+    width: 42px;
+    height: 42px;
+}
+
+.game-controls__card-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    height: fit-content;
+    height: 70px;
+}
+
+.game-controls__card-container {
+    width: 41px;
+    height: 57px;
+    position: relative;
+    margin-top: -51px
+}
+
+.game-controls__card-container--empty::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    pointer-events: none;    
+}
+
+.game-controls__card {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.game-controls__card-count-badge {
+    position: absolute;
+    top: 0;
+    right: 1px;
+    width: 1.25em;
+    height: 1.25em;
+}
+
+.game-controls__card-count-badge-background {
+    display: block;
+    height: 100%;
+}
+
+.game-controls__card-count {
+    display: flex;
+    position: absolute;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0.1em;
+    padding-left: 0.1em;
+    width: 100%;
+    height: 100%;
+    text-shadow:
+        -0.5px -0.5px 1px #073158,
+        0.5px -0.5px 1px #073158,
+        -0.5px 0.5px 1px #073158,
+        0.5px 0.5px 1px #073158;
+    color: #fff;
+    font-size: 0.875em;
+    font-weight: 600;
 }
 
 .game-controls__players {
