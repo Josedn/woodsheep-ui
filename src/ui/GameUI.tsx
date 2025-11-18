@@ -40,9 +40,9 @@ const generateBank = () => {
                 {generateCardStack(18, cardLumber)}
                 {generateCardStack(8, cardBrick)}
                 {generateCardStack(18, cardWool)}
-                {generateCardStack(1, cardGrain)}
+                {generateCardStack(0, cardGrain)}
                 {generateCardStack(18, cardOre)}
-                {generateCardStack(0, cardDevelopment)}
+                {generateCardStack(20, cardDevelopment)}
             </div>
         </div>
     );
@@ -54,9 +54,7 @@ const generateLog = () => {
             <div className="game-controls__log-container">
                 <div className="game-controls__log-scroller">
                     <div className="game-controls__log-item">
-                        <div className="game-feed-message">
-                            Message           
-                        </div>
+                        <div className="game-feed-message">Message</div>
                     </div>
                 </div>
             </div>

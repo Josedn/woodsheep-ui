@@ -94,13 +94,13 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    padding-bottom: .25em;
+    padding-bottom: 0.25em;
     width: 100%;
 }
 
 .game-feed-message {
-    border-radius: .25em;
-    padding: 0 .5em;
+    border-radius: 0.25em;
+    padding: 0 0.5em;
     word-break: break-word;
     // Check below ??
     opacity: 1;
@@ -148,15 +148,11 @@ body {
     width: 41px;
     height: 57px;
     position: relative;
-    margin-top: -51px
+    margin-top: -51px;
 }
 
-.game-controls__card-container--empty::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-    pointer-events: none;    
+.game-controls__card-container--empty {
+    filter: brightness(0.5);
 }
 
 .game-controls__card {
