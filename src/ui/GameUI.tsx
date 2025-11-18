@@ -8,26 +8,56 @@ import cardDevelopment from "../assets/ui/card_devcardback.92569a1abd04a8c1c17e.
 import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
 
 const generateCardStack = (count: number, imgSrc: string) => {
+    const lastItemClassName = "game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "");
     return (
         <div className="game-controls__card-stack">
-            {/* First card — only show if count ≥ 15 */}
             {count >= 13 && (
                 <div className="game-controls__card-container">
                     <img className="game-controls__card" src={imgSrc} />
                 </div>
             )}
-
-            {/* Second card — only show if count ≥ 10 */}
             {count >= 8 && (
                 <div className="game-controls__card-container">
                     <img className="game-controls__card" src={imgSrc} />
                 </div>
             )}
-            <div className={"game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "")}>
+            <div className={lastItemClassName}>
                 <img className="game-controls__card" src={imgSrc}></img>
                 <div className="game-controls__card-count-badge">
                     <img className="game-controls__card-count-badge-background" src={badgeBackgroundBlue}></img>
                     <div className="game-controls__card-count">{count}</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const generateBank = () => {
+    return (
+        <div className="game-controls__bank generic-box">
+            <img src={bankIcon} className="game-controls__bank-icon"></img>
+            <div className="game-controls__bank-row">
+                {generateCardStack(18, cardLumber)}
+                {generateCardStack(8, cardBrick)}
+                {generateCardStack(18, cardWool)}
+                {generateCardStack(1, cardGrain)}
+                {generateCardStack(18, cardOre)}
+                {generateCardStack(0, cardDevelopment)}
+            </div>
+        </div>
+    );
+};
+
+const generateLog = () => {
+    return (
+        <div className="game-controls__log generic-box">
+            <div className="game-controls__log-container">
+                <div className="game-controls__log-scroller">
+                    <div className="game-controls__log-item">
+                        <div className="game-feed-message">
+                            Message           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,19 +84,9 @@ export const GameUI = () => {
                     </div>
                 </div>
                 <div className="game-controls">
-                    <div className="game-controls__log generic-box">Log</div>
+                    {generateLog()}
                     <div className="game-controls__chat generic-box">Chat</div>
-                    <div className="game-controls__bank generic-box">
-                        <img src={bankIcon} className="game-controls__bank-icon"></img>
-                        <div className="game-controls__bank-row">
-                            {generateCardStack(18, cardLumber)}
-                            {generateCardStack(8, cardBrick)}
-                            {generateCardStack(18, cardWool)}
-                            {generateCardStack(0, cardGrain)}
-                            {generateCardStack(18, cardOre)}
-                            {generateCardStack(2, cardDevelopment)}
-                        </div>
-                    </div>
+                    {generateBank()}
                     <div className="game-controls__players generic-box">Players</div>
                 </div>
             </div>
