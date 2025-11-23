@@ -6,6 +6,8 @@ import cardOre from "../assets/ui/card_ore.117f64dab28e1c987958.svg";
 import cardGrain from "../assets/ui/card_grain.09c9d82146a64bce69b5.svg";
 import cardDevelopment from "../assets/ui/card_devcardback.92569a1abd04a8c1c17e.svg";
 import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
+import iconBot from "../assets/ui/icon_bot.fe8fdd5cc98ae77d7774.svg";
+import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
 
 const generateCardStack = (count: number, imgSrc: string) => {
     const lastItemClassName = "game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "");
@@ -54,7 +56,18 @@ const generateLog = () => {
             <div className="game-controls__log-container">
                 <div className="game-controls__log-scroller">
                     <div className="game-controls__log-item">
-                        <div className="game-feed-message">Message</div>
+                        <div className="game-feed-message">
+
+                            <div className="container-k26ZLqas hideBackground-tkyRocbV avatar-yelUykqb">
+                                <img className="avatarImage-JNCoQelY" src="https://cdn.colonist.io/dist/assets/icon_player_loggedin.88be0a3c581efb9f2d3a.svg" />
+                            </div>
+
+                            <span className="messagePart-XeUsOgLX">
+                                <span style="font-weight:600;word-break:break-all;color:#62B95D">LiFejpg</span> bought
+                                <img src="https://cdn.colonist.io/dist/assets/card_devcardback.92569a1abd04a8c1c17e.svg" alt="Development Card" height="20" width="14.25" className="lobby-chat-text-icon" />
+                            </span>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
