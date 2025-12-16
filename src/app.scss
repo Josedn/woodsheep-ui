@@ -91,14 +91,12 @@ body {
 }
 
 .game-controls__log-item {
-    position: absolute;
-    top: 0;
-    left: 0;
     padding-bottom: 0.25em;
     width: 100%;
+    line-height: 1.5;
 }
 
-.game-feed-message {
+.game-feed-message__container {
     border-radius: 0.25em;
     padding: 0 0.5em;
     word-break: break-word;
@@ -106,6 +104,54 @@ body {
     opacity: 1;
 }
 
+.game-feed-message__container--centered {
+    text-align: center;
+}
+
+.game-feed-message__icon {
+    display: inline-block;
+    margin-right: 0.15em;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+}
+
+.game-feed-message__image {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+    object-fit: cover;
+}
+
+.game-feed-message__content-image {
+    width: auto;
+    max-width: 1.25em;
+    height: 1.25em;
+    vertical-align: sub;
+    object-fit: contain;
+}
+
+.game-feed-message__content--bold {
+    font-weight: 600;
+    word-break: break-all;
+}
+
+.game-feed-message__content--red {
+    color: #e27174;
+}
+
+.game-feed-message__content--blue {
+    color: #223697;
+}
+
+.game-feed-message__content--green {
+    color: #62B95D;
+}
+
+.game-feed-message__content--orange {
+    color: #E09742;
+}
 .game-controls__chat {
     display: flex;
     height: 50px;
