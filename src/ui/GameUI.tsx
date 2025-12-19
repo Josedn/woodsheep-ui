@@ -205,6 +205,10 @@ const generateLog = () => {
                     {generateLogSeparator()}
                     {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
                     {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                    {generateLogSeparator()}
+                    {generateLogItem("Joost", "green", false, "rolled", [dice5, dice6])}
+                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                    {generateLogSeparator()}
                     {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
                     {generateLogItem("Ester", "red", true, "got", [cardGrain])}
                     {generateLogSeparator()}
