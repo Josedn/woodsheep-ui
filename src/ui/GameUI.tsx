@@ -26,6 +26,7 @@ import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.5
 
 const generatePlayer = (
     username: string,
+    isBot: boolean,
     pointsToShow: number,
     realPoints: number,
     resourceCards: number,
@@ -51,7 +52,7 @@ const generatePlayer = (
                     <div className="player-info__avatar-and-points">
                         <button className={"player-info__avatar" + (currentUser ? " player-info__avatar--current-user" : "")}>
                             <div className={`player-info__avatar-halo player-info__avatar-halo--${color}`}>
-                                <img src={iconPlayer} className="player-info__avatar-image"></img>
+                                <img src={isBot ? iconBot : iconPlayer} className="player-info__avatar-image"></img>
                             </div>
                         </button>
                         <div className={"player-info__points" + (currentUser ? " player-info__points--current-user" : "")}>
@@ -92,10 +93,10 @@ const generatePlayer = (
 const generatePlayers = () => {
     return (
         <div className="game-controls__players">
-            {generatePlayer("Joost", 4, 4, 1, 4, 2, 4, false, false, "green", false, false)}
-            {generatePlayer("Ester", 8, 8, 9, 1, 2, 5, false, true, "red", true, false)}
-            {generatePlayer("Bold", 2, 2, 3, 0, 5, 4, true, false, "orange", false, false)}
-            {generatePlayer("Lissi", 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
+            {generatePlayer("Joost", false, 4, 4, 1, 4, 2, 4, false, false, "green", false, false)}
+            {generatePlayer("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", true, false)}
+            {generatePlayer("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false, false)}
+            {generatePlayer("Lissi", false, 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
         </div>
     );
 };
@@ -197,7 +198,7 @@ const generateLog = () => {
             <div className="game-controls__log-container">
                 <div className="game-controls__log-scroller">
                     {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                    {generateLogItem("Ester", "red", false, "got", [cardGrain])}
+                    {generateLogItem("Ester", "red", true, "got", [cardGrain])}
                     {generateLogSeparator()}
                     {generateLogItem("Joost", "green", false, "rolled", [dice1, dice2])}
                     {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
@@ -205,10 +206,25 @@ const generateLog = () => {
                     {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
                     {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
                     {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                    {generateLogItem("Ester", "red", false, "got", [cardGrain])}
+                    {generateLogItem("Ester", "red", true, "got", [cardGrain])}
                     {generateLogSeparator()}
-                    {generateWinItem("Ester", "red", false)}
+                    {generateWinItem("Ester", "red", true)}
                 </div>
+            </div>
+        </div>
+    );
+};
+
+const generateChatItem = (username: string, color: string, isBot: boolean, message: string) => {
+    return (
+        <div className="game-controls__log-item">
+            <div className="game-feed-message__container">
+                <div className="game-feed-message__icon">
+                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
+                </div>
+                <span className="game-feed-message__content">
+                    <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> {message}
+                </span>
             </div>
         </div>
     );
@@ -219,46 +235,9 @@ const generateChat = () => {
         <div className="game-controls__chat generic-box">
             <div className="game-controls__log-container">
                 <div className="game-controls__log-scroller">
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconPlayer}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--orange">Bold</span> Hey everyone!
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--blue">Lissi</span> Good luck!
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <span className="game-feed-message__content">
-                                <hr />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconPlayer}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--green">Joost</span> Anyone up for a trade?
-                            </span>
-                        </div>
-                    </div>
+                    {generateChatItem("Bold", "orange", false, "Hey everyone!")}
+                    {generateChatItem("Lissi", "blue", false, "Good luck!")}
+                    {generateChatItem("Joost", "green", false, "Anyone up for a trade?")}
                 </div>
             </div>
         </div>
