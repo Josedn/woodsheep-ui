@@ -296,6 +296,14 @@ const generateLog = () => {
                     </div>
 
                     <div className="game-controls__log-item">
+                        <div className="game-feed-message__container">
+                            <span className="game-feed-message__content">
+                                <hr />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="game-controls__log-item">
                         <div className="game-feed-message__container game-feed-message__container--centered">
                             <div className="game-feed-message__icon">
                                 <img className="game-feed-message__image" src={iconBot}></img>
@@ -303,6 +311,57 @@ const generateLog = () => {
                             <span className="game-feed-message__content">
                                 <img className="game-feed-message__content-image" src={iconTrophy}></img> <span className="game-feed-message__content--bold game-feed-message__content--red">Ester</span> won the game!{" "}
                                 <img className="game-feed-message__content-image" src={iconTrophy}></img>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const generateChat = () => {
+    return (
+        <div className="game-controls__chat generic-box">
+            <div className="game-controls__log-container">
+                <div className="game-controls__log-scroller">
+                    <div className="game-controls__log-item">
+                        <div className="game-feed-message__container">
+                            <div className="game-feed-message__icon">
+                                <img className="game-feed-message__image" src={iconPlayer}></img>
+                            </div>
+                            <span className="game-feed-message__content">
+                                <span className="game-feed-message__content--bold game-feed-message__content--orange">Bold</span> Hey everyone!
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="game-controls__log-item">
+                        <div className="game-feed-message__container">
+                            <div className="game-feed-message__icon">
+                                <img className="game-feed-message__image" src={iconBot}></img>
+                            </div>
+                            <span className="game-feed-message__content">
+                                <span className="game-feed-message__content--bold game-feed-message__content--blue">Lissi</span> Good luck!
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="game-controls__log-item">
+                        <div className="game-feed-message__container">
+                            <span className="game-feed-message__content">
+                                <hr />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="game-controls__log-item">
+                        <div className="game-feed-message__container">
+                            <div className="game-feed-message__icon">
+                                <img className="game-feed-message__image" src={iconPlayer}></img>
+                            </div>
+                            <span className="game-feed-message__content">
+                                <span className="game-feed-message__content--bold game-feed-message__content--green">Joost</span> Anyone up for a trade?
                             </span>
                         </div>
                     </div>
@@ -333,7 +392,7 @@ export const GameUI = () => {
                 </div>
                 <div className="game-controls">
                     {generateLog()}
-                    <div className="game-controls__chat generic-box">Chat</div>
+                    {generateChat()}
                     {generateBank()}
                     {generatePlayers()}
                 </div>
