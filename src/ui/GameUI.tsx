@@ -51,7 +51,8 @@ const generateCardStack = (count: number, imgSrc: string) => {
 
 const generatePlayer = (
     username: string,
-    points: number,
+    pointsToShow: number,
+    realPoints: number,
     resourceCards: number,
     developmentCards: number,
     armyCount: number,
@@ -62,6 +63,10 @@ const generatePlayer = (
     isActive: boolean,
     currentUser: boolean,
 ) => {
+    let points = pointsToShow.toString();
+    if (realPoints != pointsToShow) {
+        points += ` (${realPoints})`;
+    }
     return (
         <div className={"player-info generic-box" + (!isActive ? " generic-box--faded" : "") + (currentUser ? " player-info--current-user" : "")}>
             {currentUser && <div className="player-info__username-large">{username}</div>}
@@ -112,10 +117,10 @@ const generatePlayer = (
 const generatePlayers = () => {
     return (
         <div className="game-controls__players">
-            {generatePlayer("Joost", 4, 1, 4, 2, 4, false, false, "green", false, false)}
-            {generatePlayer("Ester", 8, 9, 1, 2, 5, false, true, "red", true, false)}
-            {generatePlayer("Bold", 1, 3, 0, 5, 4, true, false, "orange", false, false)}
-            {generatePlayer("Lissi", 0, 2, 4, 2, 4, false, false, "blue", false, true)}
+            {generatePlayer("Joost", 4, 4, 1, 4, 2, 4, false, false, "green", false, false)}
+            {generatePlayer("Ester", 8, 8, 9, 1, 2, 5, false, true, "red", true, false)}
+            {generatePlayer("Bold", 2, 2, 3, 0, 5, 4, true, false, "orange", false, false)}
+            {generatePlayer("Lissi", 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
         </div>
     );
 };
