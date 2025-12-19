@@ -71,7 +71,7 @@ const generatePlayer = (
                     <div className="player-info__avatar-and-points">
                         <button className={"player-info__avatar" + (currentUser ? " player-info__avatar--current-user" : "")}>
                             <div className={`player-info__avatar-halo player-info__avatar-halo--${color}`}>
-                                <img src={iconBot} className="player-info__avatar-image"></img>
+                                <img src={iconPlayer} className="player-info__avatar-image"></img>
                             </div>
                         </button>
                         <div className={"player-info__points" + (currentUser ? " player-info__points--current-user" : "")}>
