@@ -24,31 +24,6 @@ import longestRoadIcon from "../assets/ui/icon_longest_road.5cfdeb3352b20463e64b
 import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.515bcbf0a2c0b5b5a3f1.svg";
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
 
-const generateCardStack = (count: number, imgSrc: string) => {
-    const lastItemClassName = "game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "");
-    return (
-        <div className="game-controls__card-stack">
-            {count >= 13 && (
-                <div className="game-controls__card-container">
-                    <img className="game-controls__card" src={imgSrc} />
-                </div>
-            )}
-            {count >= 8 && (
-                <div className="game-controls__card-container">
-                    <img className="game-controls__card" src={imgSrc} />
-                </div>
-            )}
-            <div className={lastItemClassName}>
-                <img className="game-controls__card" src={imgSrc}></img>
-                <div className="game-controls__card-count-badge">
-                    <img className="game-controls__card-count-badge-background" src={badgeBackgroundBlue}></img>
-                    <div className="game-controls__card-count">{count}</div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 const generatePlayer = (
     username: string,
     pointsToShow: number,
@@ -125,6 +100,31 @@ const generatePlayers = () => {
     );
 };
 
+const generateCardStack = (count: number, imgSrc: string) => {
+    const lastItemClassName = "game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "");
+    return (
+        <div className="game-controls__card-stack">
+            {count >= 13 && (
+                <div className="game-controls__card-container">
+                    <img className="game-controls__card" src={imgSrc} />
+                </div>
+            )}
+            {count >= 8 && (
+                <div className="game-controls__card-container">
+                    <img className="game-controls__card" src={imgSrc} />
+                </div>
+            )}
+            <div className={lastItemClassName}>
+                <img className="game-controls__card" src={imgSrc}></img>
+                <div className="game-controls__card-count-badge">
+                    <img className="game-controls__card-count-badge-background" src={badgeBackgroundBlue}></img>
+                    <div className="game-controls__card-count">{count}</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const generateBank = () => {
     return (
         <div className="game-controls__bank generic-box">
@@ -141,184 +141,73 @@ const generateBank = () => {
     );
 };
 
+const generateLogItem = (username: string, color: string, isBot: boolean, action: string, images: string[]) => {
+    const imagesNodes = images.map((image, index) => {
+        return (
+            <>
+                <img key={index} className="game-feed-message__content-image" src={image}></img>{" "}
+            </>
+        );
+    });
+    return (
+        <div className="game-controls__log-item">
+            <div className="game-feed-message__container">
+                <div className="game-feed-message__icon">
+                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
+                </div>
+                <span className="game-feed-message__content">
+                    <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> {action} {imagesNodes}
+                </span>
+            </div>
+        </div>
+    );
+};
+
+const generateLogSeparator = () => {
+    return (
+        <div className="game-controls__log-item">
+            <div className="game-feed-message__container">
+                <span className="game-feed-message__content">
+                    <hr />
+                </span>
+            </div>
+        </div>
+    );
+};
+
+const generateWinItem = (username: string, color: string, isBot: boolean) => {
+    return (
+        <div className="game-controls__log-item">
+            <div className="game-feed-message__container game-feed-message__container--centered">
+                <div className="game-feed-message__icon">
+                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
+                </div>
+                <span className="game-feed-message__content">
+                    <img className="game-feed-message__content-image" src={iconTrophy}></img> <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> won the game!{" "}
+                    <img className="game-feed-message__content-image" src={iconTrophy}></img>
+                </span>
+            </div>
+        </div>
+    );
+};
+
 const generateLog = () => {
     return (
         <div className="game-controls__log generic-box">
             <div className="game-controls__log-container">
                 <div className="game-controls__log-scroller">
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--blue">Lissi</span> bought <img className="game-feed-message__content-image" src={cardDevelopment}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--red">Ester</span> got <img className="game-feed-message__content-image" src={cardGrain}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <span className="game-feed-message__content">
-                                <hr />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--green">Joost</span> rolled <img className="game-feed-message__content-image" src={dice1}></img>{" "}
-                                <img className="game-feed-message__content-image" src={dice2}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconPlayer}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--orange">Bold</span> got <img className="game-feed-message__content-image" src={cardLumber}></img>{" "}
-                                <img className="game-feed-message__content-image" src={cardOre}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--green">Joost</span> rolled <img className="game-feed-message__content-image" src={dice3}></img>{" "}
-                                <img className="game-feed-message__content-image" src={dice4}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconPlayer}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--orange">Bold</span> got <img className="game-feed-message__content-image" src={cardLumber}></img>{" "}
-                                <img className="game-feed-message__content-image" src={cardOre}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--blue">Lissi</span> bought <img className="game-feed-message__content-image" src={cardDevelopment}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--red">Ester</span> got <img className="game-feed-message__content-image" src={cardGrain}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <span className="game-feed-message__content">
-                                <hr />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--green">Joost</span> rolled <img className="game-feed-message__content-image" src={dice5}></img>{" "}
-                                <img className="game-feed-message__content-image" src={dice6}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconPlayer}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--orange">Bold</span> got <img className="game-feed-message__content-image" src={cardLumber}></img>{" "}
-                                <img className="game-feed-message__content-image" src={cardOre}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--blue">Lissi</span> bought <img className="game-feed-message__content-image" src={cardDevelopment}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <span className="game-feed-message__content--bold game-feed-message__content--red">Ester</span> got <img className="game-feed-message__content-image" src={cardGrain}></img>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container">
-                            <span className="game-feed-message__content">
-                                <hr />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="game-controls__log-item">
-                        <div className="game-feed-message__container game-feed-message__container--centered">
-                            <div className="game-feed-message__icon">
-                                <img className="game-feed-message__image" src={iconBot}></img>
-                            </div>
-                            <span className="game-feed-message__content">
-                                <img className="game-feed-message__content-image" src={iconTrophy}></img> <span className="game-feed-message__content--bold game-feed-message__content--red">Ester</span> won the game!{" "}
-                                <img className="game-feed-message__content-image" src={iconTrophy}></img>
-                            </span>
-                        </div>
-                    </div>
+                    {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
+                    {generateLogItem("Ester", "red", false, "got", [cardGrain])}
+                    {generateLogSeparator()}
+                    {generateLogItem("Joost", "green", false, "rolled", [dice1, dice2])}
+                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                    {generateLogSeparator()}
+                    {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
+                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                    {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
+                    {generateLogItem("Ester", "red", false, "got", [cardGrain])}
+                    {generateLogSeparator()}
+                    {generateWinItem("Ester", "red", false)}
                 </div>
             </div>
         </div>
