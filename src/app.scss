@@ -25,30 +25,149 @@ body {
 .game-board {
     width: 1222px;
     height: 100dvh;
-    display: flex;
-    flex-direction: column;
     padding: 4px;
-    justify-content: space-between;
+
+    display: grid;
+    gap: 0.25em;
+    padding: 0.15em;
+    height: 100%;
+    font-size: 19px;
+
+    grid-template-columns: [start] auto [help-buttons-end] 1fr [game-feeds] 19em [end];
+    grid-template-rows: [start] 1fr [game-feeds-end] auto [bank-end] 21.25em [end];
+    background-color: #177fde;
 }
 
-.game-board__top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.game-board__top-left {
+    display: grid;
+    grid-template-rows: [start] min-content [middle] 1fr [end];
+    grid-template-columns: [start] auto [middle] auto [end];
+    grid-row: start / end;
+    grid-column: start / help-buttons-end;
 }
 
 .game-board__bottom {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    grid-row: game-feeds-end / end;
+    grid-column: start / game-feeds;
+    align-items: flex-end;
+    z-index: 1;
 }
 
-.game-board__options-menu {
+.game-inventory {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr auto;
+    gap: 0.25em;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.game-inventory__container {
+    display: flex;
+    position: relative;
+    gap: 0.15em;
+    align-items: flex-end;
+    user-select: none;
+    margin-right: -4.75em;
+    padding-right: 4.75em;
+    overflow: hidden;
+}
+
+.game-inventory__trade-creator {
     display: flex;
     flex-direction: column;
+    gap: 0.15em;
+    width: 100%;
 }
 
-.game-board__options-button {
+.game-inventory__trade-creator-container {
+    border-radius: 0.25em;
+    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
+    padding: 0.5em;
+    pointer-events: all;
+}
+
+.game-inventory__card-inventory {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 3.5em;
+    --outer-gap: 0.1px;
+}
+
+.game-inventory__card-stack {
+    --card-width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: max-content;
+    min-width: 0;
+    overflow: visible;
+    contain: layout;
+
+    margin-left: 0;
+
+    --gap: -38.293611793611795px;
+    z-index: 1;
+}
+
+.game-inventory__card-wrapper {
+    --offset: calc((var(--card-width) + var(--gap)) * var(--index, 0));
+    position: relative;
+    height: fit-content;
+}
+
+.game-inventory__card-container {
+    position: relative;
+    user-select: none;
+
+    width: 2.5110565111em;
+    height: 3.5em;
+    cursor: pointer;
+}
+
+.game-inventory__card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.game-inventory__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.options-menu {
+    grid-row: start / middle;
+    grid-column: start / middle;
+}
+
+.options-menu__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    padding: 0.5em;
+    pointer-events: all;
+
+    position: relative;
+    z-index: 5;
+}
+
+.options-menu__button {
+    outline: none;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 0;
+    width: fit-content;
 }
 
 .game-board__trade-popup {
@@ -56,11 +175,6 @@ body {
     flex-direction: column;
     gap: 4px;
     width: 350px;
-}
-
-.game-board__card-holder {
-    width: 100%;
-    height: 100px;
 }
 
 .game-controls {
@@ -252,7 +366,7 @@ body {
 }
 
 .game {
-    background-color: #177fde;
+    background-color: rgb(50, 141, 192);
     position: absolute;
     width: 100%;
     height: 100dvh;

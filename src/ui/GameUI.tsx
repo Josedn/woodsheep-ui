@@ -23,6 +23,7 @@ import largestArmyIcon from "../assets/ui/icon_largest_army.180cce1760beb87a1a3e
 import longestRoadIcon from "../assets/ui/icon_longest_road.5cfdeb3352b20463e64b.svg";
 import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.515bcbf0a2c0b5b5a3f1.svg";
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
+import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
 
 const generatePlayer = (
     username: string,
@@ -248,23 +249,46 @@ const generateChat = () => {
     );
 };
 
+/*
+<div className="game-board__trade-popup">
+                            <div className="game-board__trade-popup-top generic-box">Trade top</div>
+                            <div className="game-board__trade-popup-content generic-box">Trade info</div>
+                        </div>
+                        */
+
 export const GameUI = () => {
     return (
         <>
             <div className="main-wrapper">
                 <div className="game-board">
-                    <div className="game-board__top">
-                        <div className="game-board__options-menu">
-                            <button className="game-board__options-button">Options</button>
-                            <button className="game-board__options-button">Info</button>
-                        </div>
-                        <div className="game-board__trade-popup">
-                            <div className="game-board__trade-popup-top generic-box">Trade top</div>
-                            <div className="game-board__trade-popup-content generic-box">Trade info</div>
+                    <div className="game-board__top-left">
+                        <div className="options-menu">
+                            <div className="options-menu__container">
+                                <button className="options-menu__button">
+                                    <img src={iconSettings} className="options-menu__button-image"></img>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div className="game-board__bottom">
-                        <div className="game-board__card-holder generic-box">Card holder</div>
+                        <div className="game-inventory">
+                            <div className="game-inventory__container">
+                                <div className="game-inventory__trade-creator">
+                                    <div className="game-inventory__trade-creator-container">
+                                        <div className="game-inventory__card-inventory">
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardDevelopment} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="game-inventory__actions"></div>
+                        </div>
                     </div>
                 </div>
                 <div className="game-controls">
