@@ -29,6 +29,7 @@ import longestRoadIcon from "../assets/ui/icon_longest_road.5cfdeb3352b20463e64b
 import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.515bcbf0a2c0b5b5a3f1.svg";
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
 import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
+import type { VNode } from "preact";
 
 const generatePlayer = (
     username: string,
@@ -261,6 +262,36 @@ const generateChat = () => {
                         </div>
                         */
 
+const generateCardStackInventory = (count: number, imgSrc: string) => {
+    if (count < 1) {
+        return <></>;
+    }
+    const cardNodes: VNode[] = [];
+
+    for (let i = 1; i < count; i++) {
+        cardNodes.push(
+            <div className="game-inventory__card-wrapper">
+                <div className="game-inventory__card-container">
+                    <img src={imgSrc} className="game-inventory__card-image"></img>
+                </div>
+            </div>,
+        );
+    }
+    return (
+        <div className="game-inventory__card-stack">
+            {cardNodes}
+            <div className="game-inventory__card-wrapper">
+                <div className="game-inventory__card-container">
+                    <img src={imgSrc} className="game-inventory__card-image"></img>
+                    <div class="game-inventory__count-container">
+                        <div class="game-inventory__count">{count}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export const GameUI = () => {
     return (
         <>
@@ -281,120 +312,19 @@ export const GameUI = () => {
                                 <div className="game-inventory__trade-creator">
                                     <div className="game-inventory__trade-creator-container">
                                         <div className="game-inventory__card-inventory">
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardOre} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
-                                                    </div>
-                                                </div>
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
-                                                    </div>
-                                                </div>
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
-                                                    </div>
-                                                </div>
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">4</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
-                                                    </div>
-                                                </div>
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
-                                                    </div>
-                                                </div>
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">3</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {generateCardStackInventory(2, cardLumber)}
+                                            {generateCardStackInventory(2, cardBrick)}
+                                            {generateCardStackInventory(1, cardWool)}
+                                            {generateCardStackInventory(2, cardGrain)}
+                                            {generateCardStackInventory(3, cardOre)}
 
                                             <div className="game-inventory__separator"></div>
 
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardKnight} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardRoadBuilder} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardPoint} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardYearOfPlenty} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="game-inventory__card-stack">
-                                                <div className="game-inventory__card-wrapper">
-                                                    <div className="game-inventory__card-container">
-                                                        <img src={cardMonopoly} className="game-inventory__card-image"></img>
-                                                        <div class="game-inventory__count-container">
-                                                            <div class="game-inventory__count">1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {generateCardStackInventory(1, cardKnight)}
+                                            {generateCardStackInventory(1, cardRoadBuilder)}
+                                            {generateCardStackInventory(1, cardMonopoly)}
+                                            {generateCardStackInventory(1, cardPoint)}
+                                            {generateCardStackInventory(1, cardYearOfPlenty)}
                                         </div>
                                     </div>
                                 </div>
