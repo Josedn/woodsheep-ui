@@ -7,6 +7,11 @@ import cardGrain from "../assets/ui/card_grain.09c9d82146a64bce69b5.svg";
 import cardDevelopment from "../assets/ui/card_devcardback.92569a1abd04a8c1c17e.svg";
 import cardResourceBack from "../assets/ui/card_rescardback.03c18312a76028b0d9c9.svg";
 import cardResourceBackOverLimit from "../assets/ui/card_rescardoverlimit.94289aa29992189fe66c.svg";
+import cardKnight from "../assets/ui/card_knight.a58573f2154fa93a6319.svg";
+import cardMonopoly from "../assets/ui/card_monopoly.dfac189aaff62e271093.svg";
+import cardPoint from "../assets/ui/card_vp.672597308e3a8f1100ae.svg";
+import cardYearOfPlenty from "../assets/ui/card_yearofplenty.3df210b5455b7438db09.svg";
+import cardRoadBuilder from "../assets/ui/card_roadbuilding.994e8f21698ce6c350bd.svg";
 import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
 import iconBot from "../assets/ui/icon_bot.fe8fdd5cc98ae77d7774.svg";
 import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
@@ -279,7 +284,114 @@ export const GameUI = () => {
                                             <div className="game-inventory__card-stack">
                                                 <div className="game-inventory__card-wrapper">
                                                     <div className="game-inventory__card-container">
-                                                        <img src={cardDevelopment} className="game-inventory__card-image"></img>
+                                                        <img src={cardOre} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardLumber} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">4</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
+                                                    </div>
+                                                </div>
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardBrick} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">3</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__separator"></div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardKnight} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardRoadBuilder} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardPoint} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardYearOfPlenty} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="game-inventory__card-stack">
+                                                <div className="game-inventory__card-wrapper">
+                                                    <div className="game-inventory__card-container">
+                                                        <img src={cardMonopoly} className="game-inventory__card-image"></img>
+                                                        <div class="game-inventory__count-container">
+                                                            <div class="game-inventory__count">1</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

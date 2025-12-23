@@ -123,6 +123,10 @@ body {
     height: fit-content;
 }
 
+.game-inventory__card-wrapper + .game-inventory__card-wrapper {
+    margin-left: calc(var(--gap));
+}
+
 .game-inventory__card-container {
     position: relative;
     user-select: none;
@@ -132,10 +136,49 @@ body {
     cursor: pointer;
 }
 
+.game-inventory__count-container {
+    background-color: rgb(0, 114, 188);
+
+    display: inline-block;
+    border-top-left-radius: 0.1em;
+    border-bottom-left-radius: 1.25em;
+    border-bottom-right-radius: 0.1em;
+    min-width: 1.25em;
+    height: 1.25em;
+
+    position: absolute;
+    top: 0;
+    right: 1px;
+}
+
+.game-inventory__count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.1em 0.1em 0.2em;
+    height: 100%;
+    text-shadow:
+        -0.5px -0.5px 1px #073158,
+        0.5px -0.5px 1px #073158,
+        -0.5px 0.5px 1px #073158,
+        0.5px 0.5px 1px #073158;
+    color: #fff;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
 .game-inventory__card-image {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+.game-inventory__separator {
+    flex: 0 0 2px;
+    align-self: center;
+    margin: 0.2em;
+    background: rgba(102, 102, 102, 0.3);
+    height: 3em;
 }
 
 .game-inventory__actions {
