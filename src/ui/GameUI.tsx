@@ -15,6 +15,9 @@ import cardRoadBuilder from "../assets/ui/card_roadbuilding.994e8f21698ce6c350bd
 import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
 import iconBot from "../assets/ui/icon_bot.fe8fdd5cc98ae77d7774.svg";
 import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
+import iconPlayers from "../assets/ui/icon_players.85d13bf5dfe81259979a.svg";
+import iconTradeArrowGreen from "../assets/ui/icon_trade_arrow_green.dc94789e15ba3783e25e.svg";
+import iconTradeArrowRed from "../assets/ui/icon_trade_arrow_red.d9bd6f9e6fe61a2cda68.svg";
 import iconTrophy from "../assets/ui/icon_trophy.bc5c68a7464f0462721d.svg";
 import dice1 from "../assets/ui/dice_1.f5a1a69c3529b5b5ffc5.svg";
 import dice2 from "../assets/ui/dice_2.859c1a230cf0ab52f238.svg";
@@ -29,6 +32,13 @@ import longestRoadIcon from "../assets/ui/icon_longest_road.5cfdeb3352b20463e64b
 import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.515bcbf0a2c0b5b5a3f1.svg";
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
 import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
+import bgButton from "../assets/ui/bg_button.6fb386c356a3e9b580e2.svg";
+import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
+import iconPassTurn from "../assets/ui/icon_pass_turn.8d5b7a48c40a85b859cd.svg";
+import iconRoadRed from "../assets/ui/road_red.41c6cbd9278108542715.svg";
+import iconSettlementRed from "../assets/ui/settlement_red.22949197b57f9cfd968b.svg";
+import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
+
 import type { VNode } from "preact";
 
 const generatePlayer = (
@@ -262,7 +272,7 @@ const generateChat = () => {
                         </div>
                         */
 
-const generateCardStackInventory = (count: number, imgSrc: string) => {
+const generateCardStackInventory = (count: number, imgSrc: string, showCount: boolean) => {
     if (count < 1) {
         return <></>;
     }
@@ -270,7 +280,7 @@ const generateCardStackInventory = (count: number, imgSrc: string) => {
 
     for (let i = 1; i < count; i++) {
         cardNodes.push(
-            <div className="game-inventory__card-wrapper">
+            <div key={i} className="game-inventory__card-wrapper">
                 <div className="game-inventory__card-container">
                     <img src={imgSrc} className="game-inventory__card-image"></img>
                 </div>
@@ -283,8 +293,173 @@ const generateCardStackInventory = (count: number, imgSrc: string) => {
             <div className="game-inventory__card-wrapper">
                 <div className="game-inventory__card-container">
                     <img src={imgSrc} className="game-inventory__card-image"></img>
-                    <div class="game-inventory__count-container">
-                        <div class="game-inventory__count">{count}</div>
+                    {showCount && (
+                        <div class="game-inventory__count-container">
+                            <div class="game-inventory__count">{count}</div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const generateWantedCards = () => {
+    return (
+        <div class="trade-creator-wanted wantedCardSelectorContainer-BNhGzRVO">
+            <div class="trade-creator-wanted__cards-container cardsContainer-OkZMWL2H">
+                <div class="trade-creator-wanted__cards-stack container-GHn2zJsx cardStack-a42L5muF">
+                    {generateCardStackInventory(1, cardLumber, false)}
+                    {generateCardStackInventory(1, cardBrick, false)}
+                    {generateCardStackInventory(1, cardWool, false)}
+                    {generateCardStackInventory(1, cardGrain, false)}
+                    {generateCardStackInventory(1, cardOre, false)}
+                    {generateCardStackInventory(1, cardResourceBack, false)}
+                </div>
+            </div>
+            <div class="trade-creator-wanted__bank-icon tooltipTrigger-LSJLRWEF ratioContainer-uZ2gOVwR">
+                <img class="trade-creator-wanted__bank-icon-image ratioIcon-NcxgaLUV" src={bankIcon} />
+            </div>
+        </div>
+    );
+};
+export const generateTradeProposal = () => {
+    return (
+        <>
+            {generateWantedCards()}
+            <div class="trade-creator-proposal">
+                <div class="trade-creator-proposal__wanted-container">
+                    <div class="trade-creator-proposal__avatar-container">
+                        <img class="trade-creator-proposal__avatar-image" src={iconPlayers} />
+                    </div>
+                    <img class="trade-creator-proposal__giving-arrow" src={iconTradeArrowGreen} />
+                    {generateCardStackInventory(1, cardBrick, true)}
+                    {generateCardStackInventory(1, cardLumber, true)}
+                </div>
+                <div class="trade-creator-proposal__offered-container">
+                    <div class="trade-creator-proposal__avatar-container player-info__avatar-halo--red">
+                        <img class="trade-creator-proposal__avatar-image--current-player" src={iconPlayer} />
+                    </div>
+                    <img class="trade-creator-proposal__giving-arrow" src={iconTradeArrowRed} />
+                    {generateCardStackInventory(2, cardOre, true)}
+                    {generateCardStackInventory(1, cardWool, true)}
+                </div>
+            </div>
+        </>
+    );
+};
+
+export const generateInventory = () => {
+    return (
+        <div className="game-inventory__trade-creator-container">
+            <div className="game-inventory__card-inventory">
+                {generateCardStackInventory(2, cardLumber, true)}
+                {generateCardStackInventory(2, cardBrick, true)}
+                {generateCardStackInventory(1, cardWool, true)}
+                {generateCardStackInventory(2, cardGrain, true)}
+                {generateCardStackInventory(3, cardOre, true)}
+
+                <div className="game-inventory__separator"></div>
+
+                {generateCardStackInventory(1, cardKnight, false)}
+                {generateCardStackInventory(1, cardRoadBuilder, false)}
+                {generateCardStackInventory(1, cardMonopoly, false)}
+                {generateCardStackInventory(1, cardPoint, false)}
+                {generateCardStackInventory(1, cardYearOfPlenty, false)}
+            </div>
+        </div>
+    );
+};
+
+export const generateDiceContainer = () => {
+    return (
+        <div class="dice-container">
+            <div class="dice-container__wrapper">
+                <img class="dice-container__image" src={dice1} />
+            </div>
+            <div class="dice-container__wrapper">
+                <img class="dice-container__image dice-container__image--inactive" src={dice3} />
+            </div>
+        </div>
+    );
+};
+
+export const generateActionButtons = () => {
+    return (
+        <div class="game-actions">
+            <div class="game-actions__current-status">
+                <div class="game-actions__current-status-container">
+                    <div class="game-actions__avatar player-info__avatar-halo--red">
+                        <img class="game-actions__avatar-image" src={iconPlayer} />
+                    </div>
+                    <div class="game-actions__current-status-message">Answer Trade</div>
+                </div>
+            </div>
+            <div class="game-actions__timer container-pBn83kjC beigeBackground-LUrLCPZy timer-ItAWXRS8">
+                <div class="game-actions__timer-text timerBeige-tyEEde4z">03:02</div>
+            </div>
+            <div class="game-actions__trade-button tradeButton-BgRRP9Nn">
+                <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-trade">
+                    <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                    <div class="">
+                        <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconCross} />
+                    </div>
+                </div>
+            </div>
+            <div class="game-actions__development-card-button buyDevelopmentCardButton-ZZiU63kF">
+                <div class="game-actions__icon-container container-pW9vSis7">
+                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-buy-dev-card">
+                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
+                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={cardDevelopment} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-actions__road-button roadButton-Fj8MaFrs">
+                <div class="container-pW9vSis7">
+                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX">
+                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
+                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconRoadRed} />
+                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
+                                <div class="game-actions__count count-Dh6MtdiN">12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-actions__settlement-button settlementButton-bA9oNaR0">
+                <div class="container-pW9vSis7">
+                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX">
+                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
+                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconSettlementRed} />
+                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
+                                <div class="game-actions__count count-Dh6MtdiN">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-actions__city-button cityButton-ROgnxYv3">
+                <div class="container-pW9vSis7">
+                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-build-city">
+                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
+                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconCityRed} />
+                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
+                                <div class="game-actions__count count-Dh6MtdiN">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-actions__turn-button turnButton-klLaRZeE">
+                <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-pass-turn">
+                    <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
+                    <div class="">
+                        <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconPassTurn} />
                     </div>
                 </div>
             </div>
@@ -310,26 +485,14 @@ export const GameUI = () => {
                         <div className="game-inventory">
                             <div className="game-inventory__container">
                                 <div className="game-inventory__trade-creator">
-                                    <div className="game-inventory__trade-creator-container">
-                                        <div className="game-inventory__card-inventory">
-                                            {generateCardStackInventory(2, cardLumber)}
-                                            {generateCardStackInventory(2, cardBrick)}
-                                            {generateCardStackInventory(1, cardWool)}
-                                            {generateCardStackInventory(2, cardGrain)}
-                                            {generateCardStackInventory(3, cardOre)}
-
-                                            <div className="game-inventory__separator"></div>
-
-                                            {generateCardStackInventory(1, cardKnight)}
-                                            {generateCardStackInventory(1, cardRoadBuilder)}
-                                            {generateCardStackInventory(1, cardMonopoly)}
-                                            {generateCardStackInventory(1, cardPoint)}
-                                            {generateCardStackInventory(1, cardYearOfPlenty)}
-                                        </div>
-                                    </div>
+                                    {generateTradeProposal()}
+                                    {generateInventory()}
                                 </div>
                             </div>
-                            <div className="game-inventory__actions"></div>
+                            <div className="game-inventory__actions">
+                                {generateDiceContainer()}
+                                {generateActionButtons()}
+                            </div>
                         </div>
                     </div>
                 </div>
