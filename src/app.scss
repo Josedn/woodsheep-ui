@@ -658,15 +658,105 @@ body {
     height: 4.5em;
 }
 
-// TODO: delete
-.game-controls {
+.game-board__bank {
     display: flex;
-    background-color: black;
-    width: 362px;
-    height: 100dvh;
+    position: relative;
+    gap: 0.5em;
+    justify-content: space-between;
+    border-radius: 0.25em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    width: 100%;
+    user-select: none;
+
+    grid-row: game-feeds-end / bank-end;
+    grid-column: game-feeds / end;
+
+    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
+}
+
+.bank_container__icon {
+    align-self: center;
+    width: 2.25em;
+    height: 2.25em;
+    vertical-align: middle;
+}
+
+.bank_container__card-row {
+    display: flex;
+    gap: 0.35em;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.bank_container__card-stack {
+    position: relative;
+    height: fit-content;
+    --card-width: 100%;
+
     flex-direction: column;
-    gap: 4px;
-    padding: 4px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    --gap: -51.46875px;
+}
+
+.bank_container__card-wrapper {
+    --offset: calc((var(--card-width) + var(--gap)) * var(--index, 0));
+    position: relative;
+    height: fit-content;
+
+    //
+    position: relative;
+    user-select: none;
+    width: 2.1523341523em;
+    height: 3em;
+}
+
+.bank_container__card-wrapper--empty {
+    filter: brightness(0.5);
+}
+
+.bank_container__card-wrapper + .bank_container__card-wrapper {
+    margin-top: calc(var(--gap));
+    margin-left: 0;
+}
+
+.bank_container__card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.bank_container__count-container {
+    display: inline-block;
+    border-top-left-radius: 0.1em;
+    border-bottom-left-radius: 1.25em;
+    border-bottom-right-radius: 0.1em;
+    min-width: 1.25em;
+    height: 1.25em;
+
+    position: absolute;
+    top: 0;
+    right: 1px;
+
+    background-color: rgb(0, 114, 188);
+}
+
+.bank_container__count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.1em 0.1em 0.2em;
+    height: 100%;
+    text-shadow:
+        -0.5px -0.5px 1px #073158,
+        0.5px -0.5px 1px #073158,
+        -0.5px 0.5px 1px #073158,
+        0.5px 0.5px 1px #073158;
+    color: #fff;
+    font-size: 0.875em;
+    font-weight: 600;
 }
 
 .game-controls__log {
@@ -757,90 +847,6 @@ body {
     height: 50px;
     width: 100%;
     box-sizing: border-box;
-}
-
-.game-controls__bank {
-    display: flex;
-    position: relative;
-    gap: 7px;
-    justify-content: space-between;
-    width: 100%;
-    user-select: none;
-
-    grid-row: game-feeds-end / bank-end;
-    grid-column: game-feeds / end;
-}
-
-.game-controls__bank-row {
-    display: flex;
-    gap: 6px;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.game-controls__bank-icon {
-    align-self: center;
-    width: 42px;
-    height: 42px;
-}
-
-.game-controls__card-stack {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    position: relative;
-    height: fit-content;
-    height: 70px;
-}
-
-.game-controls__card-container {
-    width: 41px;
-    height: 57px;
-    position: relative;
-    margin-top: -51px;
-}
-
-.game-controls__card-container--empty {
-    filter: brightness(0.5);
-}
-
-.game-controls__card {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.game-controls__card-count-badge {
-    position: absolute;
-    top: 0;
-    right: 1px;
-    width: 1.25em;
-    height: 1.25em;
-}
-
-.game-controls__card-count-badge-background {
-    display: block;
-    height: 100%;
-}
-
-.game-controls__card-count {
-    display: flex;
-    position: absolute;
-    top: 0;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 0.1em;
-    padding-left: 0.1em;
-    width: 100%;
-    height: 100%;
-    text-shadow:
-        -0.5px -0.5px 1px #073158,
-        0.5px -0.5px 1px #073158,
-        -0.5px 0.5px 1px #073158,
-        0.5px 0.5px 1px #073158;
-    color: #fff;
-    font-size: 0.875em;
-    font-weight: 600;
 }
 
 .game {

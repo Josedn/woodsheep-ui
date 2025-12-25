@@ -12,7 +12,6 @@ import cardMonopoly from "../assets/ui/card_monopoly.dfac189aaff62e271093.svg";
 import cardPoint from "../assets/ui/card_vp.672597308e3a8f1100ae.svg";
 import cardYearOfPlenty from "../assets/ui/card_yearofplenty.3df210b5455b7438db09.svg";
 import cardRoadBuilder from "../assets/ui/card_roadbuilding.994e8f21698ce6c350bd.svg";
-import badgeBackgroundBlue from "../assets/ui/button_badge_background_blue.2e754ec21f9c79da6267.svg";
 import iconBot from "../assets/ui/icon_bot.fe8fdd5cc98ae77d7774.svg";
 import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
 import iconPlayers from "../assets/ui/icon_players.85d13bf5dfe81259979a.svg";
@@ -150,25 +149,24 @@ const generatePlayers = () => {
     );
 };
 
-const generateCardStack = (count: number, imgSrc: string) => {
-    const lastItemClassName = "game-controls__card-container" + (count == 0 ? " game-controls__card-container--empty" : "");
+const generateCardStackBank = (count: number, imgSrc: string) => {
+    const lastItemClassName = "bank_container__card-wrapper" + (count == 0 ? " bank_container__card-wrapper--empty" : "");
     return (
-        <div className="game-controls__card-stack">
+        <div className="bank_container__card-stack">
             {count >= 13 && (
-                <div className="game-controls__card-container">
-                    <img className="game-controls__card" src={imgSrc} />
+                <div className="bank_container__card-wrapper">
+                    <img className="bank_container__card-image" src={imgSrc} />
                 </div>
             )}
             {count >= 8 && (
-                <div className="game-controls__card-container">
-                    <img className="game-controls__card" src={imgSrc} />
+                <div className="bank_container__card-wrapper">
+                    <img className="bank_container__card-image" src={imgSrc} />
                 </div>
             )}
             <div className={lastItemClassName}>
-                <img className="game-controls__card" src={imgSrc}></img>
-                <div className="game-controls__card-count-badge">
-                    <img className="game-controls__card-count-badge-background" src={badgeBackgroundBlue}></img>
-                    <div className="game-controls__card-count">{count}</div>
+                <img className="bank_container__card-image" src={imgSrc}></img>
+                <div className="bank_container__count-container">
+                    <div className="bank_container__count">{count}</div>
                 </div>
             </div>
         </div>
@@ -177,20 +175,19 @@ const generateCardStack = (count: number, imgSrc: string) => {
 
 const generateBank = () => {
     return (
-        <div className="game-controls__bank generic-box">
-            <img src={bankIcon} className="game-controls__bank-icon"></img>
-            <div className="game-controls__bank-row">
-                {generateCardStack(18, cardLumber)}
-                {generateCardStack(8, cardBrick)}
-                {generateCardStack(18, cardWool)}
-                {generateCardStack(0, cardGrain)}
-                {generateCardStack(18, cardOre)}
-                {generateCardStack(20, cardDevelopment)}
+        <div className="game-board__bank bank_container">
+            <img src={bankIcon} className="bank_container__icon"></img>
+            <div className="bank_container__card-row">
+                {generateCardStackBank(18, cardLumber)}
+                {generateCardStackBank(8, cardBrick)}
+                {generateCardStackBank(18, cardWool)}
+                {generateCardStackBank(0, cardGrain)}
+                {generateCardStackBank(18, cardOre)}
+                {generateCardStackBank(20, cardDevelopment)}
             </div>
         </div>
     );
 };
-
 const generateLogItem = (username: string, color: string, isBot: boolean, action: string, images: string[]) => {
     const imagesNodes = images.map((image, index) => {
         return (
