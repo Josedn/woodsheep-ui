@@ -30,6 +30,7 @@ body {
     height: 100%;
     grid-template-columns: [start] auto [help-buttons-end] 1fr [game-feeds] 19em [end];
     grid-template-rows: [start] 1fr [game-feeds-end] auto [bank-end] 21.25em [end];
+    width: 1590px;
 }
 
 .game-board__top-left {
@@ -46,6 +47,25 @@ body {
     grid-column: start / game-feeds;
     align-items: flex-end;
     z-index: 1;
+}
+
+.game-board__responsive-log {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #000;
+    pointer-events: auto;
+
+    grid-row: start / game-feeds-end;
+    grid-column: game-feeds / end;
+    overflow: hidden;
+
+    // min height 876
+    gap: 0.3em;
+    font-size: 0.75em;
 }
 
 .game-inventory {
@@ -533,6 +553,112 @@ body {
     width: 350px;
 }
 
+.game-board__players {
+    grid-row: bank-end / end;
+    grid-column: game-feeds / end;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    justify-content: flex-end;
+    height: 100%;
+    min-height: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+.opponent-container {
+    position: relative;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+
+    display: flex;
+    margin-left: -10em;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    gap: 0.25em;
+}
+
+.opponent-container__row {
+    position: relative;
+    flex-shrink: 0;
+    min-height: 0;
+    margin-top: auto;
+    width: 100%;
+}
+
+.opponent-container__dice-group {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25%;
+    align-items: stretch;
+    justify-content: center;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    opacity: 1;
+    width: fit-content;
+    will-change: transform, opacity;
+    user-select: none;
+
+    height: 3em;
+
+    position: absolute;
+    top: calc(50% - 1.5em);
+    right: 20em;
+    pointer-events: none;
+}
+
+.opponent-container__dice-group--hidden {
+    transform: translateX(5%);
+    opacity: 0;
+    pointer-events: none !important;
+}
+
+.opponent-container__dice-wrapper {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 100%;
+
+    position: relative;
+    transform-origin: center;
+}
+
+.opponent-container__dice-image {
+    display: block;
+    cursor: pointer;
+    height: 100%;
+}
+
+.opponent-container__dice-image--inactive {
+    cursor: auto;
+    filter: brightness(0.8);
+}
+
+.opponent-container__player-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.25em;
+    background: linear-gradient(180deg, #adadaa 0%, #a59d90 100%);
+    padding: 0 0.875em;
+    min-height: 0;
+    color: #323232;
+
+    pointer-events: all;
+
+    margin-left: auto;
+    width: calc(100% - 10em);
+    height: 4.5em;
+}
+
+// TODO: delete
 .game-controls {
     display: flex;
     background-color: black;
@@ -640,6 +766,9 @@ body {
     justify-content: space-between;
     width: 100%;
     user-select: none;
+
+    grid-row: game-feeds-end / bank-end;
+    grid-column: game-feeds / end;
 }
 
 .game-controls__bank-row {
@@ -714,13 +843,6 @@ body {
     font-weight: 600;
 }
 
-.game-controls__players {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 4px;
-}
-
 .game {
     background-color: rgb(50, 141, 192);
     position: absolute;
@@ -734,7 +856,7 @@ body {
 }
 
 .generic-box {
-    border-radius: 4px;
+    border-radius: 0.25em;
     background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
     padding: 7px 7px 7px 14px;
 }
@@ -744,14 +866,21 @@ body {
 }
 
 .player-info {
-    height: 85px;
-    font-size: 18px;
-    padding: 0 16px;
     display: flex;
-    justify-content: center;
-    width: 100%;
-    min-height: 0;
     flex-direction: column;
+    justify-content: center;
+    border-radius: 0.25em;
+    background: linear-gradient(180deg, #adadaa 0%, #a59d90 100%);
+    padding: 0 0.875em;
+    min-height: 0;
+    color: #323232;
+
+    margin-left: auto;
+    width: calc(100% - 10em);
+    height: 4.5em;
+}
+.player-info--active {
+    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
 }
 
 .player-info--current-user {
@@ -759,6 +888,7 @@ body {
     justify-content: flex-end;
     padding-top: 0.5em;
     padding-bottom: 0.75em;
+    width: 100%;
 }
 
 .player-info__container {

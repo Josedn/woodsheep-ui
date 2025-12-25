@@ -61,7 +61,7 @@ const generatePlayer = (
         points += ` (${realPoints})`;
     }
     return (
-        <div className={"player-info generic-box" + (!isActive ? " generic-box--faded" : "") + (currentUser ? " player-info--current-user" : "")}>
+        <div className={"player-info" + (isActive ? " player-info--active" : "") + (currentUser ? " player-info--current-user" : "")}>
             {currentUser && <div className="player-info__username-large">{username}</div>}
             <div className="player-info__container">
                 <div className="player-info__badge">
@@ -107,12 +107,44 @@ const generatePlayer = (
     );
 };
 
+const generateOpponentCard = (
+    username: string,
+    isBot: boolean,
+    pointsToShow: number,
+    realPoints: number,
+    resourceCards: number,
+    developmentCards: number,
+    armyCount: number,
+    roadCount: number,
+    largestArmy: boolean,
+    longestRoad: boolean,
+    color: string,
+    isActive: boolean,
+) => {
+    return (
+        <div className="opponent-container__row">
+            <div className={"opponent-container__dice-group" + (!isActive ? " opponent-container__dice-group--hidden" : "")}>
+                <div className="opponent-container__dice-wrapper">
+                    <img class="opponent-container__dice-image" src={dice1} />
+                </div>
+                <div className="opponent-container__dice-wrapper">
+                    <img class="opponent-container__dice-image opponent-container__dice-image--inactive" src={dice1} />
+                </div>
+            </div>
+
+            {generatePlayer(username, isBot, pointsToShow, realPoints, resourceCards, developmentCards, armyCount, roadCount, largestArmy, longestRoad, color, isActive, false)}
+        </div>
+    );
+};
+
 const generatePlayers = () => {
     return (
-        <div className="game-controls__players">
-            {generatePlayer("Joost", false, 4, 4, 1, 4, 2, 4, false, false, "green", false, false)}
-            {generatePlayer("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", true, false)}
-            {generatePlayer("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false, false)}
+        <div className="game-board__players">
+            <div className="opponent-container">
+                {generateOpponentCard("Joost", false, 4, 4, 1, 4, 2, 4, false, false, "green", false)}
+                {generateOpponentCard("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", true)}
+                {generateOpponentCard("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false)}
+            </div>
             {generatePlayer("Lissi", false, 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
         </div>
     );
@@ -495,10 +527,10 @@ export const GameUI = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="game-controls">
-                    {generateLog()}
-                    {generateChat()}
+                    <div className="game-board__responsive-log">
+                        {generateLog()}
+                        {generateChat()}
+                    </div>
                     {generateBank()}
                     {generatePlayers()}
                 </div>
