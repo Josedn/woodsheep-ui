@@ -151,23 +151,23 @@ const generatePlayers = () => {
 };
 
 const generateCardStackBank = (count: number, imgSrc: string) => {
-    const lastItemClassName = "bank_container__card-wrapper" + (count == 0 ? " bank_container__card-wrapper--empty" : "");
+    const lastItemClassName = "bank-container__card-wrapper" + (count == 0 ? " bank-container__card-wrapper--empty" : "");
     return (
-        <div className="bank_container__card-stack">
+        <div className="bank-container__card-stack">
             {count >= 13 && (
-                <div className="bank_container__card-wrapper">
-                    <img className="bank_container__card-image" src={imgSrc} />
+                <div className="bank-container__card-wrapper">
+                    <img className="bank-container__card-image" src={imgSrc} />
                 </div>
             )}
             {count >= 8 && (
-                <div className="bank_container__card-wrapper">
-                    <img className="bank_container__card-image" src={imgSrc} />
+                <div className="bank-container__card-wrapper">
+                    <img className="bank-container__card-image" src={imgSrc} />
                 </div>
             )}
             <div className={lastItemClassName}>
-                <img className="bank_container__card-image" src={imgSrc}></img>
-                <div className="bank_container__count-container">
-                    <div className="bank_container__count">{count}</div>
+                <img className="bank-container__card-image" src={imgSrc}></img>
+                <div className="bank-container__count-container">
+                    <div className="bank-container__count">{count}</div>
                 </div>
             </div>
         </div>
@@ -176,9 +176,9 @@ const generateCardStackBank = (count: number, imgSrc: string) => {
 
 const generateBank = () => {
     return (
-        <div className="game-board__bank bank_container">
-            <img src={bankIcon} className="bank_container__icon"></img>
-            <div className="bank_container__card-row">
+        <div className="game-board__bank bank-container">
+            <img src={bankIcon} className="bank-container__icon"></img>
+            <div className="bank-container__card-row">
                 {generateCardStackBank(18, cardLumber)}
                 {generateCardStackBank(8, cardBrick)}
                 {generateCardStackBank(18, cardWool)}
@@ -193,75 +193,42 @@ const generateLogItem = (username: string, color: string, isBot: boolean, action
     const imagesNodes = images.map((image, index) => {
         return (
             <>
-                <img key={index} className="game-feed-message__content-image" src={image}></img>{" "}
+                <img key={index} className="chat-container__message-image" src={image}></img>{" "}
             </>
         );
     });
     return (
-        <div className="game-controls__log-item">
-            <div className="game-feed-message__container">
-                <div className="game-feed-message__icon">
-                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
-                </div>
-                <span className="game-feed-message__content">
-                    <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> {action} {imagesNodes}
-                </span>
+        <div className="chat-container__message-wrapper">
+            <div className="chat-container__icon">
+                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
             </div>
+            <span className="chat-container__message-content">
+                <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> {action} {imagesNodes}
+            </span>
         </div>
     );
 };
 
 const generateLogSeparator = () => {
     return (
-        <div className="game-controls__log-item">
-            <div className="game-feed-message__container">
-                <span className="game-feed-message__content">
-                    <hr />
-                </span>
-            </div>
+        <div className="chat-container__message-wrapper">
+            <span className="chat-container__message-content">
+                <hr />
+            </span>
         </div>
     );
 };
 
 const generateWinItem = (username: string, color: string, isBot: boolean) => {
     return (
-        <div className="game-controls__log-item">
-            <div className="game-feed-message__container game-feed-message__container--centered">
-                <div className="game-feed-message__icon">
-                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
-                </div>
-                <span className="game-feed-message__content">
-                    <img className="game-feed-message__content-image" src={iconTrophy}></img> <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> won the game!{" "}
-                    <img className="game-feed-message__content-image" src={iconTrophy}></img>
-                </span>
+        <div className="chat-container__message-wrapper chat-container__message-wrapper--centered">
+            <div className="chat-container__icon">
+                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
             </div>
-        </div>
-    );
-};
-
-const generateLog = () => {
-    return (
-        <div className="game-controls__log generic-box">
-            <div className="game-controls__log-container">
-                <div className="game-controls__log-scroller">
-                    {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                    {generateLogItem("Ester", "red", true, "got", [cardGrain])}
-                    {generateLogSeparator()}
-                    {generateLogItem("Joost", "green", false, "rolled", [dice1, dice2])}
-                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
-                    {generateLogSeparator()}
-                    {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
-                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
-                    {generateLogSeparator()}
-                    {generateLogItem("Joost", "green", false, "rolled", [dice5, dice6])}
-                    {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
-                    {generateLogSeparator()}
-                    {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                    {generateLogItem("Ester", "red", true, "got", [cardGrain])}
-                    {generateLogSeparator()}
-                    {generateWinItem("Ester", "red", true)}
-                </div>
-            </div>
+            <span className="chat-container__message-content">
+                <img className="chat-container__message-image" src={iconTrophy}></img> <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> won the game!{" "}
+                <img className="chat-container__message-image" src={iconTrophy}></img>
+            </span>
         </div>
     );
 };
@@ -275,6 +242,31 @@ const generateChatItem = (username: string, color: string, isBot: boolean, messa
             <span className="chat-container__message-content">
                 <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span>: {message}
             </span>
+        </div>
+    );
+};
+
+const generateLog = () => {
+    return (
+        <div className="game-board__log">
+            <div className="chat-container__scroller">
+                {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
+                {generateLogItem("Ester", "red", true, "got", [cardGrain])}
+                {generateLogSeparator()}
+                {generateLogItem("Joost", "green", false, "rolled", [dice1, dice2])}
+                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogSeparator()}
+                {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
+                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogSeparator()}
+                {generateLogItem("Joost", "green", false, "rolled", [dice5, dice6])}
+                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogSeparator()}
+                {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
+                {generateLogItem("Ester", "red", true, "got", [cardGrain])}
+                {generateLogSeparator()}
+                {generateWinItem("Ester", "red", true)}
+            </div>
         </div>
     );
 };
@@ -301,13 +293,6 @@ const generateChat = () => {
         </div>
     );
 };
-
-/*
-<div className="game-board__trade-popup">
-                            <div className="game-board__trade-popup-top generic-box">Trade top</div>
-                            <div className="game-board__trade-popup-content generic-box">Trade info</div>
-                        </div>
-                        */
 
 const generateCardStackInventory = (count: number, imgSrc: string, showCount: boolean) => {
     if (count < 1) {
@@ -341,7 +326,7 @@ const generateCardStackInventory = (count: number, imgSrc: string, showCount: bo
     );
 };
 
-export const generateWantedCards = () => {
+const generateWantedCards = () => {
     return (
         <div class="trade-creator-wanted wantedCardSelectorContainer-BNhGzRVO">
             <div class="trade-creator-wanted__cards-container cardsContainer-OkZMWL2H">
@@ -360,7 +345,7 @@ export const generateWantedCards = () => {
         </div>
     );
 };
-export const generateTradeProposal = () => {
+const generateTradeProposal = () => {
     return (
         <>
             {generateWantedCards()}
@@ -386,7 +371,7 @@ export const generateTradeProposal = () => {
     );
 };
 
-export const generateInventory = () => {
+const generateInventory = () => {
     return (
         <div className="game-inventory__trade-creator-container">
             <div className="game-inventory__card-inventory">
@@ -408,7 +393,7 @@ export const generateInventory = () => {
     );
 };
 
-export const generateDiceContainer = () => {
+const generateDiceContainer = () => {
     return (
         <div class="dice-container">
             <div class="dice-container__wrapper">
@@ -421,7 +406,7 @@ export const generateDiceContainer = () => {
     );
 };
 
-export const generateActionButtons = () => {
+const generateActionButtons = () => {
     return (
         <div class="game-actions">
             <div class="game-actions__current-status">

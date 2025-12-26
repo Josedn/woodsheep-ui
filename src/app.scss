@@ -546,13 +546,6 @@ body {
     width: fit-content;
 }
 
-.game-board__trade-popup {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 350px;
-}
-
 .game-board__players {
     grid-row: bank-end / end;
     grid-column: game-feeds / end;
@@ -674,21 +667,21 @@ body {
     background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
 }
 
-.bank_container__icon {
+.bank-container__icon {
     align-self: center;
     width: 2.25em;
     height: 2.25em;
     vertical-align: middle;
 }
 
-.bank_container__card-row {
+.bank-container__card-row {
     display: flex;
     gap: 0.35em;
     align-items: flex-end;
     justify-content: center;
 }
 
-.bank_container__card-stack {
+.bank-container__card-stack {
     position: relative;
     height: fit-content;
     --card-width: 100%;
@@ -701,7 +694,7 @@ body {
     --gap: -51.46875px;
 }
 
-.bank_container__card-wrapper {
+.bank-container__card-wrapper {
     --offset: calc((var(--card-width) + var(--gap)) * var(--index, 0));
     position: relative;
     height: fit-content;
@@ -713,22 +706,22 @@ body {
     height: 3em;
 }
 
-.bank_container__card-wrapper--empty {
+.bank-container__card-wrapper--empty {
     filter: brightness(0.5);
 }
 
-.bank_container__card-wrapper + .bank_container__card-wrapper {
+.bank-container__card-wrapper + .bank-container__card-wrapper {
     margin-top: calc(var(--gap));
     margin-left: 0;
 }
 
-.bank_container__card-image {
+.bank-container__card-image {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-.bank_container__count-container {
+.bank-container__count-container {
     display: inline-block;
     border-top-left-radius: 0.1em;
     border-bottom-left-radius: 1.25em;
@@ -743,7 +736,7 @@ body {
     background-color: rgb(0, 114, 188);
 }
 
-.bank_container__count {
+.bank-container__count {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -757,69 +750,6 @@ body {
     color: #fff;
     font-size: 0.875em;
     font-weight: 600;
-}
-
-.game-controls__log {
-    display: flex;
-    height: 250px;
-    width: 100%;
-}
-
-.game-controls__log-container {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    overscroll-behavior: none;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    scrollbar-width: thin;
-}
-
-.game-controls__log-scroller {
-    position: relative;
-    height: 100%;
-}
-
-.game-controls__log-item {
-    padding-bottom: 0.25em;
-    width: 100%;
-    line-height: 1.5;
-}
-
-.game-feed-message__container {
-    border-radius: 0.25em;
-    padding: 0 0.5em;
-    word-break: break-word;
-    // Check below ??
-    opacity: 1;
-}
-
-.game-feed-message__container--centered {
-    text-align: center;
-}
-
-.game-feed-message__icon {
-    display: inline-block;
-    margin-right: 0.15em;
-    width: 1.25em;
-    height: 1.25em;
-    vertical-align: middle;
-}
-
-.game-feed-message__image {
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
-}
-
-.game-feed-message__content-image {
-    width: auto;
-    max-width: 1.25em;
-    height: 1.25em;
-    vertical-align: sub;
-    object-fit: contain;
 }
 
 .game-board__chat {
@@ -935,6 +865,14 @@ body {
     vertical-align: middle;
 }
 
+.chat-container__message-image {
+    width: auto;
+    max-width: 1.25em;
+    height: 1.25em;
+    vertical-align: sub;
+    object-fit: contain;
+}
+
 .chat-container__message-content--bold {
     font-weight: 600;
     word-break: break-all;
@@ -956,6 +894,20 @@ body {
     color: #e09742;
 }
 
+.chat-container__message-wrapper--centered {
+    text-align: center;
+}
+
+.game-board__log {
+    flex: 1;
+    border-radius: 0.25em;
+    padding: 0.625em;
+    min-height: 0;
+    pointer-events: auto;
+
+    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
+}
+
 .game {
     background-color: rgb(50, 141, 192);
     position: absolute;
@@ -966,16 +918,6 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-}
-
-.generic-box {
-    border-radius: 0.25em;
-    background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
-    padding: 7px 7px 7px 14px;
-}
-
-.generic-box--faded {
-    background: linear-gradient(180deg, #adadaa 0%, #a59d90 100%);
 }
 
 .player-info {
