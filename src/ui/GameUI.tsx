@@ -18,6 +18,7 @@ import iconPlayers from "../assets/ui/icon_players.85d13bf5dfe81259979a.svg";
 import iconTradeArrowGreen from "../assets/ui/icon_trade_arrow_green.dc94789e15ba3783e25e.svg";
 import iconTradeArrowRed from "../assets/ui/icon_trade_arrow_red.d9bd6f9e6fe61a2cda68.svg";
 import iconTrophy from "../assets/ui/icon_trophy.bc5c68a7464f0462721d.svg";
+import iconSend from "../assets/ui/icon_send.0395fe5de05351959b13.svg";
 import dice1 from "../assets/ui/dice_1.f5a1a69c3529b5b5ffc5.svg";
 import dice2 from "../assets/ui/dice_2.859c1a230cf0ab52f238.svg";
 import dice3 from "../assets/ui/dice_3.353e115f936308bb6256.svg";
@@ -267,27 +268,34 @@ const generateLog = () => {
 
 const generateChatItem = (username: string, color: string, isBot: boolean, message: string) => {
     return (
-        <div className="game-controls__log-item">
-            <div className="game-feed-message__container">
-                <div className="game-feed-message__icon">
-                    <img className="game-feed-message__image" src={isBot ? iconBot : iconPlayer}></img>
-                </div>
-                <span className="game-feed-message__content">
-                    <span className={`game-feed-message__content--bold game-feed-message__content--${color}`}>{username}</span> {message}
-                </span>
+        <div className="chat-container__message-wrapper">
+            <div className="chat-container__icon">
+                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
             </div>
+            <span className="chat-container__message-content">
+                <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span>: {message}
+            </span>
         </div>
     );
 };
 
 const generateChat = () => {
     return (
-        <div className="game-controls__chat generic-box">
-            <div className="game-controls__log-container">
-                <div className="game-controls__log-scroller">
-                    {generateChatItem("Bold", "orange", false, "Hey everyone!")}
-                    {generateChatItem("Lissi", "blue", false, "Good luck!")}
+        <div className="game-board__chat">
+            <div className="chat-container">
+                <div className="chat-container__scroller">
+                    {generateChatItem("Bold", "orange", false, "Hey everyone! Just trying to create a really long message. Does it work??")}
+                    {generateChatItem("Lissi", "blue", false, "Hmm sure dude")}
+                    {generateChatItem("Ester", "red", false, "Good luck!")}
                     {generateChatItem("Joost", "green", false, "Anyone up for a trade?")}
+                </div>
+                <div className="chat-container__bottom">
+                    <form className="chat-container__form">
+                        <input type="text" placeholder="Send a message" maxlength={200} className="chat-container__input"></input>
+                        <button className="chat-container__submit">
+                            <img src={iconSend} className="chat-container__submit-image" />
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
