@@ -507,10 +507,10 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
 
 const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean) => {
     return (
-        <div class="trade-offers__button root-fipXCgRS tradeButton-AjrCYoFI">
-            <img class="trade-offers__button-image backgroundImage-m_p04hHp" src={backgroundSrc} />
+        <div class="trade-offers__button">
+            <img class="trade-offers__button-image" src={backgroundSrc} />
             <div class={enabled ? "" : "trade-offers__button-foreground-disabled"}>
-                <img class="trade-offers__icon-wrapper iconWrapper-Yz2YZsv8" src={iconSrc} />
+                <img class="trade-offers__icon-wrapper" src={iconSrc} />
             </div>
         </div>
     );
