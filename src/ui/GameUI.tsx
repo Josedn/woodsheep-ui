@@ -505,9 +505,19 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
     );
 };
 
-const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean) => {
+const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean, cooldown: boolean) => {
     return (
         <div class="trade-offers__button">
+            {cooldown && (
+                <img
+                    class="trade-offers__button-cooldown"
+                    src="https://cdn.colonist.io/dist/assets/bg_button_trade_highlight.3925cb750db0bd0daa9c.svg"
+                    style="
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);
+  "
+                />
+            )}
+
             <img class="trade-offers__button-image" src={backgroundSrc} />
             <div class={enabled ? "" : "trade-offers__button-foreground-disabled"}>
                 <img class="trade-offers__icon-wrapper" src={iconSrc} />
@@ -594,17 +604,17 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
 
                     {sentByMe && (
                         <div class="trade-offers__right-container">
-                            {generateTradeButton(bgButtonBlue, iconCheck, true)}
-                            {generateTradeButton(bgButtonOrange, iconCheck, false)}
-                            {generateTradeButton(bgButtonGreen, iconCheck, true)}
-                            {generateTradeButton(bgButton, iconCross, false)}
+                            {generateTradeButton(bgButtonBlue, iconCheck, true, false)}
+                            {generateTradeButton(bgButtonOrange, iconCheck, false, false)}
+                            {generateTradeButton(bgButtonGreen, iconCheck, true, false)}
+                            {generateTradeButton(bgButton, iconCross, false, false)}
                         </div>
                     )}
                     {!sentByMe && (
                         <div class="trade-offers__right-container">
-                            {generateTradeButton(bgButton, iconPencil, true)}
-                            {generateTradeButton(bgButton, iconCross, true)}
-                            {generateTradeButton(bgButton, iconCheck, true)}
+                            {generateTradeButton(bgButton, iconPencil, true, false)}
+                            {generateTradeButton(bgButton, iconCross, true, true)}
+                            {generateTradeButton(bgButton, iconCheck, true, false)}
                         </div>
                     )}
                 </div>
