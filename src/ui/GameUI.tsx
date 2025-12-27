@@ -138,10 +138,10 @@ const generateOpponentCard = (
         <div className="opponent-container__row">
             <div className={"opponent-container__dice-group" + (!isActive ? " opponent-container__dice-group--hidden" : "")}>
                 <div className="opponent-container__dice-wrapper">
-                    <img class="opponent-container__dice-image" src={dice1} />
+                    <img className="opponent-container__dice-image" src={dice1} />
                 </div>
                 <div className="opponent-container__dice-wrapper">
-                    <img class="opponent-container__dice-image opponent-container__dice-image--inactive" src={dice1} />
+                    <img className="opponent-container__dice-image opponent-container__dice-image--inactive" src={dice1} />
                 </div>
             </div>
 
@@ -329,8 +329,8 @@ const generateCardStackInventory = (count: number, imgSrc: string, showCount: bo
                 <div className="game-inventory__card-container">
                     <img src={imgSrc} className="game-inventory__card-image"></img>
                     {showCount && (
-                        <div class="game-inventory__count-container">
-                            <div class="game-inventory__count">{count}</div>
+                        <div className="game-inventory__count-container">
+                            <div className="game-inventory__count">{count}</div>
                         </div>
                     )}
                 </div>
@@ -341,9 +341,9 @@ const generateCardStackInventory = (count: number, imgSrc: string, showCount: bo
 
 const generateWantedCards = () => {
     return (
-        <div class="trade-creator-wanted">
-            <div class="trade-creator-wanted__cards-container">
-                <div class="trade-creator-wanted__cards-stack">
+        <div className="trade-creator-wanted">
+            <div className="trade-creator-wanted__cards-container">
+                <div className="trade-creator-wanted__cards-stack">
                     {generateCardStackInventory(1, cardLumber, false)}
                     {generateCardStackInventory(1, cardBrick, false)}
                     {generateCardStackInventory(1, cardWool, false)}
@@ -352,8 +352,8 @@ const generateWantedCards = () => {
                     {generateCardStackInventory(1, cardResourceBack, false)}
                 </div>
             </div>
-            <div class="trade-creator-wanted__bank-icon">
-                <img class="trade-creator-wanted__bank-icon-image" src={bankIcon} />
+            <div className="trade-creator-wanted__bank-icon">
+                <img className="trade-creator-wanted__bank-icon-image" src={bankIcon} />
             </div>
         </div>
     );
@@ -362,20 +362,20 @@ const generateTradeProposal = () => {
     return (
         <>
             {generateWantedCards()}
-            <div class="trade-creator-proposal">
-                <div class="trade-creator-proposal__wanted-container">
-                    <div class="trade-creator-proposal__avatar-container">
-                        <img class="trade-creator-proposal__avatar-image" src={iconPlayers} />
+            <div className="trade-creator-proposal">
+                <div className="trade-creator-proposal__wanted-container">
+                    <div className="trade-creator-proposal__avatar-container">
+                        <img className="trade-creator-proposal__avatar-image" src={iconPlayers} />
                     </div>
-                    <img class="trade-creator-proposal__giving-arrow" src={iconTradeArrowGreen} />
+                    <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowGreen} />
                     {generateCardStackInventory(1, cardBrick, true)}
                     {generateCardStackInventory(1, cardLumber, true)}
                 </div>
-                <div class="trade-creator-proposal__offered-container">
-                    <div class="trade-creator-proposal__avatar-container player-info__avatar-halo--red">
-                        <img class="trade-creator-proposal__avatar-image--current-player" src={iconPlayer} />
+                <div className="trade-creator-proposal__offered-container">
+                    <div className="trade-creator-proposal__avatar-container player-info__avatar-halo--red">
+                        <img className="trade-creator-proposal__avatar-image--current-player" src={iconPlayer} />
                     </div>
-                    <img class="trade-creator-proposal__giving-arrow" src={iconTradeArrowRed} />
+                    <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowRed} />
                     {generateCardStackInventory(2, cardOre, true)}
                     {generateCardStackInventory(1, cardWool, true)}
                 </div>
@@ -403,17 +403,17 @@ const generateInventory = () => {
                 {generateCardStackInventory(1, cardYearOfPlenty, false)}
             </div>
             <div className="game-inventory__trade-actions">
-                <div class="game-inventory__action-button">
-                    <img class="game-inventory__action-bg" src={bgButton} />
-                    <div class="">
-                        <img class="game-inventory__action-icon" src={iconBankTrade} />
+                <div className="game-inventory__action-button">
+                    <img className="game-inventory__action-bg" src={bgButton} />
+                    <div className="">
+                        <img className="game-inventory__action-icon" src={iconBankTrade} />
                     </div>
                 </div>
 
-                <div class="game-inventory__action-button">
-                    <img class="game-inventory__action-bg" src={bgButton} />
-                    <div class="">
-                        <img class="game-inventory__action-icon" src={iconOpponentTrade} />
+                <div className="game-inventory__action-button">
+                    <img className="game-inventory__action-bg" src={bgButton} />
+                    <div className="">
+                        <img className="game-inventory__action-icon" src={iconOpponentTrade} />
                     </div>
                 </div>
             </div>
@@ -423,12 +423,12 @@ const generateInventory = () => {
 
 const generateDiceContainer = () => {
     return (
-        <div class="dice-container">
-            <div class="dice-container__wrapper">
-                <img class="dice-container__image" src={dice1} />
+        <div className="dice-container">
+            <div className="dice-container__wrapper">
+                <img className="dice-container__image" src={dice1} />
             </div>
-            <div class="dice-container__wrapper">
-                <img class="dice-container__image dice-container__image--inactive" src={dice3} />
+            <div className="dice-container__wrapper">
+                <img className="dice-container__image dice-container__image--inactive" src={dice3} />
             </div>
         </div>
     );
@@ -436,14 +436,14 @@ const generateDiceContainer = () => {
 
 const generateActionButton = (className: string, iconSrc: string, enabled: boolean, count: number) => {
     return (
-        <div class={className}>
-            <div class="game-actions__action-button">
-                <img class="game-actions__button-background" src={bgButton} />
-                <div class={enabled ? "" : "game-actions__foreground-disabled"}>
-                    <img class="game-actions__icon-wrapper" src={iconSrc} />
+        <div className={className}>
+            <div className="game-actions__action-button">
+                <img className="game-actions__button-background" src={bgButton} />
+                <div className={enabled ? "" : "game-actions__foreground-disabled"}>
+                    <img className="game-actions__icon-wrapper" src={iconSrc} />
                     {count >= 0 && (
-                        <div class="game-actions__count-container">
-                            <div class="game-actions__count">{count}</div>
+                        <div className="game-actions__count-container">
+                            <div className="game-actions__count">{count}</div>
                         </div>
                     )}
                 </div>
@@ -454,17 +454,17 @@ const generateActionButton = (className: string, iconSrc: string, enabled: boole
 
 const generateActionButtons = () => {
     return (
-        <div class="game-actions">
-            <div class="game-actions__current-status">
-                <div class="game-actions__current-status-container">
-                    <div class="game-actions__avatar player-info__avatar-halo--red">
-                        <img class="game-actions__avatar-image" src={iconPlayer} />
+        <div className="game-actions">
+            <div className="game-actions__current-status">
+                <div className="game-actions__current-status-container">
+                    <div className="game-actions__avatar player-info__avatar-halo--red">
+                        <img className="game-actions__avatar-image" src={iconPlayer} />
                     </div>
-                    <div class="game-actions__current-status-message">Answer Trade</div>
+                    <div className="game-actions__current-status-message">Answer Trade</div>
                 </div>
             </div>
-            <div class="game-actions__timer">
-                <div class="game-actions__timer-text">03:02</div>
+            <div className="game-actions__timer">
+                <div className="game-actions__timer-text">03:02</div>
             </div>
 
             {generateActionButton("game-actions__trade-button", iconCross, true, -1) /* iconTrade */}
@@ -482,22 +482,22 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
 
     for (let i = 1; i < count; i++) {
         cardNodes.push(
-            <div class="trade-offers__card-wrapper">
-                <div class="trade-offers__card-container" data-card-enum="4">
-                    <img class="trade-offers__card-image" src={imgSrc} />
+            <div className="trade-offers__card-wrapper">
+                <div className="trade-offers__card-container" data-card-enum="4">
+                    <img className="trade-offers__card-image" src={imgSrc} />
                 </div>
             </div>,
         );
     }
 
     return (
-        <div class="trade-offers__card-stack-container ">
+        <div className="trade-offers__card-stack-container ">
             {cardNodes}
-            <div class="trade-offers__card-wrapper">
-                <div class="trade-offers__card-container" data-card-enum="4">
-                    <img class="trade-offers__card-image" src={imgSrc} />
-                    <div class="trade-offers__count-container">
-                        <div class="trade-offers__count">{count}</div>
+            <div className="trade-offers__card-wrapper">
+                <div className="trade-offers__card-container" data-card-enum="4">
+                    <img className="trade-offers__card-image" src={imgSrc} />
+                    <div className="trade-offers__count-container">
+                        <div className="trade-offers__count">{count}</div>
                     </div>
                 </div>
             </div>
@@ -507,10 +507,10 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
 
 const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean, cooldown: boolean) => {
     return (
-        <div class="trade-offers__button">
+        <div className="trade-offers__button">
             {cooldown && (
                 <img
-                    class="trade-offers__button-cooldown"
+                    className="trade-offers__button-cooldown"
                     src="https://cdn.colonist.io/dist/assets/bg_button_trade_highlight.3925cb750db0bd0daa9c.svg"
                     style="
     clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);
@@ -518,9 +518,9 @@ const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: bo
                 />
             )}
 
-            <img class="trade-offers__button-image" src={backgroundSrc} />
-            <div class={enabled ? "" : "trade-offers__button-foreground-disabled"}>
-                <img class="trade-offers__icon-wrapper" src={iconSrc} />
+            <img className="trade-offers__button-image" src={backgroundSrc} />
+            <div className={enabled ? "" : "trade-offers__button-foreground-disabled"}>
+                <img className="trade-offers__icon-wrapper" src={iconSrc} />
             </div>
         </div>
     );
@@ -528,9 +528,9 @@ const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: bo
 
 const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarColor: string, avatarSrc: string) => {
     return (
-        <div class={`trade-offers__opponent-status player-info__avatar-halo--${avatarColor}`}>
-            <img class="trade-offers__opponent-status-image" src={tradeStatusSrc} />
-            <img class="trade-offers__opponent-avatar-image" src={avatarSrc} />
+        <div className={`trade-offers__opponent-status player-info__avatar-halo--${avatarColor}`}>
+            <img className="trade-offers__opponent-status-image" src={tradeStatusSrc} />
+            <img className="trade-offers__opponent-avatar-image" src={avatarSrc} />
         </div>
     );
 };
@@ -538,50 +538,50 @@ const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarColor: string
 const generateTradeHeader = (colors: string[]) => {
     const iconNodes: VNode[] = colors.map(color => {
         return (
-            <div key={color} class={`trade-offers__player-icon player-info__avatar-halo--${color}`}>
-                <img class="trade-offers__player-image" src={iconBot} />
+            <div key={color} className={`trade-offers__player-icon player-info__avatar-halo--${color}`}>
+                <img className="trade-offers__player-image" src={iconBot} />
             </div>
         );
     });
 
     return (
-        <div class="trade-offers__header">
-            <div class="trade-offers__players-container">{iconNodes}</div>
-            <img class="trade-offers__hide-icon" src={iconArrowUpBlack} />
+        <div className="trade-offers__header">
+            <div className="trade-offers__players-container">{iconNodes}</div>
+            <img className="trade-offers__hide-icon" src={iconArrowUpBlack} />
         </div>
     );
 };
 
 const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
     return (
-        <div class="trade-offers__offer">
+        <div className="trade-offers__offer">
             {counterOffer && (
-                <div class="trade-offers__counteroffer-side ">
-                    <div class="trade-offers__opponent-avatar trade-offers__opponent-avatar--counteroffer player-info__avatar-halo--green">
-                        <img class="trade-offers__opponent-image" src={iconPlayer} />
+                <div className="trade-offers__counteroffer-side ">
+                    <div className="trade-offers__opponent-avatar trade-offers__opponent-avatar--counteroffer player-info__avatar-halo--green">
+                        <img className="trade-offers__opponent-image" src={iconPlayer} />
                     </div>
                 </div>
             )}
 
-            <div class="trade-offers__offer-container">
-                <div class="trade-offers__receiving-half">
-                    <div class="trade-offers__left-container">
+            <div className="trade-offers__offer-container">
+                <div className="trade-offers__receiving-half">
+                    <div className="trade-offers__left-container">
                         {sentByMe && (
-                            <div class="trade-offers__opponent-avatar">
-                                <img class="trade-offers__opponent-image trade-offers__opponent-image--anonymous" src={iconPlayers} />
+                            <div className="trade-offers__opponent-avatar">
+                                <img className="trade-offers__opponent-image trade-offers__opponent-image--anonymous" src={iconPlayers} />
                             </div>
                         )}
 
                         {!sentByMe && (
-                            <div class="trade-offers__opponent-avatar player-info__avatar-halo--green">
-                                <img class="trade-offers__opponent-image" src={iconPlayer} />
+                            <div className="trade-offers__opponent-avatar player-info__avatar-halo--green">
+                                <img className="trade-offers__opponent-image" src={iconPlayer} />
                             </div>
                         )}
 
-                        <img class="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
-                        <div class="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
+                        <img className="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
+                        <div className="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
                     </div>
-                    <div class="trade-offers__right-container">
+                    <div className="trade-offers__right-container">
                         {!sentByMe && (
                             <>
                                 {generateOpponentTradeStatus(iconStatusAccept, "blue", iconPlayer)}
@@ -590,20 +590,20 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                         )}
                     </div>
                 </div>
-                <div class="trade-offers__giving-half">
-                    <div class="trade-offers__left-container">
-                        <div class="trade-offers__opponent-avatar player-info__avatar-halo--red">
-                            <img class="trade-offers__opponent-image" src={iconPlayer} />
+                <div className="trade-offers__giving-half">
+                    <div className="trade-offers__left-container">
+                        <div className="trade-offers__opponent-avatar player-info__avatar-halo--red">
+                            <img className="trade-offers__opponent-image" src={iconPlayer} />
                         </div>
-                        <img class="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
-                        <div class="trade-offers__card-row">
+                        <img className="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
+                        <div className="trade-offers__card-row">
                             {generateCardStackTrade(1, cardBrick)}
                             {generateCardStackTrade(2, cardLumber)}
                         </div>
                     </div>
 
                     {sentByMe && (
-                        <div class="trade-offers__right-container">
+                        <div className="trade-offers__right-container">
                             {generateTradeButton(bgButtonBlue, iconCheck, true, false)}
                             {generateTradeButton(bgButtonOrange, iconCheck, false, false)}
                             {generateTradeButton(bgButtonGreen, iconCheck, true, false)}
@@ -611,7 +611,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                         </div>
                     )}
                     {!sentByMe && (
-                        <div class="trade-offers__right-container">
+                        <div className="trade-offers__right-container">
                             {generateTradeButton(bgButton, iconPencil, true, false)}
                             {generateTradeButton(bgButton, iconCross, true, true)}
                             {generateTradeButton(bgButton, iconCheck, true, false)}
@@ -638,7 +638,7 @@ export const GameUI = () => {
                         </div>
                     </div>
                     <div className="game-board__trade-offers">
-                        <div class="trade-offers">
+                        <div className="trade-offers">
                             {generateTradeHeader(["blue", "red", "green"])}
                             {generateTradeOffer(true, false)}
                             {generateTradeOffer(false, true)}
