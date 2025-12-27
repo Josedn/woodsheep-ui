@@ -443,7 +443,7 @@ const generateActionButton = (className: string, iconSrc: string, enabled: boole
                     <img class="game-actions__icon-wrapper" src={iconSrc} />
                     {count >= 0 && (
                         <div class="game-actions__count-container">
-                            <div class="game-actions__count count-Dh6MtdiN">3</div>
+                            <div class="game-actions__count">{count}</div>
                         </div>
                     )}
                 </div>
