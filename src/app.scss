@@ -232,6 +232,10 @@ body {
     height: fit-content;
 }
 
+.trade-offers__card-wrapper + .trade-offers__card-wrapper {
+    margin-left: calc(var(--gap));
+}
+
 .trade-offers__card-container {
     position: relative;
     user-select: none;

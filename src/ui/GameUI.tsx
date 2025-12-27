@@ -500,13 +500,26 @@ const generateActionButtons = () => {
 };
 
 const generateCardStackTrade = (count: number, imgSrc: string) => {
+    const cardNodes: VNode[] = [];
+
+    for (let i = 1; i < count; i++) {
+        cardNodes.push(
+            <div class="trade-offers__card-wrapper">
+                <div class="trade-offers__card-container" data-card-enum="4">
+                    <img class="trade-offers__card-image" src={imgSrc} />
+                </div>
+            </div>,
+        );
+    }
+
     return (
-        <div class="trade-offers__card-stack-container cardStackContainer-fmSnqB7f stackWrapper-Y4H2vSbN">
-            <div class="trade-offers__card-wrapper cardWrapper-MJp1QnJA" style="--index: 0">
-                <div class="trade-offers__card-container cardContainer-VARMP5Sl sm-QPadI0PD" data-card-enum="4">
-                    <img class="trade-offers__card-image cardImage-xOi_TXOs" src={imgSrc} />
-                    <div class="trade-offers__count-container container-j1vSyHMk countBadge-bbB_0E7C">
-                        <div class="trade-offers__count count-Dh6MtdiN">{count}</div>
+        <div class="trade-offers__card-stack-container ">
+            {cardNodes}
+            <div class="trade-offers__card-wrapper">
+                <div class="trade-offers__card-container" data-card-enum="4">
+                    <img class="trade-offers__card-image" src={imgSrc} />
+                    <div class="trade-offers__count-container">
+                        <div class="trade-offers__count">{count}</div>
                     </div>
                 </div>
             </div>
@@ -578,7 +591,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                         )}
 
                         <img class="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
-                        <div class="trade-offers__card-row">{generateCardStackTrade(1, cardOre)}</div>
+                        <div class="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
                     </div>
                     <div class="trade-offers__right-container">
                         {!sentByMe && (
@@ -597,7 +610,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                         <img class="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
                         <div class="trade-offers__card-row">
                             {generateCardStackTrade(1, cardBrick)}
-                            {generateCardStackTrade(1, cardLumber)}
+                            {generateCardStackTrade(2, cardLumber)}
                         </div>
                     </div>
 
