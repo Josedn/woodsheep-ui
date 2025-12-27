@@ -341,9 +341,9 @@ const generateCardStackInventory = (count: number, imgSrc: string, showCount: bo
 
 const generateWantedCards = () => {
     return (
-        <div class="trade-creator-wanted wantedCardSelectorContainer-BNhGzRVO">
-            <div class="trade-creator-wanted__cards-container cardsContainer-OkZMWL2H">
-                <div class="trade-creator-wanted__cards-stack container-GHn2zJsx cardStack-a42L5muF">
+        <div class="trade-creator-wanted">
+            <div class="trade-creator-wanted__cards-container">
+                <div class="trade-creator-wanted__cards-stack">
                     {generateCardStackInventory(1, cardLumber, false)}
                     {generateCardStackInventory(1, cardBrick, false)}
                     {generateCardStackInventory(1, cardWool, false)}
@@ -352,8 +352,8 @@ const generateWantedCards = () => {
                     {generateCardStackInventory(1, cardResourceBack, false)}
                 </div>
             </div>
-            <div class="trade-creator-wanted__bank-icon tooltipTrigger-LSJLRWEF ratioContainer-uZ2gOVwR">
-                <img class="trade-creator-wanted__bank-icon-image ratioIcon-NcxgaLUV" src={bankIcon} />
+            <div class="trade-creator-wanted__bank-icon">
+                <img class="trade-creator-wanted__bank-icon-image" src={bankIcon} />
             </div>
         </div>
     );
