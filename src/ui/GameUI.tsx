@@ -33,11 +33,20 @@ import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.5
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
 import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
 import bgButton from "../assets/ui/bg_button.6fb386c356a3e9b580e2.svg";
+import bgButtonRed from "../assets/ui/bg_button_red.e443074fceecb964fe06.svg";
+import bgButtonBlue from "../assets/ui/bg_button_blue.b7198c2652442d82f2eb.svg";
+import bgButtonOrange from "../assets/ui/bg_button_orange.2e4497beb68391151250.svg";
+import bgButtonGreen from "../assets/ui/bg_button_green.71912ebbd4119e3cfafc.svg";
+import iconCheck from "../assets/ui/icon_check.25cd255d370bed6f507b.svg";
 import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
+import iconArrowUpBlack from "../assets/ui/icon_arrow_up_black.82635b6e9f69a1a10e3e.svg";
 import iconPassTurn from "../assets/ui/icon_pass_turn.8d5b7a48c40a85b859cd.svg";
 import iconRoadRed from "../assets/ui/road_red.41c6cbd9278108542715.svg";
 import iconSettlementRed from "../assets/ui/settlement_red.22949197b57f9cfd968b.svg";
 import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
+import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cfb369.svg";
+import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
+import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
 
 import type { VNode } from "preact";
 
@@ -489,6 +498,99 @@ const generateActionButtons = () => {
     );
 };
 
+const generateCardStackTrade = (count: number, imgSrc: string) => {
+    return (
+        <div class="trade-offers__card-stack-container cardStackContainer-fmSnqB7f stackWrapper-Y4H2vSbN">
+            <div class="trade-offers__card-wrapper cardWrapper-MJp1QnJA" style="--index: 0">
+                <div class="trade-offers__card-container cardContainer-VARMP5Sl sm-QPadI0PD" data-card-enum="4">
+                    <img class="trade-offers__card-image cardImage-xOi_TXOs" src={imgSrc} />
+                    <div class="trade-offers__count-container container-j1vSyHMk countBadge-bbB_0E7C">
+                        <div class="trade-offers__count count-Dh6MtdiN">{count}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean) => {
+    return (
+        <div class="trade-offers__button root-fipXCgRS tradeButton-AjrCYoFI">
+            <img class="trade-offers__button-image backgroundImage-m_p04hHp" src={backgroundSrc} />
+            <div class={enabled ? "" : "trade-offers__button-foreground-disabled"}>
+                <img class="trade-offers__icon-wrapper iconWrapper-Yz2YZsv8" src={iconSrc} />
+            </div>
+        </div>
+    );
+};
+
+const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarSrc: string) => {
+    return (
+        <div class="trade-offers__opponent-status container-k26ZLqas green-on07RpjA hasBackground-eQdsNEZD avatar-lEFEtm7Z">
+            <img class="trade-offers__opponent-status-image tradeResponseStatus-Wa78ni7p" src={tradeStatusSrc} />
+            <img class="trade-offers__opponent-avatar-image avatarImage-JNCoQelY undefined" src={avatarSrc} />
+        </div>
+    );
+};
+
+const generateTradeOffers = () => {
+    return (
+        <div class="trade-offers container-Pedkcpmv gameTradeOffersWrapper-AYVkPxeT">
+            <div class="trade-offers__container container-qsyW8ctb">
+                <div class="trade-offers__players-container playersContainer-q_iM1WR8">
+                    <div class="trade-offers__player-icon container-k26ZLqas blue-JPbw6Gaq hasBackground-eQdsNEZD avatar-JJty_TC1">
+                        <img class="trade-offers__player-image avatarImage-JNCoQelY undefined" src={iconBot} />
+                    </div>
+                    <div class="trade-offers__player-icon container-k26ZLqas orange-HkNYXUSn hasBackground-eQdsNEZD avatar-JJty_TC1">
+                        <img class="trade-offers__player-image avatarImage-JNCoQelY undefined" src={iconBot} />
+                    </div>
+                    <div class="trade-offers__player-icon container-k26ZLqas green-on07RpjA hasBackground-eQdsNEZD avatar-JJty_TC1">
+                        <img class="trade-offers__player-image avatarImage-JNCoQelY undefined" src={iconBot} />
+                    </div>
+                </div>
+                <img class="trade-offers__hide-icon showHideTradeIcon-Ei0woPsb" src={iconArrowUpBlack} />
+            </div>
+            <div class="trade-offers__offer container-OjwMoejM">
+                <div class="trade-offers__offer-container tradeContainer-d2bozHsP">
+                    <div class="trade-offers__receiving-half receivingHalfContainer-Rgb3y3ni">
+                        <div class="trade-offers__left-container leftContainer-sTfgjJSY">
+                            <div class="trade-offers__opponent-avatar container-k26ZLqas hideBackground-tkyRocbV avatar-lEFEtm7Z">
+                                <img class="trade-offers__opponent-image avatarImage-JNCoQelY" src={iconPlayers} />
+                            </div>
+
+                            <img class="trade-offers__receiving-arrow receivingArrow-oZqGiawv" src={iconTradeArrowGreen} />
+                            <div class="trade-offers__card-row container-GHn2zJsx cardStack-xJGoKNmT">{generateCardStackTrade(1, cardOre)}</div>
+                        </div>
+                        <div class="trade-offers__right-container rightContainer-_HaGYroT">
+                            {generateOpponentTradeStatus(iconStatusAccept, iconPlayer)}
+                            {generateOpponentTradeStatus(iconStatusReject, iconBot)}
+                        </div>
+                    </div>
+                    <div class="trade-offers__giving-half givingHalfContainer-CF1I3nGJ">
+                        <div class="trade-offers__left-container leftContainer-sTfgjJSY">
+                            <div class="trade-offers__opponent-avatar container-k26ZLqas red-mDDVK4ZW hasBackground-eQdsNEZD avatar-lEFEtm7Z">
+                                <img class="trade-offers__opponent-image avatarImage-JNCoQelY" src={iconPlayer} />
+                            </div>
+                            <img class="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
+                            <div class="trade-offers__card-row container-GHn2zJsx cardStack-xJGoKNmT">
+                                {generateCardStackTrade(1, cardBrick)}
+                                {generateCardStackTrade(1, cardLumber)}
+                            </div>
+                        </div>
+
+                        <div class="trade-offers__right-container rightContainer-_HaGYroT">
+                            {generateTradeButton(bgButtonBlue, iconCheck, true)}
+                            {generateTradeButton(bgButtonOrange, iconCheck, false)}
+                            {generateTradeButton(bgButtonGreen, iconCheck, true)}
+                            {generateTradeButton(bgButton, iconCross, false)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export const GameUI = () => {
     return (
         <>
@@ -503,6 +605,7 @@ export const GameUI = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="game-board__trade-offers">{generateTradeOffers()}</div>
                     <div className="game-board__bottom">
                         <div className="game-inventory">
                             <div className="game-inventory__container">
