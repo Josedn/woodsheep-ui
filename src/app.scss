@@ -93,7 +93,7 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
-.trade-offers__container {
+.trade-offers__header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 0.5em;
@@ -113,10 +113,6 @@ body {
 .trade-offers__player-icon {
     position: relative;
     border-radius: 50%;
-
-    background: radial-gradient(50% 50% at 50% 50%, #52b1cc 0%, #4fabcb 17.4%, #469bc8 39.9%, #3680c4 65.4%, #215bbe 85.5%, #fff 89% 92.5%, #0e2b87 96% 100%);
-
-    background: radial-gradient(50% 50% at 50% 50%, #52b1cc 0%, #4fabcb 17.4%, #469bc8 39.9%, #3680c4 65.4%, #215bbe 85.5%, #fff 89% 92.5%, #0e2b87 96% 100%);
 }
 
 .trade-offers__player-image {
@@ -167,10 +163,17 @@ body {
 }
 
 .trade-offers__opponent-avatar {
-    background: radial-gradient(50% 50% at 50% 50%, #55ec36 0%, #52e833 22%, #4adb2b 44.8%, #3bc71c 68%, #28aa09 85.5%, #fff 89% 92.5%, #187c0a 96% 100%);
     flex-shrink: 0;
     width: 2.25em;
     height: 2.25em;
+
+    position: relative;
+    border-radius: 50%;
+}
+
+.trade-offers__opponent-avatar--counteroffer {
+    width: 1.75em;
+    height: 1.75em;
 }
 
 .trade-offers__opponent-image {
@@ -180,6 +183,10 @@ body {
     vertical-align: baseline;
     object-fit: cover;
     display: block;
+}
+
+.trade-offers__opponent-image--anonymous {
+    padding: 0;
 }
 
 .trade-offers__receiving-arrow {
@@ -278,7 +285,6 @@ body {
 .trade-offers__opponent-status {
     position: relative;
     border-radius: 50%;
-    background: radial-gradient(50% 50% at 50% 50%, #52b1cc 0%, #4fabcb 17.4%, #469bc8 39.9%, #3680c4 65.4%, #215bbe 85.5%, #fff 89% 92.5%, #0e2b87 96% 100%);
     max-width: 2em;
     max-height: 2em;
 }
@@ -334,6 +340,15 @@ body {
     width: 100%;
     height: 100%;
     filter: grayscale(0.5);
+}
+
+.trade-offers__counteroffer-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25em 0 0 0.25em;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.25em;
 }
 
 .game-inventory {
