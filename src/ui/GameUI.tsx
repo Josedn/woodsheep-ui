@@ -37,6 +37,9 @@ import bgButtonRed from "../assets/ui/bg_button_red.e443074fceecb964fe06.svg";
 import bgButtonBlue from "../assets/ui/bg_button_blue.b7198c2652442d82f2eb.svg";
 import bgButtonOrange from "../assets/ui/bg_button_orange.2e4497beb68391151250.svg";
 import bgButtonGreen from "../assets/ui/bg_button_green.71912ebbd4119e3cfafc.svg";
+import iconBankTrade from "../assets/ui/icon_trade_bank_check.cca85e07979a94c78dac.svg";
+import iconOpponentTrade from "../assets/ui/icon_trade_opponents_check.90ff25f49e3eede7c0bb.svg";
+import iconTrade from "../assets/ui/icon_trade.db2aa231787fcdbc1a67.svg";
 import iconCheck from "../assets/ui/icon_check.25cd255d370bed6f507b.svg";
 import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
 import iconPencil from "../assets/ui/icon_pencil.9d4a73f29f331378c4b5.svg";
@@ -399,6 +402,21 @@ const generateInventory = () => {
                 {generateCardStackInventory(1, cardPoint, false)}
                 {generateCardStackInventory(1, cardYearOfPlenty, false)}
             </div>
+            <div className="game-inventory__trade-actions">
+                <div class="game-inventory__action-button">
+                    <img class="game-inventory__action-bg" src={bgButton} />
+                    <div class="">
+                        <img class="game-inventory__action-icon" src={iconBankTrade} />
+                    </div>
+                </div>
+
+                <div class="game-inventory__action-button">
+                    <img class="game-inventory__action-bg" src={bgButton} />
+                    <div class="">
+                        <img class="game-inventory__action-icon" src={iconOpponentTrade} />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
@@ -416,6 +434,24 @@ const generateDiceContainer = () => {
     );
 };
 
+const generateActionButton = (className: string, iconSrc: string, enabled: boolean, count: number) => {
+    return (
+        <div class={className}>
+            <div class="game-actions__action-button">
+                <img class="game-actions__button-background" src={bgButton} />
+                <div class={enabled ? "" : "game-actions__foreground-disabled"}>
+                    <img class="game-actions__icon-wrapper" src={iconSrc} />
+                    {count >= 0 && (
+                        <div class="game-actions__count-container">
+                            <div class="game-actions__count count-Dh6MtdiN">3</div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const generateActionButtons = () => {
     return (
         <div class="game-actions">
@@ -427,74 +463,16 @@ const generateActionButtons = () => {
                     <div class="game-actions__current-status-message">Answer Trade</div>
                 </div>
             </div>
-            <div class="game-actions__timer container-pBn83kjC beigeBackground-LUrLCPZy timer-ItAWXRS8">
-                <div class="game-actions__timer-text timerBeige-tyEEde4z">03:02</div>
+            <div class="game-actions__timer">
+                <div class="game-actions__timer-text">03:02</div>
             </div>
-            <div class="game-actions__trade-button tradeButton-BgRRP9Nn">
-                <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-trade">
-                    <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                    <div class="">
-                        <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconCross} />
-                    </div>
-                </div>
-            </div>
-            <div class="game-actions__development-card-button buyDevelopmentCardButton-ZZiU63kF">
-                <div class="game-actions__icon-container container-pW9vSis7">
-                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-buy-dev-card">
-                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
-                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={cardDevelopment} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="game-actions__road-button roadButton-Fj8MaFrs">
-                <div class="container-pW9vSis7">
-                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX">
-                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
-                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconRoadRed} />
-                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
-                                <div class="game-actions__count count-Dh6MtdiN">12</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="game-actions__settlement-button settlementButton-bA9oNaR0">
-                <div class="container-pW9vSis7">
-                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX">
-                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
-                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconSettlementRed} />
-                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
-                                <div class="game-actions__count count-Dh6MtdiN">3</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="game-actions__city-button cityButton-ROgnxYv3">
-                <div class="container-pW9vSis7">
-                    <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-build-city">
-                        <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                        <div class="game-actions__foreground-disabled foregroundDisabled-vat4kvGr">
-                            <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconCityRed} />
-                            <div class="game-actions__count-container container-j1vSyHMk count-vxb8uBMn">
-                                <div class="game-actions__count count-Dh6MtdiN">3</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="game-actions__turn-button turnButton-klLaRZeE">
-                <div class="game-actions__action-button root-fipXCgRS actionButton-mJLb8ACX" id="action-button-pass-turn">
-                    <img class="game-actions__button-background backgroundImage-m_p04hHp" src={bgButton} />
-                    <div class="">
-                        <img class="game-actions__icon-wrapper iconWrapper-Yz2YZsv8" src={iconPassTurn} />
-                    </div>
-                </div>
-            </div>
+
+            {generateActionButton("game-actions__trade-button", iconCross, true, -1) /* iconTrade */}
+            {generateActionButton("game-actions__development-card-button", cardDevelopment, false, -1)}
+            {generateActionButton("game-actions__road-button", iconRoadRed, true, 14)}
+            {generateActionButton("game-actions__settlement-button", iconSettlementRed, false, 5)}
+            {generateActionButton("game-actions__city-button", iconCityRed, false, 4)}
+            {generateActionButton("game-actions__turn-button", iconPassTurn, true, -1)}
         </div>
     );
 };
