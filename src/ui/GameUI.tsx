@@ -81,9 +81,7 @@ const generatePlayer = (
                     {!currentUser && <div className="player-info__username">{username}</div>}
                     <div className="player-info__avatar-and-points">
                         <button className={"player-info__avatar" + (currentUser ? " player-info__avatar--current-user" : "")}>
-                            <div className={`player-info__avatar-halo player-info__avatar-halo--${color}`}>
-                                <img src={isBot ? iconBot : iconPlayer} className="player-info__avatar-image"></img>
-                            </div>
+                            <GenericAvatar className="player-info__avatar-halo" backgroundColor={color} iconSrc={isBot ? iconBot : iconPlayer} />
                         </button>
                         <div className={"player-info__points" + (currentUser ? " player-info__points--current-user" : "")}>
                             <img src={currentUser ? ribbonLarge : ribbonSmall} className={"player-info__points-ribbon" + (currentUser ? " player-info__points-ribbon--current-user" : "")}></img>
@@ -358,23 +356,33 @@ const generateWantedCards = () => {
         </div>
     );
 };
+
+const GenericAvatar = (props: { className?: string; backgroundColor?: string; iconSrc?: string; children?: VNode }) => {
+    const additionalClassName = props.className || "";
+    const iconSrc = props.iconSrc || iconPlayer;
+    const colorClassName = (props.backgroundColor && `generic-avatar--${props.backgroundColor}`) || "";
+    const imageClassName = props.backgroundColor == null ? "generic-avatar__image generic-avatar__image--no-background" : "generic-avatar__image";
+    return (
+        <div className={`generic-avatar ${colorClassName} ${additionalClassName}`}>
+            <img className={imageClassName} src={iconSrc} />
+            {props.children}
+        </div>
+    );
+};
+
 const generateTradeProposal = () => {
     return (
         <>
             {generateWantedCards()}
             <div className="trade-creator-proposal">
                 <div className="trade-creator-proposal__wanted-container">
-                    <div className="trade-creator-proposal__avatar-container">
-                        <img className="trade-creator-proposal__avatar-image" src={iconPlayers} />
-                    </div>
+                    <GenericAvatar iconSrc={iconPlayers} />
                     <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowGreen} />
                     {generateCardStackInventory(1, cardBrick, true)}
                     {generateCardStackInventory(1, cardLumber, true)}
                 </div>
                 <div className="trade-creator-proposal__offered-container">
-                    <div className="trade-creator-proposal__avatar-container player-info__avatar-halo--red">
-                        <img className="trade-creator-proposal__avatar-image--current-player" src={iconPlayer} />
-                    </div>
+                    <GenericAvatar backgroundColor="red" />
                     <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowRed} />
                     {generateCardStackInventory(2, cardOre, true)}
                     {generateCardStackInventory(1, cardWool, true)}
@@ -457,9 +465,7 @@ const generateActionButtons = () => {
         <div className="game-actions">
             <div className="game-actions__current-status">
                 <div className="game-actions__current-status-container">
-                    <div className="game-actions__avatar player-info__avatar-halo--red">
-                        <img className="game-actions__avatar-image" src={iconPlayer} />
-                    </div>
+                    <GenericAvatar className="game-actions__avatar" backgroundColor="red" iconSrc={iconPlayer} />
                     <div className="game-actions__current-status-message">Answer Trade</div>
                 </div>
             </div>
@@ -528,20 +534,15 @@ const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: bo
 
 const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarColor: string, avatarSrc: string) => {
     return (
-        <div className={`trade-offers__opponent-status player-info__avatar-halo--${avatarColor}`}>
+        <GenericAvatar className="trade-offers__opponent-status" backgroundColor={avatarColor} iconSrc={avatarSrc}>
             <img className="trade-offers__opponent-status-image" src={tradeStatusSrc} />
-            <img className="trade-offers__opponent-avatar-image" src={avatarSrc} />
-        </div>
+        </GenericAvatar>
     );
 };
 
 const generateTradeHeader = (colors: string[]) => {
     const iconNodes: VNode[] = colors.map(color => {
-        return (
-            <div key={color} className={`trade-offers__player-icon player-info__avatar-halo--${color}`}>
-                <img className="trade-offers__player-image" src={iconBot} />
-            </div>
-        );
+        return <GenericAvatar className="trade-offers__player-icon" backgroundColor={color} iconSrc={iconBot} />;
     });
 
     return (
@@ -557,26 +558,16 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
         <div className="trade-offers__offer">
             {counterOffer && (
                 <div className="trade-offers__counteroffer-side ">
-                    <div className="trade-offers__opponent-avatar trade-offers__opponent-avatar--counteroffer player-info__avatar-halo--green">
-                        <img className="trade-offers__opponent-image" src={iconPlayer} />
-                    </div>
+                    <GenericAvatar className="trade-offers__opponent-avatar-counteroffer" backgroundColor="green" iconSrc={iconPlayer} />
                 </div>
             )}
 
             <div className="trade-offers__offer-container">
                 <div className="trade-offers__receiving-half">
                     <div className="trade-offers__left-container">
-                        {sentByMe && (
-                            <div className="trade-offers__opponent-avatar">
-                                <img className="trade-offers__opponent-image trade-offers__opponent-image--anonymous" src={iconPlayers} />
-                            </div>
-                        )}
+                        {sentByMe && <GenericAvatar iconSrc={iconPlayers}></GenericAvatar>}
 
-                        {!sentByMe && (
-                            <div className="trade-offers__opponent-avatar player-info__avatar-halo--green">
-                                <img className="trade-offers__opponent-image" src={iconPlayer} />
-                            </div>
-                        )}
+                        {!sentByMe && <GenericAvatar backgroundColor="green" iconSrc={iconPlayer} />}
 
                         <img className="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
                         <div className="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
@@ -592,9 +583,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                 </div>
                 <div className="trade-offers__giving-half">
                     <div className="trade-offers__left-container">
-                        <div className="trade-offers__opponent-avatar player-info__avatar-halo--red">
-                            <img className="trade-offers__opponent-image" src={iconPlayer} />
-                        </div>
+                        <GenericAvatar backgroundColor="orange" iconSrc={iconPlayer} />
                         <img className="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
                         <div className="trade-offers__card-row">
                             {generateCardStackTrade(1, cardBrick)}

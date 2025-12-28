@@ -110,18 +110,9 @@ body {
     justify-content: center;
 }
 
-.trade-offers__player-icon {
-    position: relative;
-    border-radius: 50%;
-}
-
-.trade-offers__player-image {
-    display: block;
-    padding: 15%;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
+.trade-offers .trade-offers__player-icon {
+    height: auto;
+    width: auto;
 }
 
 .trade-offers__hide-icon {
@@ -162,31 +153,9 @@ body {
     align-items: center;
 }
 
-.trade-offers__opponent-avatar {
-    flex-shrink: 0;
-    width: 2.25em;
-    height: 2.25em;
-
-    position: relative;
-    border-radius: 50%;
-}
-
-.trade-offers__opponent-avatar--counteroffer {
+.trade-offers .trade-offers__opponent-avatar-counteroffer {
     width: 1.75em;
     height: 1.75em;
-}
-
-.trade-offers__opponent-image {
-    padding: 15%;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
-    display: block;
-}
-
-.trade-offers__opponent-image--anonymous {
-    padding: 0;
 }
 
 .trade-offers__receiving-arrow {
@@ -286,9 +255,7 @@ body {
     align-items: center;
 }
 
-.trade-offers__opponent-status {
-    position: relative;
-    border-radius: 50%;
+.trade-offers .trade-offers__opponent-status {
     max-width: 2em;
     max-height: 2em;
 }
@@ -299,15 +266,6 @@ body {
     bottom: -10%;
     width: 50%;
     height: 50%;
-}
-
-.trade-offers__opponent-avatar-image {
-    padding: 15%;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
-    display: block;
 }
 
 .trade-offers__button {
@@ -560,31 +518,6 @@ body {
     overflow: hidden;
 }
 
-.trade-creator-proposal__avatar-container {
-    flex-shrink: 0;
-    width: 2.25em;
-    height: 2.25em;
-
-    position: relative;
-    border-radius: 50%;
-}
-
-.trade-creator-proposal__avatar-image {
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
-}
-
-.trade-creator-proposal__avatar-image--current-player {
-    padding: 15%;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
-}
-
 .trade-creator-proposal__giving-arrow {
     flex-shrink: 0;
     transform: rotate(-90deg);
@@ -703,22 +636,9 @@ body {
     background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
 }
 
-.game-actions__avatar {
-    position: relative;
-    border-radius: 50%;
-    flex-shrink: 0;
+.game-actions .game-actions__avatar {
     max-width: 2em;
-    height: 100%;
     max-height: 2em;
-    aspect-ratio: 1 / 1;
-}
-
-.game-actions__avatar-image {
-    padding: 15%;
-    width: 100%;
-    height: 100%;
-    vertical-align: baseline;
-    object-fit: cover;
 }
 
 .game-actions__current-status-message {
@@ -1333,7 +1253,6 @@ body {
 .player-info__avatar {
     width: 2.25em;
     max-height: 2.25em;
-    font-size: 1em;
     aspect-ratio: 1 / 1;
 
     outline: none;
@@ -1353,27 +1272,9 @@ body {
     max-height: 4em;
 }
 
-.player-info__avatar-halo {
+.player-info .player-info__avatar-halo {
     width: 100%;
     height: 100%;
-    position: relative;
-    border-radius: 50%;
-}
-
-.player-info__avatar-halo--green {
-    background: radial-gradient(50% 50% at 50% 50%, #55ec36 0%, #52e833 22%, #4adb2b 44.8%, #3bc71c 68%, #28aa09 85.5%, #fff 89% 92.5%, #187c0a 96% 100%);
-}
-
-.player-info__avatar-halo--blue {
-    background: radial-gradient(50% 50% at 50% 50%, #52b1cc 0%, #4fabcb 17.4%, #469bc8 39.9%, #3680c4 65.4%, #215bbe 85.5%, #fff 89% 92.5%, #0e2b87 96% 100%);
-}
-
-.player-info__avatar-halo--red {
-    background: radial-gradient(50% 50% at 50% 50%, #ec6f66 0%, #ec6961 25%, #ec5652 49.4%, #ec393b 77.7%, #ec2128 85.5%, #fff 89% 92.5%, #9b192c 96% 100%);
-}
-
-.player-info__avatar-halo--orange {
-    background: radial-gradient(50% 50% at 50% 50%, #fbb122 0%, #faad22 21.3%, #f9a022 43.4%, #f68c21 65.9%, #f26f20 85.5%, #fff 89% 92.5%, #c65305 96% 100%);
 }
 
 .player-info__avatar-image {
@@ -1496,4 +1397,41 @@ body {
 .player-info__achievement-count {
     line-height: 1;
     font-size: 1em;
+}
+
+.generic-avatar {
+    flex-shrink: 0;
+    width: 2.25em;
+    height: 2.25em;
+    position: relative;
+    border-radius: 50%;
+}
+
+.generic-avatar__image {
+    padding: 15%;
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+    object-fit: cover;
+    display: block;
+}
+
+.generic-avatar--red {
+    background: radial-gradient(50% 50% at 50% 50%, #ec6f66 0%, #ec6961 25%, #ec5652 49.4%, #ec393b 77.7%, #ec2128 85.5%, #fff 89% 92.5%, #9b192c 96% 100%);
+}
+
+.generic-avatar--green {
+    background: radial-gradient(50% 50% at 50% 50%, #55ec36 0%, #52e833 22%, #4adb2b 44.8%, #3bc71c 68%, #28aa09 85.5%, #fff 89% 92.5%, #187c0a 96% 100%);
+}
+
+.generic-avatar--blue {
+    background: radial-gradient(50% 50% at 50% 50%, #52b1cc 0%, #4fabcb 17.4%, #469bc8 39.9%, #3680c4 65.4%, #215bbe 85.5%, #fff 89% 92.5%, #0e2b87 96% 100%);
+}
+
+.generic-avatar--orange {
+    background: radial-gradient(50% 50% at 50% 50%, #fbb122 0%, #faad22 21.3%, #f9a022 43.4%, #f68c21 65.9%, #f26f20 85.5%, #fff 89% 92.5%, #c65305 96% 100%);
+}
+
+.generic-avatar__image--no-background {
+    padding: 0;
 }
