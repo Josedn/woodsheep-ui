@@ -155,7 +155,7 @@ const PlayerList = () => {
         <div className="game-board__players">
             <div className="opponent-container">
                 {generateOpponentCard("Joost", false, 4, 4, 1, 4, 2, 4, false, false, "green", false)}
-                {generateOpponentCard("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", true)}
+                {generateOpponentCard("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", false)}
                 {generateOpponentCard("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false)}
             </div>
             {generatePlayer("Lissi", false, 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
@@ -394,7 +394,7 @@ const TradeProposalSection = () => {
     );
 };
 
-const InventorySection = () => {
+const InventorySection = (props: { showTradeActions: boolean }) => {
     return (
         <div className="game-inventory__trade-creator-container">
             <div className="game-inventory__card-inventory">
@@ -412,21 +412,23 @@ const InventorySection = () => {
                 {generateCardStackInventory(1, cardPoint, false)}
                 {generateCardStackInventory(1, cardYearOfPlenty, false)}
             </div>
-            <div className="game-inventory__trade-actions">
-                <div className="game-inventory__action-button">
-                    <img className="game-inventory__action-bg" src={bgButton} />
-                    <div className="">
-                        <img className="game-inventory__action-icon" src={iconBankTrade} />
+            {props.showTradeActions && (
+                <div className="game-inventory__trade-actions">
+                    <div className="game-inventory__action-button">
+                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <div className="">
+                            <img className="game-inventory__action-icon" src={iconBankTrade} />
+                        </div>
                     </div>
-                </div>
 
-                <div className="game-inventory__action-button">
-                    <img className="game-inventory__action-bg" src={bgButton} />
-                    <div className="">
-                        <img className="game-inventory__action-icon" src={iconOpponentTrade} />
+                    <div className="game-inventory__action-button">
+                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <div className="">
+                            <img className="game-inventory__action-icon" src={iconOpponentTrade} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
@@ -615,41 +617,41 @@ export const GameUI = () => {
                         <GameBoard />
                     </div>
                     <div className="game-board__top-left">
-                        <div className="options-menu">
+                        {/*<div className="options-menu">
                             <div className="options-menu__container">
                                 <button className="options-menu__button">
                                     <img src={iconSettings} className="options-menu__button-image"></img>
                                 </button>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                     <div className="game-board__trade-offers">
                         <div className="trade-offers">
-                            <TradeHeader colors={["blue", "red", "green"]} />
+                            {/*<TradeHeader colors={["blue", "red", "green"]} />
                             <TradeOffer sentByMe={true} counterOffer={false} />
-                            <TradeOffer sentByMe={false} counterOffer={true} />
+                            <TradeOffer sentByMe={false} counterOffer={true} /> */}
                         </div>
                     </div>
                     <div className="game-board__bottom">
                         <div className="game-inventory">
                             <div className="game-inventory__container">
                                 <div className="game-inventory__trade-creator">
-                                    <TradeProposalSection />
-                                    <InventorySection />
+                                    {/*<TradeProposalSection />
+                                    <InventorySection showTradeActions={false} />*/}
                                 </div>
                             </div>
                             <div className="game-inventory__actions">
-                                <DiceContainer />
-                                <ActionButtonsSection />
+                                {/*<DiceContainer />
+                                <ActionButtonsSection />*/}
                             </div>
                         </div>
                     </div>
-                    <div className="game-board__responsive-log">
+                    {/*<div className="game-board__responsive-log">
                         <GameLog />
                         <GameChat />
                     </div>
                     <Bank />
-                    <PlayerList />
+                    <PlayerList />*/}
                 </div>
             </div>
         </>
