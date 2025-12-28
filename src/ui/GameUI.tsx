@@ -52,9 +52,11 @@ import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
 import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cfb369.svg";
 import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
 import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
+import "./fonts.css";
+import "./ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
-import { GameBoard } from "./GameBoard";
+import { GameBoard } from "../game-board/GameBoard";
 
 const generatePlayer = (
     username: string,

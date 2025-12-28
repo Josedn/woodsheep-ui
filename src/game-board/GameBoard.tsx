@@ -1,6 +1,7 @@
 import { Intersection } from "../engine/Intersection";
 import { Path } from "../engine/Path";
 import { Tile, TileType, findCenter, hexToCartesian } from "../engine/Tile";
+import "./tinc.scss";
 
 const TILE_SCALE = 0.95;
 const INITIAL_HEX_SIZE = 130;
