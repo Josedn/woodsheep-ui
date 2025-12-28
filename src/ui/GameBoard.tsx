@@ -17,10 +17,9 @@ const ROAD_WIDTH_SCALE = 0.055;
 const ROAD_LENGTH_SCALE = 0.95;
 
 export const GameBoard = () => {
-    const transX = 700;
+    const transX = 400;
     const transY = 250;
     return (
-        <div className="main-wrapper">
             <div id="board-viewport" className="sea-color unselectable">
                 {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: -1 }, 8, TileType.WOOD))}
                 {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: 1 }, 4, TileType.ORE))}
@@ -41,7 +40,6 @@ export const GameBoard = () => {
 
                 {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: -1, z: 1 }, { x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: 0, z: 0 }), true)}
             </div>
-        </div>
     );
 };
 

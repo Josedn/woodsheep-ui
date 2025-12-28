@@ -1,7 +1,7 @@
 body {
     margin: 0;
     //font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #a1afda;
+    background-color: #328dc0;
     color: #333;
     font-size: 15px;
 
@@ -31,6 +31,7 @@ body {
     grid-template-columns: [start] auto [help-buttons-end] 1fr [game-feeds] 19em [end];
     grid-template-rows: [start] 1fr [game-feeds-end] auto [bank-end] 21.25em [end];
     width: 1590px;
+    position: relative;
 }
 
 .game-board__top-left {
@@ -1169,10 +1170,9 @@ body {
 }
 
 .game {
-    background-color: rgb(50, 141, 192);
     position: absolute;
     width: 100%;
-    height: 100dvh;
+    height: 100%;
     z-index: -1;
     top: 0;
     bottom: 0;

@@ -54,6 +54,7 @@ import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca
 import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
 
 import type { ComponentChildren, VNode } from "preact";
+import { GameBoard } from "./GameBoard";
 
 const generatePlayer = (
     username: string,
@@ -610,6 +611,9 @@ export const GameUI = () => {
         <>
             <div className="main-wrapper">
                 <div className="game-board">
+                    <div className="game">
+                        <GameBoard />
+                    </div>
                     <div className="game-board__top-left">
                         <div className="options-menu">
                             <div className="options-menu__container">
@@ -648,7 +652,6 @@ export const GameUI = () => {
                     <PlayerList />
                 </div>
             </div>
-            <div className="game"></div>
         </>
     );
 };
