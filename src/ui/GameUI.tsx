@@ -52,7 +52,7 @@ import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cf
 import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
 import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
 
-import type { VNode } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
 const generatePlayer = (
     username: string,
@@ -357,7 +357,7 @@ const generateWantedCards = () => {
     );
 };
 
-const GenericAvatar = (props: { className?: string; backgroundColor?: string; iconSrc?: string; children?: VNode }) => {
+const GenericAvatar = (props: { className?: string; backgroundColor?: string; iconSrc?: string; children?: ComponentChildren }) => {
     const additionalClassName = props.className || "";
     const iconSrc = props.iconSrc || iconPlayer;
     const colorClassName = (props.backgroundColor && `generic-avatar--${props.backgroundColor}`) || "";
