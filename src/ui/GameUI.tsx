@@ -33,6 +33,7 @@ import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.5
 import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
 import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
 import bgButton from "../assets/ui/bg_button.6fb386c356a3e9b580e2.svg";
+import bgButtonHighlight from "../assets/ui/bg_button_trade_highlight.3925cb750db0bd0daa9c.svg";
 import bgButtonRed from "../assets/ui/bg_button_red.e443074fceecb964fe06.svg";
 import bgButtonBlue from "../assets/ui/bg_button_blue.b7198c2652442d82f2eb.svg";
 import bgButtonOrange from "../assets/ui/bg_button_orange.2e4497beb68391151250.svg";
@@ -517,10 +518,8 @@ const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: bo
             {cooldown && (
                 <img
                     className="trade-offers__button-cooldown"
-                    src="https://cdn.colonist.io/dist/assets/bg_button_trade_highlight.3925cb750db0bd0daa9c.svg"
-                    style="
-    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);
-  "
+                    src={bgButtonHighlight}
+                    style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);"
                 />
             )}
 
