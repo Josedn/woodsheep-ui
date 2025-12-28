@@ -1193,6 +1193,7 @@ body {
     margin-left: auto;
     width: calc(100% - 10em);
     height: 4.5em;
+    overflow: hidden;
 }
 .player-info--active {
     background: linear-gradient(180deg, #fcfaf5, #e2d7c4);
