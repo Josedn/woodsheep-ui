@@ -149,7 +149,7 @@ const generateOpponentCard = (
     );
 };
 
-const generatePlayers = () => {
+const PlayerList = () => {
     return (
         <div className="game-board__players">
             <div className="opponent-container">
@@ -186,7 +186,7 @@ const generateCardStackBank = (count: number, imgSrc: string) => {
     );
 };
 
-const generateBank = () => {
+const Bank = () => {
     return (
         <div className="game-board__bank bank-container">
             <img src={bankIcon} className="bank-container__icon"></img>
@@ -258,7 +258,7 @@ const generateChatItem = (username: string, color: string, isBot: boolean, messa
     );
 };
 
-const generateLog = () => {
+const GameLog = () => {
     return (
         <div className="game-board__log">
             <div className="chat-container__scroller">
@@ -283,7 +283,7 @@ const generateLog = () => {
     );
 };
 
-const generateChat = () => {
+const GameChat = () => {
     return (
         <div className="game-board__chat">
             <div className="chat-container">
@@ -371,7 +371,7 @@ const GenericAvatar = (props: { className?: string; backgroundColor?: string; ic
     );
 };
 
-const generateTradeProposal = () => {
+const TradeProposalSection = () => {
     return (
         <>
             {generateWantedCards()}
@@ -393,7 +393,7 @@ const generateTradeProposal = () => {
     );
 };
 
-const generateInventory = () => {
+const InventorySection = () => {
     return (
         <div className="game-inventory__trade-creator-container">
             <div className="game-inventory__card-inventory">
@@ -430,7 +430,7 @@ const generateInventory = () => {
     );
 };
 
-const generateDiceContainer = () => {
+const DiceContainer = () => {
     return (
         <div className="dice-container">
             <div className="dice-container__wrapper">
@@ -461,7 +461,7 @@ const generateActionButton = (className: string, iconSrc: string, enabled: boole
     );
 };
 
-const generateActionButtons = () => {
+const ActionButtonsSection = () => {
     return (
         <div className="game-actions">
             <div className="game-actions__current-status">
@@ -515,13 +515,7 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
 const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean, cooldown: boolean) => {
     return (
         <div className="trade-offers__button">
-            {cooldown && (
-                <img
-                    className="trade-offers__button-cooldown"
-                    src={bgButtonHighlight}
-                    style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);"
-                />
-            )}
+            {cooldown && <img className="trade-offers__button-cooldown" src={bgButtonHighlight} style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);" />}
 
             <img className="trade-offers__button-image" src={backgroundSrc} />
             <div className={enabled ? "" : "trade-offers__button-foreground-disabled"}>
@@ -539,8 +533,8 @@ const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarColor: string
     );
 };
 
-const generateTradeHeader = (colors: string[]) => {
-    const iconNodes: VNode[] = colors.map(color => {
+const TradeHeader = (props: { colors: string[] }) => {
+    const iconNodes: VNode[] = props.colors.map(color => {
         return <GenericAvatar className="trade-offers__player-icon" backgroundColor={color} iconSrc={iconBot} />;
     });
 
@@ -552,10 +546,10 @@ const generateTradeHeader = (colors: string[]) => {
     );
 };
 
-const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
+const TradeOffer = (props: { sentByMe: boolean; counterOffer: boolean }) => {
     return (
         <div className="trade-offers__offer">
-            {counterOffer && (
+            {props.counterOffer && (
                 <div className="trade-offers__counteroffer-side ">
                     <GenericAvatar className="trade-offers__opponent-avatar-counteroffer" backgroundColor="green" iconSrc={iconPlayer} />
                 </div>
@@ -564,15 +558,15 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
             <div className="trade-offers__offer-container">
                 <div className="trade-offers__receiving-half">
                     <div className="trade-offers__left-container">
-                        {sentByMe && <GenericAvatar iconSrc={iconPlayers}></GenericAvatar>}
+                        {props.sentByMe && <GenericAvatar iconSrc={iconPlayers}></GenericAvatar>}
 
-                        {!sentByMe && <GenericAvatar backgroundColor="green" iconSrc={iconPlayer} />}
+                        {!props.sentByMe && <GenericAvatar backgroundColor="green" iconSrc={iconPlayer} />}
 
                         <img className="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
                         <div className="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
                     </div>
                     <div className="trade-offers__right-container">
-                        {!sentByMe && (
+                        {!props.sentByMe && (
                             <>
                                 {generateOpponentTradeStatus(iconStatusAccept, "blue", iconPlayer)}
                                 {generateOpponentTradeStatus(iconStatusReject, "green", iconBot)}
@@ -590,7 +584,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                         </div>
                     </div>
 
-                    {sentByMe && (
+                    {props.sentByMe && (
                         <div className="trade-offers__right-container">
                             {generateTradeButton(bgButtonBlue, iconCheck, true, false)}
                             {generateTradeButton(bgButtonOrange, iconCheck, false, false)}
@@ -598,7 +592,7 @@ const generateTradeOffer = (sentByMe: boolean, counterOffer: boolean) => {
                             {generateTradeButton(bgButton, iconCross, false, false)}
                         </div>
                     )}
-                    {!sentByMe && (
+                    {!props.sentByMe && (
                         <div className="trade-offers__right-container">
                             {generateTradeButton(bgButton, iconPencil, true, false)}
                             {generateTradeButton(bgButton, iconCross, true, true)}
@@ -627,31 +621,31 @@ export const GameUI = () => {
                     </div>
                     <div className="game-board__trade-offers">
                         <div className="trade-offers">
-                            {generateTradeHeader(["blue", "red", "green"])}
-                            {generateTradeOffer(true, false)}
-                            {generateTradeOffer(false, true)}
+                            <TradeHeader colors={["blue", "red", "green"]} />
+                            <TradeOffer sentByMe={true} counterOffer={false} />
+                            <TradeOffer sentByMe={false} counterOffer={true} />
                         </div>
                     </div>
                     <div className="game-board__bottom">
                         <div className="game-inventory">
                             <div className="game-inventory__container">
                                 <div className="game-inventory__trade-creator">
-                                    {generateTradeProposal()}
-                                    {generateInventory()}
+                                    <TradeProposalSection />
+                                    <InventorySection />
                                 </div>
                             </div>
                             <div className="game-inventory__actions">
-                                {generateDiceContainer()}
-                                {generateActionButtons()}
+                                <DiceContainer />
+                                <ActionButtonsSection />
                             </div>
                         </div>
                     </div>
                     <div className="game-board__responsive-log">
-                        {generateLog()}
-                        {generateChat()}
+                        <GameLog />
+                        <GameChat />
                     </div>
-                    {generateBank()}
-                    {generatePlayers()}
+                    <Bank />
+                    <PlayerList />
                 </div>
             </div>
             <div className="game"></div>
