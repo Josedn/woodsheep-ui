@@ -1,6 +1,7 @@
 import { render } from "preact";
-import { GameBoard } from "./ui/GameBoard.tsx";
+import { GameUI } from "./ui/GameUI.tsx";
 import "./app.scss";
 import "./catan.scss";
+import "./fonts.css";
 
-render(<GameBoard />, document.getElementById("app")!);
+render(<GameUI />, document.getElementById("app")!);

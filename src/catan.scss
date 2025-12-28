@@ -1,9 +1,9 @@
 #board-viewport {
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
+    height: 100%;
+    width: 100%;
     z-index: 0;
     overflow: hidden;
+    line-height: 1.42857143;
 }
 
 .brick-color {
@@ -31,7 +31,7 @@
 }
 
 .sea-color {
-    background-color: #b5d7e5;
+    background-color: #0967a6;
 }
 
 .wildcard-color {
