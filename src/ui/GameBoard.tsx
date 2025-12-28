@@ -20,26 +20,26 @@ export const GameBoard = () => {
     const transX = 400;
     const transY = 250;
     return (
-            <div id="board-viewport" className="sea-color unselectable">
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: -1 }, 8, TileType.WOOD))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: 1 }, 4, TileType.ORE))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: 0 }, 10, TileType.SHEEP))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: 0, z: 0 }, 5, TileType.WHEAT))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: 0, z: -1 }, 5, TileType.BRICK))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 3, y: 0, z: 0 }, 6, TileType.ORE))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -1, z: 1 }, 6, TileType.SHEEP))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -1, z: 0 }, 2, TileType.DESERT))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: -1, z: 0 }, 12, TileType.BRICK))}
-                {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -2, z: 0 }, 3, TileType.WOOD))}
+        <div id="board-viewport" className="sea-color unselectable">
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: -1 }, 8, TileType.WOOD))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: 1 }, 4, TileType.ORE))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: 0, z: 0 }, 10, TileType.SHEEP))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: 0, z: 0 }, 5, TileType.WHEAT))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: 0, z: -1 }, 5, TileType.BRICK))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 3, y: 0, z: 0 }, 6, TileType.ORE))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -1, z: 1 }, 6, TileType.SHEEP))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -1, z: 0 }, 2, TileType.DESERT))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 2, y: -1, z: 0 }, 12, TileType.BRICK))}
+            {drawTile(transX, transY, INITIAL_HEX_SIZE, new Tile({ x: 1, y: -2, z: 0 }, 3, TileType.WOOD))}
 
-                {drawIntersection(transX, transY, INITIAL_HEX_SIZE, new Intersection({ x: 1, y: -2, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), true)}
-                {drawIntersection(transX, transY, INITIAL_HEX_SIZE, new Intersection({ x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), true)}
+            {drawIntersection(transX, transY, INITIAL_HEX_SIZE, new Intersection({ x: 1, y: -2, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), true)}
+            {drawIntersection(transX, transY, INITIAL_HEX_SIZE, new Intersection({ x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), true)}
 
-                {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 1, y: -2, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), false)}
-                {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 2, y: 0, z: 0 }, { x: 3, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), false)}
+            {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 1, y: -2, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), false)}
+            {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 2, y: 0, z: 0 }, { x: 3, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 2, y: -1, z: 0 }, { x: 1, y: -1, z: 0 }), false)}
 
-                {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: -1, z: 1 }, { x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: 0, z: 0 }), true)}
-            </div>
+            {drawPath(transX, transY, INITIAL_HEX_SIZE, new Path({ x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: -1, z: 1 }, { x: 1, y: 0, z: 1 }, { x: 1, y: -1, z: 0 }, { x: 1, y: 0, z: 0 }), true)}
+        </div>
     );
 };
 
