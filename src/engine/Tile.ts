@@ -1,6 +1,10 @@
-const X_UNIT_VEC: CartesianCoordinate = { x: Math.sqrt(3) / 2, y: 0.5 };
-const Y_UNIT_VEC: CartesianCoordinate = { x: 0, y: -1 };
-const Z_UNIT_VEC: CartesianCoordinate = { x: -Math.sqrt(3) / 2, y: 0.5 };
+export const degToRad = (degrees: number): number => {
+    return degrees * (Math.PI / 180);
+};
+
+const X_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(60)), y: Math.cos(degToRad(60)) };
+const Y_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(180)), y: Math.cos(degToRad(180)) };
+const Z_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(300)), y: Math.cos(degToRad(300)) };
 
 export interface HexCoordinate {
     x: number;
@@ -21,6 +25,7 @@ export const TileType = {
     SHEEP: "Sheep",
     DESERT: "Desert",
     SEA: "Sea",
+    GOLD: "Gold",
 } as const;
 
 export type TileType = (typeof TileType)[keyof typeof TileType];
