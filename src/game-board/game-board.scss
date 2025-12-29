@@ -1,0 +1,32 @@
+.board-viewport {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #0967a6;
+    z-index: 0;
+}
+
+.tile {
+    text-align: center;
+    position: absolute;
+    display: inline-block;
+    z-index: 1;
+}
+
+.tile__hitbox {
+    position: absolute;
+    left: 12px;
+    height: 100%;
+    aspect-ratio: cos(30deg);
+    clip-path: polygon(-50% 50%, 50% 100%, 150% 50%, 50% 0);
+}
+
+.tile__background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    z-index: 0;
+}

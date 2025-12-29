@@ -1,3 +1,5 @@
+import "./game-board/tinc.scss";
+
 export function Example() {
     return (
         <div className="main-wrapper">
