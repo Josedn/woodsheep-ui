@@ -16,19 +16,19 @@ import prob10 from "../assets/game/prob_10.d145f244ff011dd7a427.svg";
 import prob11 from "../assets/game/prob_11.102e16ed661168ddeec8.svg";
 import prob12 from "../assets/game/prob_12.6031ada2e92549efc5ba.svg";
 
-import { Tile, TileType, degToRad, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
+import { Tile, TileType, degToRad, findCenter, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
 
 import "./game-board.scss";
 import "./tinc.scss";
+import { Path } from "../engine/Path";
+import type { Intersection } from "../engine/Intersection";
 
 export const GameBoard = () => {
     const transX2 = 50;
     const transY2 = 20;
-
-    return (
-        <div className="board-viewport">
-            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 0 }, 2, TileType.ORE)} />
-            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: 0 }, 3, TileType.BRICK)} />
+    const nodes = (
+        <>
+            {/*<TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 0 }, 2, TileType.ORE)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: -1 }, -1, TileType.DESERT)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 0 }, 4, TileType.SHEEP)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 1 }, 5, TileType.WHEAT)} />
@@ -37,16 +37,28 @@ export const GameBoard = () => {
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 0, z: 0 }, 9, TileType.ORE)} />
             <TileHex faded transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 1, z: 0 }, 10, TileType.GOLD)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -1, z: 0 }, 11, TileType.WHEAT)} />
-            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: -2 }, 12, TileType.WOOD)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: -2 }, 4, TileType.BRICK)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: -3, z: -1 }, 5, TileType.ORE)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: -3, z: -1 }, 4, TileType.SHEEP)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -3, y: -3, z: -1 }, 6, TileType.BRICK)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 1 }, 12, TileType.WOOD)} />
-            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 1, z: 1 }, 5, TileType.SHEEP)} />
-            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 3, z: 1 }, 11, TileType.ORE)} />
+            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 1, z: 1 }, 5, TileType.SHEEP)} />*/}
+
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 2, z: 1 }, 5, TileType.SHEEP)} />
-        </div>
+            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: 0 }, 3, TileType.BRICK)} />
+            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 3, z: 1 }, 11, TileType.ORE)} />
+            <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: -2 }, 12, TileType.WHEAT)} />
+        </>
+    );
+
+    return (
+        <>
+            <div className="board-viewport">
+                {nodes}
+                {/*drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: -1, y: 0, z: -2 }, { x: 1, y: 3, z: 1 }, { x: 0, y: 1, z: 0 }))*/}
+
+            </div>
+        </>
     );
 };
 
@@ -129,3 +141,96 @@ const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: bo
         </div>
     );
 };
+
+const drawIntersection = (transX: number, transY: number, scale: number, intersection: Intersection, highlighted: boolean) => {
+    const SELECTABLE_AREA_SCALE = 0.25;
+    const hexCoordinate = findCenter(intersection.coord1, intersection.coord2, intersection.coord3);
+    const id = `intersection-x-${hexCoordinate.x}y-${hexCoordinate.y}z-${hexCoordinate.z}`.replace(/[.]/g, "_");
+    const displacement = hexToCartesianPointyUp(hexCoordinate);
+
+    const width = scale * SELECTABLE_AREA_SCALE;
+    const x = transX + displacement.x * scale + (Math.sqrt(3) * scale) / 4 - width / 4 - 0.02 * scale;
+    const y = transY + displacement.y * scale + scale / 4 - width / 2;
+
+    const style = `transform: translate(${x}px, ${y}px); width: ${width}px; height: ${width}px;`;
+
+    return (
+        <>
+            <div className={"intersection-select circle" + (highlighted ? " highlighted" : "")} id={`${id}-select`} style={style}></div>
+            <div className="intersection" id={id}></div>
+        </>
+    );
+};
+
+/*
+const drawPath = (transX: number, transY: number, path: Path) => {
+    // Force start to be leftmost intersection and end to be rightmost intersection
+    const first = findCenter(path.start1, path.start2, path.start3);
+    const second = findCenter(path.end1, path.end2, path.end3);
+    const scale = 10;
+    const ROAD_WIDTH_SCALE = 0.055;
+    const ROAD_LENGTH_SCALE = 1;
+
+    let start = first;
+    let end = second;
+
+    if (hexToCartesianPointyUp(first).x < hexToCartesianPointyUp(second).x) {
+        start = first;
+        end = second;
+    } else {
+        start = second;
+        end = first;
+    }
+
+    const id = ("path-x-" + start.x + "y-" + start.y + "z-" + start.z + "-to-x-" + end.x + "y-" + end.y + "z-" + end.z).replace(/[.]/g, "_");
+
+    // Move road to correct section of board
+    const cartesianStart = hexToCartesianPointyUp(start);
+    const cartesianEnd = hexToCartesianPointyUp(end);
+    let x = transX + cartesianStart.x * scale + (Math.sqrt(3) * scale) / 4;
+    let y = transY + cartesianStart.y * scale + scale / 4;
+
+    const deltaX = cartesianEnd.x - cartesianStart.x;
+    const deltaY = cartesianEnd.y - cartesianStart.y;
+
+    // Find angle of road
+    let angle = Math.atan(deltaY / deltaX);
+    if (deltaX < 0) {
+        angle = angle + Math.PI;
+    }
+
+    if (Math.abs(angle) < 0.001) {
+        angle = 0.0;
+    }
+
+    // Find exact size of road div
+    const length = (scale / Math.sqrt(3)) * ROAD_LENGTH_SCALE;
+    const height = scale * ROAD_WIDTH_SCALE;
+
+    // Offset road to be centered based on its angle
+    x = x + 0.04 * scale;
+    x = x + scale / Math.sqrt(3) - length / 2;
+
+    if (Math.abs(angle) < 0.0001 || Math.abs(angle - Math.PI) < 0.0001 || Math.abs(angle + Math.PI) < 0.001) {
+        x = x - (scale / Math.sqrt(3) - length / 2);
+        x = x + ((1 - ROAD_LENGTH_SCALE) * scale) / (2 * Math.sqrt(3));
+        y = y + 0.015 * scale - height / 2;
+    } else if (Math.abs(angle - Math.PI / 3) < 0.0001) {
+        x = x - (scale * Math.sqrt(3)) / 4;
+        y = y - 0.015 * scale + scale / 4;
+    } else if (Math.abs(angle + Math.PI / 3) < 0.0001) {
+        x = x - (scale * Math.sqrt(3)) / 4;
+        y = y - 0.015 * scale - scale / 4;
+    }
+
+    const style = `transform: translate(${x}em, ${y}em) rotate(${angle}rad); width: ${length}em; height: ${height}em;`;
+
+    return (
+        <>
+            <div className="path" id={id} style={style + " background-color: red"}></div>
+        </>
+    );
+};
+*/
+
+
