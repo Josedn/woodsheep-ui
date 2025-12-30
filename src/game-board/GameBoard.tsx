@@ -18,6 +18,9 @@ import prob12 from "../assets/game/prob_12.6031ada2e92549efc5ba.svg";
 import roadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
 import settlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
 import cityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
+import tileShore1 from "../assets/game/tile_shore_1.png";
+import tileShore2 from "../assets/game/tile_shore_2_sswwww.png";
+import tileShore6 from "../assets/game/tile_shore_6.png";
 
 import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
 
@@ -26,7 +29,7 @@ import "./tinc.scss";
 import { Path } from "../engine/Path";
 import { Intersection } from "../engine/Intersection";
 
-const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.995; // 10em * hex width / height * arbitrary adjustment
+const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
 
 export const GameBoard = () => {
     const transX2 = 60;
@@ -53,6 +56,25 @@ export const GameBoard = () => {
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: 0 }, 3, TileType.BRICK)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 3, z: 1 }, 11, TileType.ORE)} />
             <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: -2 }, 12, TileType.WHEAT)} />
+
+            <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore1} coord={{ x: -2, y: 1, z: -2 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore2} coord={{ x: -2, y: 1, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore2} coord={{ x: -3, y: 0, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore1} coord={{ x: -4, y: -1, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore2} coord={{ x: -4, y: -2, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore2} coord={{ x: -4, y: -3, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore1} coord={{ x: -4, y: -4, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore2} coord={{ x: -3, y: -4, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore2} coord={{ x: -2, y: -4, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore1} coord={{ x: -1, y: -4, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore2} coord={{ x: -0, y: -3, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore2} coord={{ x: 1, y: -2, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore1} coord={{ x: 2, y: -1, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore2} coord={{ x: 2, y: 0, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore2} coord={{ x: 2, y: 1, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore1} coord={{ x: 2, y: 2, z: -1 }} />
+            <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore2} coord={{ x: 1, y: 2, z: -1 }} />
         </>
     );
 
@@ -135,11 +157,12 @@ const hexToCartesianPointyUp = (hexCoordinates: HexCoordinate): CartesianCoordin
     return { x: x, y: y };
 };
 
-const getTranslationStyle = (transX: number, transY: number, coord: HexCoordinate) => {
+const getTranslationStyle = (transX: number, transY: number, coord: HexCoordinate, angle?: number) => {
     const displacement = hexToCartesianPointyUp(coord);
     const cartesianX = transX + displacement.x * HEX_SCALE;
     const cartesianY = transY + displacement.y * HEX_SCALE;
-    return `transform: translate(${cartesianX}em, ${cartesianY}em) translate(-50%, -50%)`;
+    const rotation = angle ? `rotateZ(${angle}rad)` : "";
+    return `transform: translate(${cartesianX}em, ${cartesianY}em) translate(-50%, -50%) ${rotation};`;
 };
 
 const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: boolean }) => {
@@ -152,6 +175,17 @@ const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: bo
             <div className={"tile__hitbox"} />
             <img className={"tile__background-image" + (props.faded ? " tile__background-image--faded" : "")} src={sprite} />
             {numberSprite && <img className={"tile__probability-image"} src={numberSprite} />}
+        </div>
+    );
+};
+
+const TileShore = (props: { transX: number; transY: number; coord: HexCoordinate; degreesRotation: number; sprite: string }) => {
+    const id = `shore-(${props.coord.x},${props.coord.y},${props.coord.z})`;
+    const style = getTranslationStyle(props.transX, props.transY, props.coord, degToRad(props.degreesRotation));
+    return (
+        <div className="tile tile--shore" id={id} style={style}>
+            <div className={"tile__hitbox"} />
+            <img className={"tile__background-image"} src={props.sprite} />
         </div>
     );
 };
@@ -188,7 +222,7 @@ const drawPath = (transX: number, transY: number, path: Path) => {
     const deltaY = cartesianEnd.y - cartesianStart.y;
     const angle = Math.atan(deltaY / deltaX) + Math.PI / 2;
 
-    const style = getTranslationStyle(transX, transY, center) + ` rotateZ(${angle}rad)`;
+    const style = getTranslationStyle(transX, transY, center, angle);
 
     const id = `path-(${center.x},${center.y},${center.z})`;
 
