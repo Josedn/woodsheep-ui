@@ -52,9 +52,11 @@ import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
 import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cfb369.svg";
 import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
 import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
+import "./fonts.css";
+import "./ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
-import { GameBoard } from "./GameBoard";
+import { GameBoard } from "../game-board/GameBoard";
 
 const generatePlayer = (
     username: string,
@@ -155,7 +157,7 @@ const PlayerList = () => {
         <div className="game-board__players">
             <div className="opponent-container">
                 {generateOpponentCard("Joost", false, 4, 4, 1, 4, 2, 4, false, false, "green", false)}
-                {generateOpponentCard("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", true)}
+                {generateOpponentCard("Ester", true, 8, 8, 9, 1, 2, 5, false, true, "red", false)}
                 {generateOpponentCard("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false)}
             </div>
             {generatePlayer("Lissi", false, 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
@@ -394,7 +396,7 @@ const TradeProposalSection = () => {
     );
 };
 
-const InventorySection = () => {
+const InventorySection = (props: { showTradeActions: boolean }) => {
     return (
         <div className="game-inventory__trade-creator-container">
             <div className="game-inventory__card-inventory">
@@ -412,21 +414,23 @@ const InventorySection = () => {
                 {generateCardStackInventory(1, cardPoint, false)}
                 {generateCardStackInventory(1, cardYearOfPlenty, false)}
             </div>
-            <div className="game-inventory__trade-actions">
-                <div className="game-inventory__action-button">
-                    <img className="game-inventory__action-bg" src={bgButton} />
-                    <div className="">
-                        <img className="game-inventory__action-icon" src={iconBankTrade} />
+            {props.showTradeActions && (
+                <div className="game-inventory__trade-actions">
+                    <div className="game-inventory__action-button">
+                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <div className="">
+                            <img className="game-inventory__action-icon" src={iconBankTrade} />
+                        </div>
                     </div>
-                </div>
 
-                <div className="game-inventory__action-button">
-                    <img className="game-inventory__action-bg" src={bgButton} />
-                    <div className="">
-                        <img className="game-inventory__action-icon" src={iconOpponentTrade} />
+                    <div className="game-inventory__action-button">
+                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <div className="">
+                            <img className="game-inventory__action-icon" src={iconOpponentTrade} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
@@ -635,7 +639,7 @@ export const GameUI = () => {
                             <div className="game-inventory__container">
                                 <div className="game-inventory__trade-creator">
                                     <TradeProposalSection />
-                                    <InventorySection />
+                                    <InventorySection showTradeActions={false} />
                                 </div>
                             </div>
                             <div className="game-inventory__actions">

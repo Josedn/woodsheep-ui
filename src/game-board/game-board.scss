@@ -1,0 +1,132 @@
+.board-viewport {
+    font-size: 15.5px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #0967a6;
+    z-index: 0;
+}
+
+.tile {
+    position: absolute;
+    display: inline-block;
+    z-index: 1;
+    height: 10em;
+    aspect-ratio: cos(30deg);
+}
+
+.tile__hitbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    aspect-ratio: cos(30deg);
+    clip-path: polygon(-50% 50%, 50% 100%, 150% 50%, 50% 0);
+    z-index: 2;
+}
+
+.tile__background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.tile__background-image--faded {
+    filter: brightness(0.5);
+}
+
+.tile__probability-image {
+    z-index: 1;
+    width: 3em;
+    height: 3em;
+    position: absolute;
+    bottom: 2em;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.path-road {
+    position: absolute;
+    z-index: 3;
+    height: 5em;
+    aspect-ratio: 20 / 97;
+}
+
+.path-road__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.entity {
+    cursor: pointer;
+    position: absolute;
+    z-index: 4;
+    width: 3.5em;
+    height: 3.5em;
+}
+
+.entity__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.point {
+    background: radial-gradient(closest-side, rgb(255, 255, 0), rgba(255, 255, 0, 0.5) 65%, rgba(255, 255, 255, 0) 100%);
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 7;
+    width: 2.5em;
+    height: 2.5em;
+}
+
+.port-pier,
+.port-ship {
+    position: absolute;
+    display: inline-block;
+    z-index: 2;
+    height: 10em;
+    aspect-ratio: cos(30deg);
+}
+
+.port-ship__image {
+    z-index: 2;
+    width: 4em;
+    height: 4em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.port-pier__image1 {
+    z-index: 2;
+    height: 2.8em;
+    aspect-ratio: 24/67;
+    position: absolute;
+    bottom: 0;
+    left: 4em;
+    margin: auto;
+}
+
+.port-pier__image2 {
+    z-index: 2;
+    height: 2.8em;
+    aspect-ratio: 24/67;
+    position: absolute;
+    bottom: 1.9em;
+    right: 1em;
+    margin: auto;
+    transform: rotateZ(120deg);
+}

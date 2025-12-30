@@ -1,6 +1,10 @@
-const X_UNIT_VEC: CartesianCoordinate = { x: Math.sqrt(3) / 2, y: 0.5 };
-const Y_UNIT_VEC: CartesianCoordinate = { x: 0, y: -1 };
-const Z_UNIT_VEC: CartesianCoordinate = { x: -Math.sqrt(3) / 2, y: 0.5 };
+export const degToRad = (degrees: number): number => {
+    return degrees * (Math.PI / 180);
+};
+
+const X_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(60)), y: Math.cos(degToRad(60)) };
+const Y_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(180)), y: Math.cos(degToRad(180)) };
+const Z_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(300)), y: Math.cos(degToRad(300)) };
 
 export interface HexCoordinate {
     x: number;
@@ -21,6 +25,7 @@ export const TileType = {
     SHEEP: "Sheep",
     DESERT: "Desert",
     SEA: "Sea",
+    GOLD: "Gold",
 } as const;
 
 export type TileType = (typeof TileType)[keyof typeof TileType];
@@ -51,14 +56,28 @@ export const hexToCartesian = (hexCoordinates: HexCoordinate): CartesianCoordina
 /*
  * Finds the center of three hex coordinates
  * @param c1 - the first hex coordinate
- * @param c1 - the second hex coordinate
- * @param c1 - the third hex coordinate
+ * @param c2 - the second hex coordinate
+ * @param c3 - the third hex coordinate
  * @return the center of the three hex coordinates, as a hex coordinate
  */
 export const findCenter = (c1: HexCoordinate, c2: HexCoordinate, c3: HexCoordinate) => {
-    var x = (c1.x + c2.x + c3.x) / 3;
-    var y = (c1.y + c2.y + c3.y) / 3;
-    var z = (c1.z + c2.z + c3.z) / 3;
+    const x = (c1.x + c2.x + c3.x) / 3;
+    const y = (c1.y + c2.y + c3.y) / 3;
+    const z = (c1.z + c2.z + c3.z) / 3;
+
+    return { x: x, y: y, z: z };
+};
+
+/*
+ * Finds the center of two hex coordinates
+ * @param c1 - the first hex coordinate
+ * @param c2 - the second hex coordinate
+ * @return the center of the three hex coordinates, as a hex coordinate
+ */
+export const findCenter2c = (c1: HexCoordinate, c2: HexCoordinate) => {
+    const x = (c1.x + c2.x) / 2;
+    const y = (c1.y + c2.y) / 2;
+    const z = (c1.z + c2.z) / 2;
 
     return { x: x, y: y, z: z };
 };
