@@ -21,7 +21,9 @@ import { Tile, TileType, degToRad, findCenter, type CartesianCoordinate, type He
 import "./game-board.scss";
 import "./tinc.scss";
 import { Path } from "../engine/Path";
-import type { Intersection } from "../engine/Intersection";
+import { Intersection } from "../engine/Intersection";
+
+const HEX_SIZE = 10 * Math.cos(degToRad(30)) * 0.995; // 10em * hex width / height * arbitrary adjustment
 
 export const GameBoard = () => {
     const transX2 = 50;
@@ -56,7 +58,8 @@ export const GameBoard = () => {
             <div className="board-viewport">
                 {nodes}
                 {/*drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: -1, y: 0, z: -2 }, { x: 1, y: 3, z: 1 }, { x: 0, y: 1, z: 0 }))*/}
-
+                {drawIntersection(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
+                {drawIntersection(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
             </div>
         </>
     );
@@ -123,14 +126,17 @@ const hexToCartesianPointyUp = (hexCoordinates: HexCoordinate): CartesianCoordin
     return { x: x, y: y };
 };
 
+const getTranslationStyle = (cartesianX: number, cartesianY: number) => {
+    return `transform: translate(${cartesianX}em, ${cartesianY}em) translate(-50%, -50%);`;
+};
+
 const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: boolean }) => {
-    const hexSize = ((10 * Math.sqrt(3)) / 2) * 0.995;
     const displacement = hexToCartesianPointyUp(props.tile.coordinate);
-    const tileX = props.transX + displacement.x * hexSize;
-    const tileY = props.transY + displacement.y * hexSize;
+    const cartesianX = props.transX + displacement.x * HEX_SIZE;
+    const cartesianY = props.transY + displacement.y * HEX_SIZE;
 
     const id = `tile-(${props.tile.coordinate.x},${props.tile.coordinate.y},${props.tile.coordinate.z})`;
-    const style = `transform: translate(${tileX}em, ${tileY}em);`;
+    const style = getTranslationStyle(cartesianX, cartesianY);
     const sprite = calculateTileSprite(props.tile.tileType);
     const numberSprite = calculateProbabilitySprite(props.tile.number);
     return (
@@ -142,24 +148,22 @@ const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: bo
     );
 };
 
-const drawIntersection = (transX: number, transY: number, scale: number, intersection: Intersection, highlighted: boolean) => {
-    const SELECTABLE_AREA_SCALE = 0.25;
-    const hexCoordinate = findCenter(intersection.coord1, intersection.coord2, intersection.coord3);
-    const id = `intersection-x-${hexCoordinate.x}y-${hexCoordinate.y}z-${hexCoordinate.z}`.replace(/[.]/g, "_");
-    const displacement = hexToCartesianPointyUp(hexCoordinate);
+const drawPoint = (transX: number, transY: number, coord: HexCoordinate) => {
+    const displacement = hexToCartesianPointyUp(coord);
+    const x = transX + displacement.x * HEX_SIZE;
+    const y = transY + displacement.y * HEX_SIZE;
 
-    const width = scale * SELECTABLE_AREA_SCALE;
-    const x = transX + displacement.x * scale + (Math.sqrt(3) * scale) / 4 - width / 4 - 0.02 * scale;
-    const y = transY + displacement.y * scale + scale / 4 - width / 2;
-
-    const style = `transform: translate(${x}px, ${y}px); width: ${width}px; height: ${width}px;`;
+    const style = getTranslationStyle(x, y);
 
     return (
         <>
-            <div className={"intersection-select circle" + (highlighted ? " highlighted" : "")} id={`${id}-select`} style={style}></div>
-            <div className="intersection" id={id}></div>
+            <div className={"point"} style={style}></div>
         </>
     );
+};
+
+const drawIntersection = (transX: number, transY: number, intersection: Intersection) => {
+    return drawPoint(transX, transY, findCenter(intersection.coord1, intersection.coord2, intersection.coord3));
 };
 
 /*
@@ -232,5 +236,3 @@ const drawPath = (transX: number, transY: number, path: Path) => {
     );
 };
 */
-
-
