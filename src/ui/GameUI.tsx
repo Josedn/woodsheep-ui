@@ -619,41 +619,41 @@ export const GameUI = () => {
                         <GameBoard />
                     </div>
                     <div className="game-board__top-left">
-                        {/*<div className="options-menu">
+                        <div className="options-menu">
                             <div className="options-menu__container">
                                 <button className="options-menu__button">
                                     <img src={iconSettings} className="options-menu__button-image"></img>
                                 </button>
                             </div>
-                        </div>*/}
+                        </div>
                     </div>
                     <div className="game-board__trade-offers">
                         <div className="trade-offers">
-                            {/*<TradeHeader colors={["blue", "red", "green"]} />
+                            <TradeHeader colors={["blue", "red", "green"]} />
                             <TradeOffer sentByMe={true} counterOffer={false} />
-                            <TradeOffer sentByMe={false} counterOffer={true} /> */}
+                            <TradeOffer sentByMe={false} counterOffer={true} />
                         </div>
                     </div>
                     <div className="game-board__bottom">
                         <div className="game-inventory">
                             <div className="game-inventory__container">
                                 <div className="game-inventory__trade-creator">
-                                    {/*<TradeProposalSection />
-                                    <InventorySection showTradeActions={false} />*/}
+                                    <TradeProposalSection />
+                                    <InventorySection showTradeActions={false} />
                                 </div>
                             </div>
                             <div className="game-inventory__actions">
-                                {/*<DiceContainer />
-                                <ActionButtonsSection />*/}
+                                <DiceContainer />
+                                <ActionButtonsSection />
                             </div>
                         </div>
                     </div>
-                    {/*<div className="game-board__responsive-log">
+                    <div className="game-board__responsive-log">
                         <GameLog />
                         <GameChat />
                     </div>
                     <Bank />
-                    <PlayerList />*/}
+                    <PlayerList />
                 </div>
             </div>
         </>

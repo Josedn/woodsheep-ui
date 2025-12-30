@@ -38,7 +38,7 @@ import { Intersection } from "../engine/Intersection";
 const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
 
 export const GameBoard = () => {
-    const transX2 = 49;
+    const transX2 = 40;
     const transY2 = 28;
 
     return (
