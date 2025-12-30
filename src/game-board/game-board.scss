@@ -55,9 +55,11 @@
 .path-road {
     position: absolute;
     border-radius: 5px;
-    /*border-left: 1px solid black;*/
-    /*border-right: 1px solid black;*/
-    z-index: 2;
+    z-index: 3;
+
+    width: 5em;
+    height: 0.5em;
+    background-color: red;
 }
 
 .point {
