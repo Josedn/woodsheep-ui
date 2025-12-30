@@ -29,11 +29,9 @@ import portWool from "../assets/game/port_wool.png";
 import portGrain from "../assets/game/port_grain.png";
 
 import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
-
-import "./game-board.scss";
-import "./tinc.scss";
 import { Path } from "../engine/Path";
 import { Intersection } from "../engine/Intersection";
+import "./game-board.scss";
 
 const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
 
