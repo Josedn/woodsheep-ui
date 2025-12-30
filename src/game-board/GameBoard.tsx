@@ -15,6 +15,9 @@ import prob9 from "../assets/game/prob_9.0dce1d649976660b463a.svg";
 import prob10 from "../assets/game/prob_10.d145f244ff011dd7a427.svg";
 import prob11 from "../assets/game/prob_11.102e16ed661168ddeec8.svg";
 import prob12 from "../assets/game/prob_12.6031ada2e92549efc5ba.svg";
+import roadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
+import settlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
+import cityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
 
 import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
 
@@ -58,8 +61,14 @@ export const GameBoard = () => {
             <div className="board-viewport">
                 {nodes}
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
+
+                {/*drawIntersection(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
                 {drawIntersection(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
-                {drawIntersection(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
+                {drawIntersection(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }))*/}
+
+                {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }))}
+                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), cityRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), settlementRed)}
             </div>
         </>
     );
@@ -149,12 +158,23 @@ const TileHex = (props: { transX: number; transY: number; tile: Tile; faded?: bo
 
 const drawPoint = (transX: number, transY: number, coord: HexCoordinate) => {
     const style = getTranslationStyle(transX, transY, coord);
-    const id = `path-(${coord.x},${coord.y},${coord.z})`;
+    const id = `point-(${coord.x},${coord.y},${coord.z})`;
     return <div id={id} className={"point"} style={style}></div>;
 };
 
 const drawIntersection = (transX: number, transY: number, intersection: Intersection) => {
     return drawPoint(transX, transY, findCenter(intersection.coord1, intersection.coord2, intersection.coord3));
+};
+
+const drawEntity = (transX: number, transY: number, intersection: Intersection, entitySrc: string) => {
+    const coord = findCenter(intersection.coord1, intersection.coord2, intersection.coord3);
+    const style = getTranslationStyle(transX, transY, coord);
+    const id = `entity-(${coord.x},${coord.y},${coord.z})`;
+    return (
+        <div id={id} className={"entity"} style={style}>
+            <img className="entity__image" src={entitySrc} />
+        </div>
+    );
 };
 
 const drawPath = (transX: number, transY: number, path: Path) => {
@@ -166,11 +186,15 @@ const drawPath = (transX: number, transY: number, path: Path) => {
     const cartesianEnd = hexToCartesianPointyUp(end);
     const deltaX = cartesianEnd.x - cartesianStart.x;
     const deltaY = cartesianEnd.y - cartesianStart.y;
-    const angle = Math.atan(deltaY / deltaX);
+    const angle = Math.atan(deltaY / deltaX) + Math.PI / 2;
 
     const style = getTranslationStyle(transX, transY, center) + ` rotateZ(${angle}rad)`;
 
     const id = `path-(${center.x},${center.y},${center.z})`;
 
-    return <div className="path-road" id={id} style={style}></div>;
+    return (
+        <div className="path-road" id={id} style={style}>
+            <img className="path-road__image" src={roadRed} />
+        </div>
+    );
 };

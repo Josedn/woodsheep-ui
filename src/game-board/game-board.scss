@@ -34,7 +34,6 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    touch-action: none;
 }
 
 .tile__background-image--faded {
@@ -54,12 +53,33 @@
 
 .path-road {
     position: absolute;
-    border-radius: 5px;
     z-index: 3;
+    height: 5em;
+    aspect-ratio: 4.85;
+}
 
-    width: 5em;
-    height: 0.5em;
-    background-color: red;
+.path-road__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.entity {
+    cursor: pointer;
+    position: absolute;
+    z-index: 3;
+    width: 3.5em;
+    height: 3.5em;
+}
+
+.entity__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .point {
