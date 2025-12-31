@@ -1,0 +1,279 @@
+import logo from "../assets/ui/logo.a66b03915fd67e4c68f8.svg";
+import iconFriends from "../assets/ui/icon_profile_friends.070663d1d744eb49945c.svg";
+import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
+import iconLanguage from "../assets/ui/icon_language.add24071ab94e6c5bee0.svg";
+import iconBell from "../assets/ui/icon_bell.6a6382d11bfb67a469be.svg";
+import iconRoadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
+import iconSettlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
+import iconCityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
+import iconPencil from "../assets/ui/icon_pencil.9d4a73f29f331378c4b5.svg";
+import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
+import iconSend from "../assets/ui/icon_send.0395fe5de05351959b13.svg";
+import iconInfo from "../assets/ui/icon_info.0f1a765945c77be429ac.svg";
+import mapBase from "../assets/ui/map_base_4p_preview.7ea40296a96ee1c95c4e.png";
+import mapVolcano from "../assets/ui/map_volcano_preview.c79f209e148f7c8270eb.png";
+import mapGoldRush from "../assets/ui/map_goldrush_preview.a33313f7fd0419b2b041.png";
+import iconSunglasses from "../assets/ui/icon_sunglasses.ecd4d017bb185bbc88b1.svg";
+import iconHideCard from "../assets/ui/icon_hide_bank_card.b09a12f928f2d00c985e.svg";
+import iconArrow from "../assets/ui/icon_arrow.b8e6ce7b0ed07009bbc7.svg";
+
+import "./home.scss";
+
+const Sidebar = () => {
+    return (
+        <div className="sidebar">
+            <div className="sidebar__logo">
+                <a className="sidebar__logo-link" href="/">
+                    <img className="sidebar__logo-image" src={logo} alt="logo" />
+                </a>
+            </div>
+            <div className="sidebar__nav">
+                <a href="/lobby" className="sidebar__nav-item sidebar__nav-item--active">
+                    <img className="sidebar__nav-image" src={iconFriends} alt="Lobby" />
+                    <span className="sidebar__nav-label">Lobby</span>
+                </a>
+                <a href="/profile" className="sidebar__nav-item">
+                    <img className="sidebar__nav-image" src={iconPlayer} alt="Profile" />
+                    <span className="sidebar__nav-label">Profile</span>
+                </a>
+            </div>
+            <div className="sidebar__footer">
+                <div className="sidebar__language-button">
+                    <img className="sidebar__language-image" src={iconLanguage} alt="Language Icon" />
+                    <div className="sidebar__language-label">en</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const Header = () => {
+    return (
+        <header className="header">
+            <div className="header__left">
+                <div className="header__profile">
+                    <div className="header__profile-logged-in">
+                        <div className="header__profile-avatar">
+                            <img className="header__profile-avatar-image" src={iconPlayer} alt="User" />
+                        </div>
+                        <div>
+                            <p className="header__profile-username">Josednn</p>
+                            <p className="header__profile-karma">Karma: 20/20</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="header__right">
+                <div className="header__notifications">
+                    <div className="header__notifications-icon">
+                        <img className="header__notifications-image" src={iconBell} alt="Notification Icon" />
+                        <div className="header__notifications-count-container">
+                            <span className="header__notifications-count">16</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+};
+
+const LobbyPlayerInfoPlaceholder = () => {
+    return <div className="lobby__player"></div>;
+};
+
+const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boolean; canEdit?: boolean }) => {
+    return (
+        <div className="lobby__player">
+            <div className="lobby__player-info">
+                <div className="lobby__player-avatar">
+                    <img className="lobby__player-avatar-image" src={iconPlayer} />
+                    <div className="lobby__player-username-container">
+                        <div className="lobby__player-username">{props.username}</div>
+                        <div className="lobby__player-karma">Karma: 20/20</div>
+                    </div>
+                </div>
+                <div className={"lobby__player-color" + (props.canEdit ? " lobby__player-color--can-edit" : "")}>
+                    <img className="lobby__player-color-image" alt="Road" src={iconRoadRed} />
+                    <img className="lobby__player-color-image" alt="Settlement" src={iconSettlementRed} />
+                    <img className="lobby__player-color-image" alt="City" src={iconCityRed} />
+                </div>
+            </div>
+            <div className="lobby__player-status">
+                <div className="lobby__player-actions-container">
+                    <div className="lobby__player-action">
+                        <img className="lobby__player-action-image" alt="Edit" src={iconPencil} />
+                    </div>
+                </div>
+                <div className={"lobby__player-ready" + (props.ready ? " lobby__player-ready--ready" : "")}>
+                    <div className="lobby__player-ready-label">{props.ready ? "READY" : "Not Ready"}</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const Lobby = () => {
+    return (
+        <div className="lobby">
+            <div className="lobby__left">
+                <h2 className="lobby__heading">Players (2/4)</h2>
+                <div className="lobby__player-list">
+                    <LobbyPlayerInfo username="Bold" color="red" ready canEdit />
+                    <LobbyPlayerInfo username="Lissi" color="green" />
+                    <LobbyPlayerInfoPlaceholder />
+                    <LobbyPlayerInfoPlaceholder />
+                </div>
+            </div>
+            <div className="lobby__middle">
+                <div className="lobby__info-header">
+                    <img className="lobby__info-exit-image" alt="Exit" src={iconCross} />
+                    <h2 className="lobby__heading">Room ID: sail6736</h2>
+                </div>
+                <div className="lobby__info-scroller">
+                    <div className="lobby__invite">
+                        <div className="lobby__invite-title">
+                            <h4 className="lobby__invite-title-heading">Invite Friends</h4>
+                            <img className="lobby__invite-title-image" src={iconInfo} />
+                        </div>
+                        <div className="lobby__invite-body">
+                            <div className="lobby__invite-body-link">tbd</div>
+                            <a className="lobby__invite-body-button">Copy</a>
+                        </div>
+                    </div>
+                    <div className="lobby__options">
+                        <div className="lobby__options-item-selection">
+                            <div className="lobby__options-title-container">
+                                <h4 className="lobby__options-title">Map</h4>
+                            </div>
+                            <div className="lobby__options-body">
+                                <div className="lobby__options-scroller">
+                                    <div className="lobby__options-scroller-wrapper">
+                                        <div className="lobby__options-cell lobby__options-cell--selected">
+                                            <img className="lobby__options-cell-image" src={mapBase} />
+                                            <p className="lobby__options-cell-label">Base</p>
+                                        </div>
+
+                                        <div className="lobby__options-cell lobby__options-cell--unavailable">
+                                            <img className="lobby__options-cell-image" src={mapVolcano} />
+                                            <p className="lobby__options-cell-label">Volcano</p>
+                                        </div>
+
+                                        <div className="lobby__options-cell lobby__options-cell--unavailable">
+                                            <img className="lobby__options-cell-image" src={mapGoldRush} />
+                                            <p className="lobby__options-cell-label">Gold Rush</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lobby__options">
+                        <div className="lobby__options-item-selection">
+                            <div className="lobby__options-title-container">
+                                <h4 className="lobby__options-title">Rules</h4>
+                            </div>
+                            <div className="lobby__options-body">
+                                <div className="lobby__options-scroller">
+                                    <div className="lobby__options-scroller-wrapper lobby__options-scroller-wrapper--no-scroll">
+                                        <div className="lobby__options-cell lobby__options-cell--selected">
+                                            <img className="lobby__options-cell-image" src={iconSunglasses} />
+                                            <p className="lobby__options-cell-label">Private Game</p>
+                                        </div>
+
+                                        <div className="lobby__options-cell">
+                                            <img className="lobby__options-cell-image" src={iconHideCard} />
+                                            <p className="lobby__options-cell-label">Hide Bank Cards</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lobby__options-settings-container">
+                        <div className="lobby__options-title-container">
+                            <h4 className="lobby__options-title lobby__options-title--settings">Advanced Settings</h4>
+                        </div>
+                        <div className="lobby__options">
+                            <div className="lobby__options-settings">
+                                <div className="lobby__options-title-container">
+                                    <h3 className="lobby__options-subtitle">Turn Timer</h3>
+                                </div>
+                                <div className="lobby__options-body">
+                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <h3 className="lobby__options-range-input">120s</h3>
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                </div>
+                            </div>
+                            <div className="lobby__options-settings">
+                                <div className="lobby__options-title-container">
+                                    <h3 className="lobby__options-subtitle">Max Players</h3>
+                                </div>
+                                <div className="lobby__options-body">
+                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <h3 className="lobby__options-range-input">4/4</h3>
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="lobby__options">
+                            <div className="lobby__options-settings">
+                                <div className="lobby__options-title-container">
+                                    <h3 className="lobby__options-subtitle">Points to Win</h3>
+                                </div>
+                                <div className="lobby__options-body">
+                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <h3 className="lobby__options-range-input">10</h3>
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                </div>
+                            </div>
+                            <div className="lobby__options-settings">
+                                <div className="lobby__options-title-container">
+                                    <h3 className="lobby__options-subtitle">Card Discard Limit</h3>
+                                </div>
+                                <div className="lobby__options-body">
+                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <h3 className="lobby__options-range-input">7</h3>
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="lobby__info-footer">
+                    <div class="lobby__start-container">
+                        <div class="lobby__start">
+                            <a class="lobby__start-button">Start Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="lobby__right">
+                <div className="lobby__right-header">
+                    <div className="lobby__right-heading">Chat</div>
+                </div>
+                <div className="lobby__message-container">
+                    <div className="lobby__message">
+                        <img className="lobby__message-avatar" alt="User" src={iconPlayer} />
+                        <span className="lobby__message-username">Bold: </span>hello
+                    </div>
+                </div>
+                <form className="lobby__message-form">
+                    <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} />
+                    <button className="lobby__message-submit">
+                        <img className="lobby__message-submit-image" src={iconSend} />
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export const Home = () => {
+    return (
+        <div className="layout">
+            <Sidebar />
+            <Header />
+            <Lobby />
+        </div>
+    );
+};

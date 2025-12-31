@@ -46,17 +46,17 @@ import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
 import iconPencil from "../assets/ui/icon_pencil.9d4a73f29f331378c4b5.svg";
 import iconArrowUpBlack from "../assets/ui/icon_arrow_up_black.82635b6e9f69a1a10e3e.svg";
 import iconPassTurn from "../assets/ui/icon_pass_turn.8d5b7a48c40a85b859cd.svg";
-import iconRoadRed from "../assets/ui/road_red.41c6cbd9278108542715.svg";
-import iconSettlementRed from "../assets/ui/settlement_red.22949197b57f9cfd968b.svg";
-import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
+import iconRoadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
+import iconSettlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
+import iconCityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
 import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cfb369.svg";
 import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
 import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
-import "./fonts.css";
-import "./ui.scss";
+
+import "./game-ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
-import { GameBoard } from "../game-board/GameBoard";
+import { GameBoard } from "../game/GameBoard";
 
 const generatePlayer = (
     username: string,
