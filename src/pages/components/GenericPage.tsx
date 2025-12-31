@@ -42,7 +42,7 @@ export const Header = () => {
                             <img className="header__profile-avatar-image" src={iconPlayer} alt="User" />
                         </div>
                         <div>
-                            <p className="header__profile-username">Josednn</p>
+                            <p className="header__profile-username">Bold</p>
                             <p className="header__profile-karma">Karma: 20/20</p>
                         </div>
                     </div>
