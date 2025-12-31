@@ -2,7 +2,7 @@ import "./game-ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
 import { GameBoard } from "../game/GameBoard";
-import { UI_ICONS, GAME_ICONS, GAME_TINTED_ICONS } from "../assets/images";
+import { UI_ICONS, GAME_TINTED_ICONS } from "../assets/images";
 
 const generatePlayer = (
     username: string,

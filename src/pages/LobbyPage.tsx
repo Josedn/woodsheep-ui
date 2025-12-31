@@ -1,6 +1,6 @@
 import "./lobby.scss";
 import { Header, Sidebar } from "./components/GenericPage";
-import { GAME_ICONS, GAME_TINTED_ICONS, UI_ICONS } from "../assets/images";
+import { GAME_TINTED_ICONS, UI_ICONS } from "../assets/images";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;

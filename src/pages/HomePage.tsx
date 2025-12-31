@@ -103,7 +103,7 @@ const PopUp = () => {
                     <div className="edit-profile">
                         <div className="edit-profile__container">
                             <img className="edit-profile__avatar" src={UI_ICONS.iconPlayer} />
-                            <h2 className="edit-profile__username">Josednn</h2>
+                            <h2 className="edit-profile__username">Bold</h2>
                         </div>
                         <img className="edit-profile__edit-icon" src={UI_ICONS.iconPencil} />
                     </div>
