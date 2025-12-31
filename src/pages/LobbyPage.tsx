@@ -1,6 +1,6 @@
 import "./lobby.scss";
 import { Header, Sidebar } from "./components/GenericPage";
-import { GAME_ICONS, UI_ICONS } from "../assets/images";
+import { GAME_ICONS, GAME_TINTED_ICONS, UI_ICONS } from "../assets/images";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -18,9 +18,9 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
                     </div>
                 </div>
                 <div className={"lobby__player-color" + (props.canEdit ? " lobby__player-color--can-edit" : "")}>
-                    <img className="lobby__player-color-image" alt="Road" src={GAME_ICONS.roadRed} />
-                    <img className="lobby__player-color-image" alt="Settlement" src={GAME_ICONS.settlementRed} />
-                    <img className="lobby__player-color-image" alt="City" src={GAME_ICONS.cityRed} />
+                    <img className="lobby__player-color-image" alt="Road" src={GAME_TINTED_ICONS.roadRed} />
+                    <img className="lobby__player-color-image" alt="Settlement" src={GAME_TINTED_ICONS.settlementRed} />
+                    <img className="lobby__player-color-image" alt="City" src={GAME_TINTED_ICONS.cityRed} />
                 </div>
             </div>
             <div className="lobby__player-status">

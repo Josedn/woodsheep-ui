@@ -1,5 +1,5 @@
 import { Header, Sidebar } from "./components/GenericPage";
-import { UI_ICONS, GAME_ICONS } from "../assets/images";
+import { UI_ICONS, GAME_TINTED_ICONS } from "../assets/images";
 
 import "./home.scss";
 
@@ -109,7 +109,11 @@ const PopUp = () => {
                     </div>
                     <div className="edit-profile__selector-container">
                         <div className="edit-profile__selector-grid">
-                            <img className="edit-profile__selector-grid-item" src={GAME_ICONS.settlementRed} />
+                            <img className="edit-profile__selector-grid-item edit-profile__selector-grid-item--selected" src={GAME_TINTED_ICONS.settlementRed} />
+                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementBlue} />
+                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementOrange} />
+                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementGreen} />
+                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementBlack} />
                         </div>
                     </div>
                 </div>

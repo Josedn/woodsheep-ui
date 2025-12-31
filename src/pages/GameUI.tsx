@@ -2,7 +2,7 @@ import "./game-ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
 import { GameBoard } from "../game/GameBoard";
-import { UI_ICONS, GAME_ICONS } from "../assets/images";
+import { UI_ICONS, GAME_ICONS, GAME_TINTED_ICONS } from "../assets/images";
 
 const generatePlayer = (
     username: string,
@@ -427,9 +427,9 @@ const ActionButtonsSection = () => {
 
             {generateActionButton("game-actions__trade-button", UI_ICONS.iconCross, true, -1) /* iconTrade */}
             {generateActionButton("game-actions__development-card-button", UI_ICONS.cardDevelopment, false, -1)}
-            {generateActionButton("game-actions__road-button", GAME_ICONS.roadRed, true, 14)}
-            {generateActionButton("game-actions__settlement-button", GAME_ICONS.settlementRed, false, 5)}
-            {generateActionButton("game-actions__city-button", GAME_ICONS.cityRed, false, 4)}
+            {generateActionButton("game-actions__road-button", GAME_TINTED_ICONS.roadRed, true, 14)}
+            {generateActionButton("game-actions__settlement-button", GAME_TINTED_ICONS.settlementRed, false, 5)}
+            {generateActionButton("game-actions__city-button", GAME_TINTED_ICONS.cityRed, false, 4)}
             {generateActionButton("game-actions__turn-button", UI_ICONS.iconPassTurn, true, -1)}
         </div>
     );

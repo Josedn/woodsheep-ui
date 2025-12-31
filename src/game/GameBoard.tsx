@@ -1,7 +1,7 @@
 import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
 import { Path } from "../engine/Path";
 import { Intersection } from "../engine/Intersection";
-import { GAME_ICONS } from "../assets/images";
+import { GAME_ICONS, GAME_TINTED_ICONS } from "../assets/images";
 import "./game-board.scss";
 
 const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
@@ -67,9 +67,9 @@ export const GameBoard = () => {
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }))}
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }))}
 
-                {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_ICONS.settlementRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_ICONS.cityRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_ICONS.settlementRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_TINTED_ICONS.settlementRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_TINTED_ICONS.cityRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_TINTED_ICONS.settlementRed)}
             </div>
         </>
     );
@@ -225,7 +225,7 @@ const drawPath = (transX: number, transY: number, path: Path) => {
 
     return (
         <div className="path-road" id={id} style={style}>
-            <img className="path-road__image" src={GAME_ICONS.roadRed} />
+            <img className="path-road__image" src={GAME_TINTED_ICONS.roadRed} />
         </div>
     );
 };
