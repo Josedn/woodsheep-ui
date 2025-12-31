@@ -1,5 +1,5 @@
 import { Header, Sidebar } from "./components/GenericPage";
-import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
+import { UI_ICONS, GAME_ICONS } from "../assets/images";
 
 import "./home.scss";
 
@@ -10,12 +10,12 @@ const LobbyTableRow = (props: { host: string; map: string }) => {
             <td>{props.map}</td>
             <td>30s</td>
 
-            <td class="lobby-list__table-data-players">
-                <div class="lobby-list__table-data-player-count">
-                    <img class="lobby-list__table-player-img" alt="User" src={iconPlayer} />
-                    <img class="lobby-list__table-player-img" alt="User" src={iconPlayer} />
-                    <img class="lobby-list__table-player-img lobby-list__table-player-img--empty" alt="Guest" src={iconPlayer} />
-                    <img class="lobby-list__table-player-img lobby-list__table-player-img--empty" alt="Guest" src={iconPlayer} />
+            <td className="lobby-list__table-data-players">
+                <div className="lobby-list__table-data-player-count">
+                    <img className="lobby-list__table-player-img" src={UI_ICONS.iconPlayer} />
+                    <img className="lobby-list__table-player-img" src={UI_ICONS.iconPlayer} />
+                    <img className="lobby-list__table-player-img lobby-list__table-player-img--empty" src={UI_ICONS.iconPlayer} />
+                    <img className="lobby-list__table-player-img lobby-list__table-player-img--empty" src={UI_ICONS.iconPlayer} />
                 </div>
             </td>
         </tr>
@@ -81,12 +81,40 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="lobby-list__actions">
-                        <div class="lobby-list__action">Create Room</div>
-                        <div class="lobby-list__action lobby-list__action--alternative">Join Room</div>
+                        <div className="lobby-list__action">Create Room</div>
+                        <div className="lobby-list__action lobby-list__action--alternative">Join Room</div>
                     </div>
                 </div>
             </div>
             <div className="home__ads"></div>
+        </div>
+    );
+};
+
+const PopUp = () => {
+    return (
+        <div className="popup">
+            <div className="popup__content">
+                <div className="popup__header">
+                    <div className="popup__heading">Edit Profile</div>
+                    <img class="popup__close" src={UI_ICONS.iconCross} />
+                </div>
+                <div className="popup__body">
+                    <div className="edit-profile">
+                        <div className="edit-profile__container">
+                            <img className="edit-profile__avatar" src={UI_ICONS.iconPlayer} />
+                            <h2 className="edit-profile__username">Josednn</h2>
+                        </div>
+                        <img className="edit-profile__edit-icon" src={UI_ICONS.iconPencil} />
+                    </div>
+                    <div className="edit-profile__selector-container">
+                        <div className="edit-profile__selector-grid">
+                            <img className="edit-profile__selector-grid-item" src={GAME_ICONS.settlementRed} />
+                        </div>
+                    </div>
+                </div>
+                <div className="popup__footer"></div>
+            </div>
         </div>
     );
 };
@@ -97,6 +125,7 @@ export const HomePage = () => {
             <Sidebar />
             <Header />
             <Home />
+            <PopUp />
         </div>
     );
 };

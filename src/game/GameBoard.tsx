@@ -1,36 +1,7 @@
-import tileLumber from "../assets/game/tile_lumber.2f0099b519514f091763.svg";
-import tileWool from "../assets/game/tile_wool.72fafecfd68aa740af09.svg";
-import tileBrick from "../assets/game/tile_brick.3082910583708dd98c82.svg";
-import tileOre from "../assets/game/tile_ore.0033829cd0573ced9c6f.svg";
-import tileGrain from "../assets/game/tile_grain.f99882d0014743dba80b.svg";
-import tileDesert from "../assets/game/tile_desert.25d3c496a667dfc64c17.svg";
-import tileGold from "../assets/game/tile_gold.8232cea1f60dd524bbef.svg";
-import prob2 from "../assets/game/prob_2.08c89e29dd2e12da2ea4.svg";
-import prob3 from "../assets/game/prob_3.94270f97a8b15ab8d3ec.svg";
-import prob4 from "../assets/game/prob_4.a2af3d909fad884353df.svg";
-import prob5 from "../assets/game/prob_5.17073f845fcfa2267dd9.svg";
-import prob6 from "../assets/game/prob_6.ada0b8434cfe315beb72.svg";
-import prob8 from "../assets/game/prob_8.ca0de6260ba265cc479f.svg";
-import prob9 from "../assets/game/prob_9.0dce1d649976660b463a.svg";
-import prob10 from "../assets/game/prob_10.d145f244ff011dd7a427.svg";
-import prob11 from "../assets/game/prob_11.102e16ed661168ddeec8.svg";
-import prob12 from "../assets/game/prob_12.6031ada2e92549efc5ba.svg";
-import roadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
-import settlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
-import cityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
-import tileShore1 from "../assets/game/tile_shore_1.png";
-import tileShore2 from "../assets/game/tile_shore_2_sswwww.png";
-import port from "../assets/game/port.png";
-import portPier from "../assets/game/port_pier.png";
-import portLumber from "../assets/game/port_lumber.png";
-import portBrick from "../assets/game/port_brick.png";
-import portOre from "../assets/game/port_ore.png";
-import portWool from "../assets/game/port_wool.png";
-import portGrain from "../assets/game/port_grain.png";
-
 import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
 import { Path } from "../engine/Path";
 import { Intersection } from "../engine/Intersection";
+import { GAME_ICONS } from "../assets/images";
 import "./game-board.scss";
 
 const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
@@ -62,43 +33,43 @@ export const GameBoard = () => {
                 <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 3, z: 1 }, 11, TileType.ORE)} />
                 <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: -2 }, 12, TileType.WHEAT)} />
 
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore1} coord={{ x: -2, y: 1, z: -2 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore2} coord={{ x: -2, y: 1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore2} coord={{ x: -3, y: 0, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={tileShore1} coord={{ x: -4, y: -1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore2} coord={{ x: -4, y: -2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore2} coord={{ x: -4, y: -3, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={tileShore1} coord={{ x: -4, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore2} coord={{ x: -3, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore2} coord={{ x: -2, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={tileShore1} coord={{ x: -1, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore2} coord={{ x: -0, y: -3, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore2} coord={{ x: 1, y: -2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={tileShore1} coord={{ x: 2, y: -1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore2} coord={{ x: 2, y: 0, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore2} coord={{ x: 2, y: 1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={tileShore1} coord={{ x: 2, y: 2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={tileShore2} coord={{ x: 1, y: 2, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore1} coord={{ x: -2, y: 1, z: -2 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -2, y: 1, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -3, y: 0, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore1} coord={{ x: -4, y: -1, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore2} coord={{ x: -4, y: -2, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore2} coord={{ x: -4, y: -3, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore1} coord={{ x: -4, y: -4, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore2} coord={{ x: -3, y: -4, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore2} coord={{ x: -2, y: -4, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore1} coord={{ x: -1, y: -4, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore2} coord={{ x: -0, y: -3, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore2} coord={{ x: 1, y: -2, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore1} coord={{ x: 2, y: -1, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore2} coord={{ x: 2, y: 0, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore2} coord={{ x: 2, y: 1, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore1} coord={{ x: 2, y: 2, z: -1 }} />
+                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: 1, y: 2, z: -1 }} />
 
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: 1, z: -2 }} angle={0} sprite={portLumber} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -3, y: 0, z: -1 }} angle={300} sprite={port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -2, z: -1 }} angle={300} sprite={portBrick} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -4, z: -1 }} angle={240} sprite={port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: -4, z: -1 }} angle={180} sprite={portGrain} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -0, y: -3, z: -1 }} angle={180} sprite={port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: -1, z: -1 }} angle={120} sprite={portWool} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: 1, z: -1 }} angle={60} sprite={port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 1, y: 2, z: -1 }} angle={60} sprite={portOre} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: 1, z: -2 }} angle={0} sprite={GAME_ICONS.portLumber} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -3, y: 0, z: -1 }} angle={300} sprite={GAME_ICONS.port} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -2, z: -1 }} angle={300} sprite={GAME_ICONS.portBrick} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -4, z: -1 }} angle={240} sprite={GAME_ICONS.port} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: -4, z: -1 }} angle={180} sprite={GAME_ICONS.portGrain} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: -0, y: -3, z: -1 }} angle={180} sprite={GAME_ICONS.port} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: -1, z: -1 }} angle={120} sprite={GAME_ICONS.portWool} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: 1, z: -1 }} angle={60} sprite={GAME_ICONS.port} />
+                <PortPier transX={transX2} transY={transY2} coord={{ x: 1, y: 2, z: -1 }} angle={60} sprite={GAME_ICONS.portOre} />
 
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }))}
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }))}
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }))}
                 {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }))}
 
-                {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), settlementRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), cityRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), settlementRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_ICONS.settlementRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_ICONS.cityRed)}
+                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_ICONS.settlementRed)}
             </div>
         </>
     );
@@ -107,25 +78,25 @@ export const GameBoard = () => {
 const calculateProbabilitySprite = (num: number): string | null => {
     switch (num) {
         case 2:
-            return prob2;
+            return GAME_ICONS.prob2;
         case 3:
-            return prob3;
+            return GAME_ICONS.prob3;
         case 4:
-            return prob4;
+            return GAME_ICONS.prob4;
         case 5:
-            return prob5;
+            return GAME_ICONS.prob5;
         case 6:
-            return prob6;
+            return GAME_ICONS.prob6;
         case 8:
-            return prob8;
+            return GAME_ICONS.prob8;
         case 9:
-            return prob9;
+            return GAME_ICONS.prob9;
         case 10:
-            return prob10;
+            return GAME_ICONS.prob10;
         case 11:
-            return prob11;
+            return GAME_ICONS.prob11;
         case 12:
-            return prob12;
+            return GAME_ICONS.prob12;
     }
     return null;
 };
@@ -133,19 +104,19 @@ const calculateProbabilitySprite = (num: number): string | null => {
 const calculateTileSprite = (tileType: TileType): string => {
     switch (tileType) {
         case TileType.BRICK:
-            return tileBrick;
+            return GAME_ICONS.tileBrick;
         case TileType.WOOD:
-            return tileLumber;
+            return GAME_ICONS.tileLumber;
         case TileType.ORE:
-            return tileOre;
+            return GAME_ICONS.tileOre;
         case TileType.WHEAT:
-            return tileGrain;
+            return GAME_ICONS.tileGrain;
         case TileType.SHEEP:
-            return tileWool;
+            return GAME_ICONS.tileWool;
         case TileType.DESERT:
-            return tileDesert;
+            return GAME_ICONS.tileDesert;
         case TileType.GOLD:
-            return tileGold;
+            return GAME_ICONS.tileGold;
     }
     return "";
 };
@@ -206,8 +177,8 @@ const PortPier = (props: { transX: number; transY: number; coord: HexCoordinate;
     return (
         <>
             <div className="port-pier" id={id} style={style}>
-                <img className={"port-pier__image1"} src={portPier} />
-                <img className={"port-pier__image2"} src={portPier} />
+                <img className={"port-pier__image1"} src={GAME_ICONS.portPier} />
+                <img className={"port-pier__image2"} src={GAME_ICONS.portPier} />
             </div>
             <div className="port-ship" style={styleNoRotation}>
                 <img className={"port-ship__image"} src={props.sprite} />
@@ -254,7 +225,7 @@ const drawPath = (transX: number, transY: number, path: Path) => {
 
     return (
         <div className="path-road" id={id} style={style}>
-            <img className="path-road__image" src={roadRed} />
+            <img className="path-road__image" src={GAME_ICONS.roadRed} />
         </div>
     );
 };

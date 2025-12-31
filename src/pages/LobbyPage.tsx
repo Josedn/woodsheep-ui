@@ -1,20 +1,6 @@
-import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
-import iconRoadRed from "../assets/game/road_red.41c6cbd9278108542715.svg";
-import iconSettlementRed from "../assets/game/settlement_red.22949197b57f9cfd968b.svg";
-import iconCityRed from "../assets/game/city_red.991ae0c7a0b95da9811d.svg";
-import iconPencil from "../assets/ui/icon_pencil.9d4a73f29f331378c4b5.svg";
-import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
-import iconSend from "../assets/ui/icon_send.0395fe5de05351959b13.svg";
-import iconInfo from "../assets/ui/icon_info.0f1a765945c77be429ac.svg";
-import mapBase from "../assets/ui/map_base_4p_preview.7ea40296a96ee1c95c4e.png";
-import mapVolcano from "../assets/ui/map_volcano_preview.c79f209e148f7c8270eb.png";
-import mapGoldRush from "../assets/ui/map_goldrush_preview.a33313f7fd0419b2b041.png";
-import iconSunglasses from "../assets/ui/icon_sunglasses.ecd4d017bb185bbc88b1.svg";
-import iconHideCard from "../assets/ui/icon_hide_bank_card.b09a12f928f2d00c985e.svg";
-import iconArrow from "../assets/ui/icon_arrow.b8e6ce7b0ed07009bbc7.svg";
-
 import "./lobby.scss";
 import { Header, Sidebar } from "./components/GenericPage";
+import { GAME_ICONS, UI_ICONS } from "../assets/images";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -25,22 +11,22 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
         <div className="lobby__player">
             <div className="lobby__player-info">
                 <div className="lobby__player-avatar">
-                    <img className="lobby__player-avatar-image" src={iconPlayer} />
+                    <img className="lobby__player-avatar-image" src={UI_ICONS.iconPlayer} />
                     <div className="lobby__player-username-container">
                         <div className="lobby__player-username">{props.username}</div>
                         <div className="lobby__player-karma">Karma: 20/20</div>
                     </div>
                 </div>
                 <div className={"lobby__player-color" + (props.canEdit ? " lobby__player-color--can-edit" : "")}>
-                    <img className="lobby__player-color-image" alt="Road" src={iconRoadRed} />
-                    <img className="lobby__player-color-image" alt="Settlement" src={iconSettlementRed} />
-                    <img className="lobby__player-color-image" alt="City" src={iconCityRed} />
+                    <img className="lobby__player-color-image" alt="Road" src={GAME_ICONS.roadRed} />
+                    <img className="lobby__player-color-image" alt="Settlement" src={GAME_ICONS.settlementRed} />
+                    <img className="lobby__player-color-image" alt="City" src={GAME_ICONS.cityRed} />
                 </div>
             </div>
             <div className="lobby__player-status">
                 <div className="lobby__player-actions-container">
                     <div className="lobby__player-action">
-                        <img className="lobby__player-action-image" alt="Edit" src={iconPencil} />
+                        <img className="lobby__player-action-image" alt="Edit" src={UI_ICONS.iconPencil} />
                     </div>
                 </div>
                 <div className={"lobby__player-ready" + (props.ready ? " lobby__player-ready--ready" : "")}>
@@ -65,14 +51,14 @@ const Lobby = () => {
             </div>
             <div className="lobby__middle">
                 <div className="lobby__info-header">
-                    <img className="lobby__info-exit-image" alt="Exit" src={iconCross} />
+                    <img className="lobby__info-exit-image" alt="Exit" src={UI_ICONS.iconCross} />
                     <h2 className="lobby__heading">Room ID: sail6736</h2>
                 </div>
                 <div className="lobby__info-scroller">
                     <div className="lobby__invite">
                         <div className="lobby__invite-title">
                             <h4 className="lobby__invite-title-heading">Invite Friends</h4>
-                            <img className="lobby__invite-title-image" src={iconInfo} />
+                            <img className="lobby__invite-title-image" src={UI_ICONS.iconInfo} />
                         </div>
                         <div className="lobby__invite-body">
                             <div className="lobby__invite-body-link">tbd</div>
@@ -88,17 +74,17 @@ const Lobby = () => {
                                 <div className="lobby__options-scroller">
                                     <div className="lobby__options-scroller-wrapper">
                                         <div className="lobby__options-cell lobby__options-cell--selected">
-                                            <img className="lobby__options-cell-image" src={mapBase} />
+                                            <img className="lobby__options-cell-image" src={UI_ICONS.mapBase} />
                                             <p className="lobby__options-cell-label">Base</p>
                                         </div>
 
                                         <div className="lobby__options-cell lobby__options-cell--unavailable">
-                                            <img className="lobby__options-cell-image" src={mapVolcano} />
+                                            <img className="lobby__options-cell-image" src={UI_ICONS.mapVolcano} />
                                             <p className="lobby__options-cell-label">Volcano</p>
                                         </div>
 
                                         <div className="lobby__options-cell lobby__options-cell--unavailable">
-                                            <img className="lobby__options-cell-image" src={mapGoldRush} />
+                                            <img className="lobby__options-cell-image" src={UI_ICONS.mapGoldRush} />
                                             <p className="lobby__options-cell-label">Gold Rush</p>
                                         </div>
                                     </div>
@@ -115,12 +101,12 @@ const Lobby = () => {
                                 <div className="lobby__options-scroller">
                                     <div className="lobby__options-scroller-wrapper lobby__options-scroller-wrapper--no-scroll">
                                         <div className="lobby__options-cell lobby__options-cell--selected">
-                                            <img className="lobby__options-cell-image" src={iconSunglasses} />
+                                            <img className="lobby__options-cell-image" src={UI_ICONS.iconSunglasses} />
                                             <p className="lobby__options-cell-label">Private Game</p>
                                         </div>
 
                                         <div className="lobby__options-cell">
-                                            <img className="lobby__options-cell-image" src={iconHideCard} />
+                                            <img className="lobby__options-cell-image" src={UI_ICONS.iconHideCard} />
                                             <p className="lobby__options-cell-label">Hide Bank Cards</p>
                                         </div>
                                     </div>
@@ -138,9 +124,9 @@ const Lobby = () => {
                                     <h3 className="lobby__options-subtitle">Turn Timer</h3>
                                 </div>
                                 <div className="lobby__options-body">
-                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
                                     <h3 className="lobby__options-range-input">120s</h3>
-                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
                             <div className="lobby__options-settings">
@@ -148,9 +134,9 @@ const Lobby = () => {
                                     <h3 className="lobby__options-subtitle">Max Players</h3>
                                 </div>
                                 <div className="lobby__options-body">
-                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
                                     <h3 className="lobby__options-range-input">4/4</h3>
-                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
                         </div>
@@ -160,9 +146,9 @@ const Lobby = () => {
                                     <h3 className="lobby__options-subtitle">Points to Win</h3>
                                 </div>
                                 <div className="lobby__options-body">
-                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
                                     <h3 className="lobby__options-range-input">10</h3>
-                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
                             <div className="lobby__options-settings">
@@ -170,9 +156,9 @@ const Lobby = () => {
                                     <h3 className="lobby__options-subtitle">Card Discard Limit</h3>
                                 </div>
                                 <div className="lobby__options-body">
-                                    <img class="lobby__options-arrow-selector" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
                                     <h3 className="lobby__options-range-input">7</h3>
-                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={iconArrow} />
+                                    <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
                         </div>
@@ -192,14 +178,14 @@ const Lobby = () => {
                 </div>
                 <div className="lobby__message-container">
                     <div className="lobby__message">
-                        <img className="lobby__message-avatar" alt="User" src={iconPlayer} />
+                        <img className="lobby__message-avatar" alt="User" src={UI_ICONS.iconPlayer} />
                         <span className="lobby__message-username">Bold: </span>hello
                     </div>
                 </div>
                 <form className="lobby__message-form">
                     <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} />
                     <button className="lobby__message-submit">
-                        <img className="lobby__message-submit-image" src={iconSend} />
+                        <img className="lobby__message-submit-image" src={UI_ICONS.iconSend} />
                     </button>
                 </form>
             </div>
