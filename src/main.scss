@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    //background-color: #328dc0;
+    background-color: #177fde;
+    color: #fff;
+    font-size: 15px;
+
+    line-height: 1.5;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+
+    scrollbar-color: #fff rgba(0, 0, 0, 0.1);
+    scrollbar-width: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    vertical-align: middle;
+}

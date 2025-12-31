@@ -1,62 +1,8 @@
-import bankIcon from "../assets/ui/bank.825b2690b4b1b694d646.svg";
-import cardLumber from "../assets/ui/card_lumber.cf22f8083cf89c2a29e7.svg";
-import cardWool from "../assets/ui/card_wool.17a6dea8d559949f0ccc.svg";
-import cardBrick from "../assets/ui/card_brick.5950ea07a7ea01bc54a5.svg";
-import cardOre from "../assets/ui/card_ore.117f64dab28e1c987958.svg";
-import cardGrain from "../assets/ui/card_grain.09c9d82146a64bce69b5.svg";
-import cardDevelopment from "../assets/ui/card_devcardback.92569a1abd04a8c1c17e.svg";
-import cardResourceBack from "../assets/ui/card_rescardback.03c18312a76028b0d9c9.svg";
-import cardResourceBackOverLimit from "../assets/ui/card_rescardoverlimit.94289aa29992189fe66c.svg";
-import cardKnight from "../assets/ui/card_knight.a58573f2154fa93a6319.svg";
-import cardMonopoly from "../assets/ui/card_monopoly.dfac189aaff62e271093.svg";
-import cardPoint from "../assets/ui/card_vp.672597308e3a8f1100ae.svg";
-import cardYearOfPlenty from "../assets/ui/card_yearofplenty.3df210b5455b7438db09.svg";
-import cardRoadBuilder from "../assets/ui/card_roadbuilding.994e8f21698ce6c350bd.svg";
-import iconBot from "../assets/ui/icon_bot.fe8fdd5cc98ae77d7774.svg";
-import iconPlayer from "../assets/ui/icon_player_loggedin.88be0a3c581efb9f2d3a.svg";
-import iconPlayers from "../assets/ui/icon_players.85d13bf5dfe81259979a.svg";
-import iconTradeArrowGreen from "../assets/ui/icon_trade_arrow_green.dc94789e15ba3783e25e.svg";
-import iconTradeArrowRed from "../assets/ui/icon_trade_arrow_red.d9bd6f9e6fe61a2cda68.svg";
-import iconTrophy from "../assets/ui/icon_trophy.bc5c68a7464f0462721d.svg";
-import iconSend from "../assets/ui/icon_send.0395fe5de05351959b13.svg";
-import dice1 from "../assets/ui/dice_1.f5a1a69c3529b5b5ffc5.svg";
-import dice2 from "../assets/ui/dice_2.859c1a230cf0ab52f238.svg";
-import dice3 from "../assets/ui/dice_3.353e115f936308bb6256.svg";
-import dice4 from "../assets/ui/dice_4.351f1ed668f38d45da30.svg";
-import dice5 from "../assets/ui/dice_5.5eea2c3e3b85be8190bd.svg";
-import dice6 from "../assets/ui/dice_6.aea83e2b0e712f5f1fab.svg";
-import ribbonSmall from "../assets/ui/ribbon_small.f1f6f5885b2535205fe3.svg";
-import ribbonLarge from "../assets/ui/ribbon_short.b4f83327f0b50cae62bb.svg";
-import largestArmyIcon from "../assets/ui/icon_largest_army.180cce1760beb87a1a3e.svg";
-import longestRoadIcon from "../assets/ui/icon_longest_road.5cfdeb3352b20463e64b.svg";
-import largestArmyIconHighlight from "../assets/ui/icon_largest_army_highlight.515bcbf0a2c0b5b5a3f1.svg";
-import longestRoadIconHighlight from "../assets/ui/icon_longest_road_highlight.50dc66b851ecee9a8662.svg";
-import iconSettings from "../assets/ui/icon_settings.163a70b3a0e246d006c2.svg";
-import bgButton from "../assets/ui/bg_button.6fb386c356a3e9b580e2.svg";
-import bgButtonHighlight from "../assets/ui/bg_button_trade_highlight.3925cb750db0bd0daa9c.svg";
-import bgButtonRed from "../assets/ui/bg_button_red.e443074fceecb964fe06.svg";
-import bgButtonBlue from "../assets/ui/bg_button_blue.b7198c2652442d82f2eb.svg";
-import bgButtonOrange from "../assets/ui/bg_button_orange.2e4497beb68391151250.svg";
-import bgButtonGreen from "../assets/ui/bg_button_green.71912ebbd4119e3cfafc.svg";
-import iconBankTrade from "../assets/ui/icon_trade_bank_check.cca85e07979a94c78dac.svg";
-import iconOpponentTrade from "../assets/ui/icon_trade_opponents_check.90ff25f49e3eede7c0bb.svg";
-import iconTrade from "../assets/ui/icon_trade.db2aa231787fcdbc1a67.svg";
-import iconCheck from "../assets/ui/icon_check.25cd255d370bed6f507b.svg";
-import iconCross from "../assets/ui/icon_x.5efbc794816c7abe462b.svg";
-import iconPencil from "../assets/ui/icon_pencil.9d4a73f29f331378c4b5.svg";
-import iconArrowUpBlack from "../assets/ui/icon_arrow_up_black.82635b6e9f69a1a10e3e.svg";
-import iconPassTurn from "../assets/ui/icon_pass_turn.8d5b7a48c40a85b859cd.svg";
-import iconRoadRed from "../assets/ui/road_red.41c6cbd9278108542715.svg";
-import iconSettlementRed from "../assets/ui/settlement_red.22949197b57f9cfd968b.svg";
-import iconCityRed from "../assets/ui/city_red.991ae0c7a0b95da9811d.svg";
-import iconStatusAccept from "../assets/ui/player_status_accept.0d2db004499736cfb369.svg";
-import iconStatusReject from "../assets/ui/player_status_reject.9efea4f82b41faca8846.svg";
-import iconStatusPending from "../assets/ui/player_status_pending.9a4dc5cd13a898e73a1e.svg";
-import "./fonts.css";
-import "./ui.scss";
+import "./game-ui.scss";
 
 import type { ComponentChildren, VNode } from "preact";
-import { GameBoard } from "../game-board/GameBoard";
+import { GameBoard } from "../game/GameBoard";
+import { UI_ICONS, GAME_TINTED_ICONS } from "../assets/images";
 
 const generatePlayer = (
     username: string,
@@ -85,23 +31,23 @@ const generatePlayer = (
                     {!currentUser && <div className="player-info__username">{username}</div>}
                     <div className="player-info__avatar-and-points">
                         <button className={"player-info__avatar" + (currentUser ? " player-info__avatar--current-user" : "")}>
-                            <GenericAvatar className="player-info__avatar-halo" backgroundColor={color} iconSrc={isBot ? iconBot : iconPlayer} />
+                            <GenericAvatar className="player-info__avatar-halo" backgroundColor={color} iconSrc={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer} />
                         </button>
                         <div className={"player-info__points" + (currentUser ? " player-info__points--current-user" : "")}>
-                            <img src={currentUser ? ribbonLarge : ribbonSmall} className={"player-info__points-ribbon" + (currentUser ? " player-info__points-ribbon--current-user" : "")}></img>
+                            <img src={currentUser ? UI_ICONS.ribbonLarge : UI_ICONS.ribbonSmall} className={"player-info__points-ribbon" + (currentUser ? " player-info__points-ribbon--current-user" : "")}></img>
                             <span className="player-info__points-count">{points}</span>
                         </div>
                     </div>
                 </div>
                 <div className={"player-info__cards" + (currentUser ? " player-info__cards--current-user" : "")}>
                     <div className="player-info__resources">
-                        <img className="player-info__card" src={resourceCards > 7 ? cardResourceBackOverLimit : cardResourceBack}></img>
+                        <img className="player-info__card" src={resourceCards > 7 ? UI_ICONS.cardResourceBackOverLimit : UI_ICONS.cardResourceBack}></img>
                         <div className="player-info__card-count-badge">
                             <div className="player-info__card-count">{resourceCards}</div>
                         </div>
                     </div>
                     <div className="player-info__resources">
-                        <img className="player-info__card" src={cardDevelopment}></img>
+                        <img className="player-info__card" src={UI_ICONS.cardDevelopment}></img>
                         <div className="player-info__card-count-badge">
                             <div className="player-info__card-count">{developmentCards}</div>
                         </div>
@@ -109,11 +55,11 @@ const generatePlayer = (
                 </div>
                 <div className={"player-info__achievement-container" + (currentUser ? " player-info__achievement-container--current-user" : "")}>
                     <div className="player-info__achievement">
-                        <img className="player-info__achievement-image" src={largestArmy ? largestArmyIconHighlight : largestArmyIcon}></img>
+                        <img className="player-info__achievement-image" src={largestArmy ? UI_ICONS.largestArmyIconHighlight : UI_ICONS.largestArmyIcon}></img>
                         <div className="player-info__achievement-count">{armyCount}</div>
                     </div>
                     <div className="player-info__achievement">
-                        <img className="player-info__achievement-image" src={longestRoad ? longestRoadIconHighlight : longestRoadIcon}></img>
+                        <img className="player-info__achievement-image" src={longestRoad ? UI_ICONS.longestRoadIconHighlight : UI_ICONS.longestRoadIcon}></img>
                         <div className="player-info__achievement-count">{roadCount}</div>
                     </div>
                 </div>
@@ -140,10 +86,10 @@ const generateOpponentCard = (
         <div className="opponent-container__row">
             <div className={"opponent-container__dice-group" + (!isActive ? " opponent-container__dice-group--hidden" : "")}>
                 <div className="opponent-container__dice-wrapper">
-                    <img className="opponent-container__dice-image" src={dice1} />
+                    <img className="opponent-container__dice-image" src={UI_ICONS.dice1} />
                 </div>
                 <div className="opponent-container__dice-wrapper">
-                    <img className="opponent-container__dice-image opponent-container__dice-image--inactive" src={dice1} />
+                    <img className="opponent-container__dice-image opponent-container__dice-image--inactive" src={UI_ICONS.dice1} />
                 </div>
             </div>
 
@@ -192,14 +138,14 @@ const generateCardStackBank = (count: number, imgSrc: string) => {
 const Bank = () => {
     return (
         <div className="game-board__bank bank-container">
-            <img src={bankIcon} className="bank-container__icon"></img>
+            <img src={UI_ICONS.bankIcon} className="bank-container__icon"></img>
             <div className="bank-container__card-row">
-                {generateCardStackBank(18, cardLumber)}
-                {generateCardStackBank(8, cardBrick)}
-                {generateCardStackBank(18, cardWool)}
-                {generateCardStackBank(0, cardGrain)}
-                {generateCardStackBank(18, cardOre)}
-                {generateCardStackBank(20, cardDevelopment)}
+                {generateCardStackBank(18, UI_ICONS.cardLumber)}
+                {generateCardStackBank(8, UI_ICONS.cardBrick)}
+                {generateCardStackBank(18, UI_ICONS.cardWool)}
+                {generateCardStackBank(0, UI_ICONS.cardGrain)}
+                {generateCardStackBank(18, UI_ICONS.cardOre)}
+                {generateCardStackBank(20, UI_ICONS.cardDevelopment)}
             </div>
         </div>
     );
@@ -215,7 +161,7 @@ const generateLogItem = (username: string, color: string, isBot: boolean, action
     return (
         <div className="chat-container__message-wrapper">
             <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
+                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
             </div>
             <span className="chat-container__message-content">
                 <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> {action} {imagesNodes}
@@ -238,11 +184,11 @@ const generateWinItem = (username: string, color: string, isBot: boolean) => {
     return (
         <div className="chat-container__message-wrapper chat-container__message-wrapper--centered">
             <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
+                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
             </div>
             <span className="chat-container__message-content">
-                <img className="chat-container__message-image" src={iconTrophy}></img> <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> won the game!{" "}
-                <img className="chat-container__message-image" src={iconTrophy}></img>
+                <img className="chat-container__message-image" src={UI_ICONS.iconTrophy}></img> <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> won the game!{" "}
+                <img className="chat-container__message-image" src={UI_ICONS.iconTrophy}></img>
             </span>
         </div>
     );
@@ -252,7 +198,7 @@ const generateChatItem = (username: string, color: string, isBot: boolean, messa
     return (
         <div className="chat-container__message-wrapper">
             <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? iconBot : iconPlayer}></img>
+                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
             </div>
             <span className="chat-container__message-content">
                 <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span>: {message}
@@ -265,20 +211,20 @@ const GameLog = () => {
     return (
         <div className="game-board__log">
             <div className="chat-container__scroller">
-                {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                {generateLogItem("Ester", "red", true, "got", [cardGrain])}
+                {generateLogItem("Lissi", "blue", false, "bought", [UI_ICONS.cardDevelopment])}
+                {generateLogItem("Ester", "red", true, "got", [UI_ICONS.cardGrain])}
                 {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [dice1, dice2])}
-                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice1, UI_ICONS.dice2])}
+                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
                 {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [dice3, dice4])}
-                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice3, UI_ICONS.dice4])}
+                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
                 {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [dice5, dice6])}
-                {generateLogItem("Bold", "orange", false, "got", [cardLumber, cardOre])}
+                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice5, UI_ICONS.dice6])}
+                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
                 {generateLogSeparator()}
-                {generateLogItem("Lissi", "blue", false, "bought", [cardDevelopment])}
-                {generateLogItem("Ester", "red", true, "got", [cardGrain])}
+                {generateLogItem("Lissi", "blue", false, "bought", [UI_ICONS.cardDevelopment])}
+                {generateLogItem("Ester", "red", true, "got", [UI_ICONS.cardGrain])}
                 {generateLogSeparator()}
                 {generateWinItem("Ester", "red", true)}
             </div>
@@ -300,7 +246,7 @@ const GameChat = () => {
                     <form className="chat-container__form">
                         <input type="text" placeholder="Send a message" maxlength={200} className="chat-container__input"></input>
                         <button className="chat-container__submit">
-                            <img src={iconSend} className="chat-container__submit-image" />
+                            <img src={UI_ICONS.iconSend} className="chat-container__submit-image" />
                         </button>
                     </form>
                 </div>
@@ -346,16 +292,16 @@ const generateWantedCards = () => {
         <div className="trade-creator-wanted">
             <div className="trade-creator-wanted__cards-container">
                 <div className="trade-creator-wanted__cards-stack">
-                    {generateCardStackInventory(1, cardLumber, false)}
-                    {generateCardStackInventory(1, cardBrick, false)}
-                    {generateCardStackInventory(1, cardWool, false)}
-                    {generateCardStackInventory(1, cardGrain, false)}
-                    {generateCardStackInventory(1, cardOre, false)}
-                    {generateCardStackInventory(1, cardResourceBack, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardLumber, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardBrick, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardWool, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardGrain, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardOre, false)}
+                    {generateCardStackInventory(1, UI_ICONS.cardResourceBack, false)}
                 </div>
             </div>
             <div className="trade-creator-wanted__bank-icon">
-                <img className="trade-creator-wanted__bank-icon-image" src={bankIcon} />
+                <img className="trade-creator-wanted__bank-icon-image" src={UI_ICONS.bankIcon} />
             </div>
         </div>
     );
@@ -363,7 +309,7 @@ const generateWantedCards = () => {
 
 const GenericAvatar = (props: { className?: string; backgroundColor?: string; iconSrc?: string; children?: ComponentChildren }) => {
     const additionalClassName = props.className || "";
-    const iconSrc = props.iconSrc || iconPlayer;
+    const iconSrc = props.iconSrc || UI_ICONS.iconPlayer;
     const colorClassName = (props.backgroundColor && `generic-avatar--${props.backgroundColor}`) || "";
     const imageClassName = props.backgroundColor == null ? "generic-avatar__image generic-avatar__image--no-background" : "generic-avatar__image";
     return (
@@ -380,16 +326,16 @@ const TradeProposalSection = () => {
             {generateWantedCards()}
             <div className="trade-creator-proposal">
                 <div className="trade-creator-proposal__wanted-container">
-                    <GenericAvatar iconSrc={iconPlayers} />
-                    <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowGreen} />
-                    {generateCardStackInventory(1, cardBrick, true)}
-                    {generateCardStackInventory(1, cardLumber, true)}
+                    <GenericAvatar iconSrc={UI_ICONS.iconPlayers} />
+                    <img className="trade-creator-proposal__giving-arrow" src={UI_ICONS.iconTradeArrowGreen} />
+                    {generateCardStackInventory(1, UI_ICONS.cardBrick, true)}
+                    {generateCardStackInventory(1, UI_ICONS.cardLumber, true)}
                 </div>
                 <div className="trade-creator-proposal__offered-container">
                     <GenericAvatar backgroundColor="red" />
-                    <img className="trade-creator-proposal__giving-arrow" src={iconTradeArrowRed} />
-                    {generateCardStackInventory(2, cardOre, true)}
-                    {generateCardStackInventory(1, cardWool, true)}
+                    <img className="trade-creator-proposal__giving-arrow" src={UI_ICONS.iconTradeArrowRed} />
+                    {generateCardStackInventory(2, UI_ICONS.cardOre, true)}
+                    {generateCardStackInventory(1, UI_ICONS.cardWool, true)}
                 </div>
             </div>
         </>
@@ -400,33 +346,33 @@ const InventorySection = (props: { showTradeActions: boolean }) => {
     return (
         <div className="game-inventory__trade-creator-container">
             <div className="game-inventory__card-inventory">
-                {generateCardStackInventory(2, cardLumber, true)}
-                {generateCardStackInventory(2, cardBrick, true)}
-                {generateCardStackInventory(1, cardWool, true)}
-                {generateCardStackInventory(2, cardGrain, true)}
-                {generateCardStackInventory(3, cardOre, true)}
+                {generateCardStackInventory(2, UI_ICONS.cardLumber, true)}
+                {generateCardStackInventory(2, UI_ICONS.cardBrick, true)}
+                {generateCardStackInventory(1, UI_ICONS.cardWool, true)}
+                {generateCardStackInventory(2, UI_ICONS.cardGrain, true)}
+                {generateCardStackInventory(3, UI_ICONS.cardOre, true)}
 
                 <div className="game-inventory__separator"></div>
 
-                {generateCardStackInventory(1, cardKnight, false)}
-                {generateCardStackInventory(1, cardRoadBuilder, false)}
-                {generateCardStackInventory(1, cardMonopoly, false)}
-                {generateCardStackInventory(1, cardPoint, false)}
-                {generateCardStackInventory(1, cardYearOfPlenty, false)}
+                {generateCardStackInventory(1, UI_ICONS.cardKnight, false)}
+                {generateCardStackInventory(1, UI_ICONS.cardRoadBuilder, false)}
+                {generateCardStackInventory(1, UI_ICONS.cardMonopoly, false)}
+                {generateCardStackInventory(1, UI_ICONS.cardPoint, false)}
+                {generateCardStackInventory(1, UI_ICONS.cardYearOfPlenty, false)}
             </div>
             {props.showTradeActions && (
                 <div className="game-inventory__trade-actions">
                     <div className="game-inventory__action-button">
-                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <img className="game-inventory__action-bg" src={UI_ICONS.bgButton} />
                         <div className="">
-                            <img className="game-inventory__action-icon" src={iconBankTrade} />
+                            <img className="game-inventory__action-icon" src={UI_ICONS.iconBankTrade} />
                         </div>
                     </div>
 
                     <div className="game-inventory__action-button">
-                        <img className="game-inventory__action-bg" src={bgButton} />
+                        <img className="game-inventory__action-bg" src={UI_ICONS.bgButton} />
                         <div className="">
-                            <img className="game-inventory__action-icon" src={iconOpponentTrade} />
+                            <img className="game-inventory__action-icon" src={UI_ICONS.iconOpponentTrade} />
                         </div>
                     </div>
                 </div>
@@ -439,10 +385,10 @@ const DiceContainer = () => {
     return (
         <div className="dice-container">
             <div className="dice-container__wrapper">
-                <img className="dice-container__image" src={dice1} />
+                <img className="dice-container__image" src={UI_ICONS.dice1} />
             </div>
             <div className="dice-container__wrapper">
-                <img className="dice-container__image dice-container__image--inactive" src={dice3} />
+                <img className="dice-container__image dice-container__image--inactive" src={UI_ICONS.dice3} />
             </div>
         </div>
     );
@@ -452,7 +398,7 @@ const generateActionButton = (className: string, iconSrc: string, enabled: boole
     return (
         <div className={className}>
             <div className="game-actions__action-button">
-                <img className="game-actions__button-background" src={bgButton} />
+                <img className="game-actions__button-background" src={UI_ICONS.bgButton} />
                 <div className={enabled ? "" : "game-actions__foreground-disabled"}>
                     <img className="game-actions__icon-wrapper" src={iconSrc} />
                     {count >= 0 && (
@@ -471,7 +417,7 @@ const ActionButtonsSection = () => {
         <div className="game-actions">
             <div className="game-actions__current-status">
                 <div className="game-actions__current-status-container">
-                    <GenericAvatar className="game-actions__avatar" backgroundColor="red" iconSrc={iconPlayer} />
+                    <GenericAvatar className="game-actions__avatar" backgroundColor="red" iconSrc={UI_ICONS.iconPlayer} />
                     <div className="game-actions__current-status-message">Answer Trade</div>
                 </div>
             </div>
@@ -479,12 +425,12 @@ const ActionButtonsSection = () => {
                 <div className="game-actions__timer-text">03:02</div>
             </div>
 
-            {generateActionButton("game-actions__trade-button", iconCross, true, -1) /* iconTrade */}
-            {generateActionButton("game-actions__development-card-button", cardDevelopment, false, -1)}
-            {generateActionButton("game-actions__road-button", iconRoadRed, true, 14)}
-            {generateActionButton("game-actions__settlement-button", iconSettlementRed, false, 5)}
-            {generateActionButton("game-actions__city-button", iconCityRed, false, 4)}
-            {generateActionButton("game-actions__turn-button", iconPassTurn, true, -1)}
+            {generateActionButton("game-actions__trade-button", UI_ICONS.iconCross, true, -1) /* iconTrade */}
+            {generateActionButton("game-actions__development-card-button", UI_ICONS.cardDevelopment, false, -1)}
+            {generateActionButton("game-actions__road-button", GAME_TINTED_ICONS.roadRed, true, 14)}
+            {generateActionButton("game-actions__settlement-button", GAME_TINTED_ICONS.settlementRed, false, 5)}
+            {generateActionButton("game-actions__city-button", GAME_TINTED_ICONS.cityRed, false, 4)}
+            {generateActionButton("game-actions__turn-button", UI_ICONS.iconPassTurn, true, -1)}
         </div>
     );
 };
@@ -520,7 +466,7 @@ const generateCardStackTrade = (count: number, imgSrc: string) => {
 const generateTradeButton = (backgroundSrc: string, iconSrc: string, enabled: boolean, cooldown: boolean) => {
     return (
         <div className="trade-offers__button">
-            {cooldown && <img className="trade-offers__button-cooldown" src={bgButtonHighlight} style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);" />}
+            {cooldown && <img className="trade-offers__button-cooldown" src={UI_ICONS.bgButtonHighlight} style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, -1.67931% 135.611%);" />}
 
             <img className="trade-offers__button-image" src={backgroundSrc} />
             <div className={enabled ? "" : "trade-offers__button-foreground-disabled"}>
@@ -540,13 +486,13 @@ const generateOpponentTradeStatus = (tradeStatusSrc: string, avatarColor: string
 
 const TradeHeader = (props: { colors: string[] }) => {
     const iconNodes: VNode[] = props.colors.map(color => {
-        return <GenericAvatar className="trade-offers__player-icon" backgroundColor={color} iconSrc={iconBot} />;
+        return <GenericAvatar className="trade-offers__player-icon" backgroundColor={color} iconSrc={UI_ICONS.iconBot} />;
     });
 
     return (
         <div className="trade-offers__header">
             <div className="trade-offers__players-container">{iconNodes}</div>
-            <img className="trade-offers__hide-icon" src={iconArrowUpBlack} />
+            <img className="trade-offers__hide-icon" src={UI_ICONS.iconArrowUpBlack} />
         </div>
     );
 };
@@ -556,52 +502,52 @@ const TradeOffer = (props: { sentByMe: boolean; counterOffer: boolean }) => {
         <div className="trade-offers__offer">
             {props.counterOffer && (
                 <div className="trade-offers__counteroffer-side ">
-                    <GenericAvatar className="trade-offers__opponent-avatar-counteroffer" backgroundColor="green" iconSrc={iconPlayer} />
+                    <GenericAvatar className="trade-offers__opponent-avatar-counteroffer" backgroundColor="green" iconSrc={UI_ICONS.iconPlayer} />
                 </div>
             )}
 
             <div className="trade-offers__offer-container">
                 <div className="trade-offers__receiving-half">
                     <div className="trade-offers__left-container">
-                        {props.sentByMe && <GenericAvatar iconSrc={iconPlayers}></GenericAvatar>}
+                        {props.sentByMe && <GenericAvatar iconSrc={UI_ICONS.iconPlayers}></GenericAvatar>}
 
-                        {!props.sentByMe && <GenericAvatar backgroundColor="green" iconSrc={iconPlayer} />}
+                        {!props.sentByMe && <GenericAvatar backgroundColor="green" iconSrc={UI_ICONS.iconPlayer} />}
 
-                        <img className="trade-offers__receiving-arrow" src={iconTradeArrowGreen} />
-                        <div className="trade-offers__card-row">{generateCardStackTrade(3, cardOre)}</div>
+                        <img className="trade-offers__receiving-arrow" src={UI_ICONS.iconTradeArrowGreen} />
+                        <div className="trade-offers__card-row">{generateCardStackTrade(3, UI_ICONS.cardOre)}</div>
                     </div>
                     <div className="trade-offers__right-container">
                         {!props.sentByMe && (
                             <>
-                                {generateOpponentTradeStatus(iconStatusAccept, "blue", iconPlayer)}
-                                {generateOpponentTradeStatus(iconStatusReject, "green", iconBot)}
+                                {generateOpponentTradeStatus(UI_ICONS.iconStatusAccept, "blue", UI_ICONS.iconPlayer)}
+                                {generateOpponentTradeStatus(UI_ICONS.iconStatusReject, "green", UI_ICONS.iconBot)}
                             </>
                         )}
                     </div>
                 </div>
                 <div className="trade-offers__giving-half">
                     <div className="trade-offers__left-container">
-                        <GenericAvatar backgroundColor="orange" iconSrc={iconPlayer} />
-                        <img className="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={iconTradeArrowRed} />
+                        <GenericAvatar backgroundColor="orange" iconSrc={UI_ICONS.iconPlayer} />
+                        <img className="trade-offers__receiving-arrow givingArrow-_1FaBc_j" src={UI_ICONS.iconTradeArrowRed} />
                         <div className="trade-offers__card-row">
-                            {generateCardStackTrade(1, cardBrick)}
-                            {generateCardStackTrade(2, cardLumber)}
+                            {generateCardStackTrade(1, UI_ICONS.cardBrick)}
+                            {generateCardStackTrade(2, UI_ICONS.cardLumber)}
                         </div>
                     </div>
 
                     {props.sentByMe && (
                         <div className="trade-offers__right-container">
-                            {generateTradeButton(bgButtonBlue, iconCheck, true, false)}
-                            {generateTradeButton(bgButtonOrange, iconCheck, false, false)}
-                            {generateTradeButton(bgButtonGreen, iconCheck, true, false)}
-                            {generateTradeButton(bgButton, iconCross, false, false)}
+                            {generateTradeButton(UI_ICONS.bgButtonBlue, UI_ICONS.iconCheck, true, false)}
+                            {generateTradeButton(UI_ICONS.bgButtonOrange, UI_ICONS.iconCheck, false, false)}
+                            {generateTradeButton(UI_ICONS.bgButtonGreen, UI_ICONS.iconCheck, true, false)}
+                            {generateTradeButton(UI_ICONS.bgButton, UI_ICONS.iconCross, false, false)}
                         </div>
                     )}
                     {!props.sentByMe && (
                         <div className="trade-offers__right-container">
-                            {generateTradeButton(bgButton, iconPencil, true, false)}
-                            {generateTradeButton(bgButton, iconCross, true, true)}
-                            {generateTradeButton(bgButton, iconCheck, true, false)}
+                            {generateTradeButton(UI_ICONS.bgButton, UI_ICONS.iconPencil, true, false)}
+                            {generateTradeButton(UI_ICONS.bgButton, UI_ICONS.iconCross, true, true)}
+                            {generateTradeButton(UI_ICONS.bgButton, UI_ICONS.iconCheck, true, false)}
                         </div>
                     )}
                 </div>
@@ -622,7 +568,7 @@ export const GameUI = () => {
                         <div className="options-menu">
                             <div className="options-menu__container">
                                 <button className="options-menu__button">
-                                    <img src={iconSettings} className="options-menu__button-image"></img>
+                                    <img src={UI_ICONS.iconSettings} className="options-menu__button-image"></img>
                                 </button>
                             </div>
                         </div>
