@@ -1,7 +1,7 @@
-import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/Tile";
-import { Path } from "../engine/Path";
-import { Intersection } from "../engine/Intersection";
-import { GAME_ICONS, GAME_TINTED_ICONS } from "../assets/images";
+import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../engine/catan/Tile";
+import { Path } from "../engine/catan/Path";
+import { Intersection } from "../engine/catan/Intersection";
+import { GAME_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
 import "./game-board.scss";
 
 const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment

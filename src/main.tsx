@@ -5,6 +5,13 @@ import { GameUI } from "./pages/GameUI.tsx";
 import { HomePage } from "./pages/HomePage.tsx";
 import "./assets/fonts/fonts.css";
 import "./main.scss";
+import { GameEngine } from "./game/engine/GameEngine.ts";
+
+const game = GameEngine.initialize();
+
+// for debugging
+const win: any = window;
+win.game = game;
 
 const App = () => {
     return (
