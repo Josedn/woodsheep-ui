@@ -2,22 +2,31 @@ import { env } from "./env";
 
 type LogMeta = Record<string, unknown>;
 
-export const Logger = {
-    debug(message: string, meta?: LogMeta) {
-        if (env.environment == "development") {
-            console.debug(message, meta);
-        }
-    },
-
-    info(message: string, meta?: LogMeta) {
-        console.info(message, meta);
-    },
-
-    warn(message: string, meta?: LogMeta) {
-        console.warn(message, meta);
-    },
-
-    error(message: string, meta?: LogMeta) {
-        console.error(message, meta);
-    },
+type LoggerInstance = {
+    debug(message: string, meta?: LogMeta): void;
+    info(message: string, meta?: LogMeta): void;
+    warn(message: string, meta?: LogMeta): void;
+    error(message: string, meta?: LogMeta): void;
 };
+
+export function createLogger(scope: string): LoggerInstance {
+    return {
+        debug(message, meta) {
+            if (env.environment === "development") {
+                console.debug(`[${scope}] ${message}`, meta);
+            }
+        },
+
+        info(message, meta) {
+            console.info(`[${scope}] ${message}`, meta);
+        },
+
+        warn(message, meta) {
+            console.warn(`[${scope}] ${message}`, meta);
+        },
+
+        error(message, meta) {
+            console.error(`[${scope}] ${message}`, meta);
+        },
+    };
+}

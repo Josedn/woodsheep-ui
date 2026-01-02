@@ -1,7 +1,9 @@
 import { GameEngine } from "../GameEngine";
 import type { GroupInfo } from "../LobbyService";
-import { Logger } from "../misc/Logger";
+import { createLogger } from "../misc/Logger";
 import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
+
+const logger = createLogger("TempGroupCommunicationService");
 
 type GroupMessage = {
     groups: GroupInfo[];
@@ -22,12 +24,12 @@ export default class TempGroupCommunicationService implements IMessageHandler {
     }
 
     connect(): Promise<void> {
-        Logger.debug("Connecting to " + this.url);
+        logger.debug("Connecting to " + this.url);
         return this.client.connect(this.url);
     }
 
     handleMessage(data: string): void {
-        Logger.debug("Received " + data);
+        logger.debug("Received " + data);
         // TODO: refactor group
         const parsed = JSON.parse(data);
         if (data == "HEARTBEAT") {
@@ -41,12 +43,12 @@ export default class TempGroupCommunicationService implements IMessageHandler {
     }
 
     handleOpenConnection(): void {
-        Logger.info("Connection open");
+        logger.info("Connection open");
     }
     handleCloseConnection(): void {
-        Logger.info("Connection closed");
+        logger.info("Connection closed");
     }
     handleConnectionError(): void {
-        Logger.info("Connection error");
+        logger.info("Connection error");
     }
 }

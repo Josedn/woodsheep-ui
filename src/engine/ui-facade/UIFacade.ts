@@ -1,7 +1,9 @@
 import { GameEngine } from "../GameEngine";
 import type { GroupInfo } from "../LobbyService";
-import { Logger } from "../misc/Logger";
+import { createLogger } from "../misc/Logger";
 import type { UserInfo } from "../ProfileService";
+
+const logger = createLogger("UIFacade");
 
 export const UI_EVENTS = {
     UPDATE_LOBBIES: "updateLobbies",
@@ -33,9 +35,9 @@ export class UIFacade {
     public on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
         this.listeners[event] ??= [];
         this.listeners[event]!.push(cb);
-        Logger.debug("Subscribed " + event);
+        logger.debug("Subscribed " + event);
         return () => {
-            Logger.debug("Unsubscribed " + event);
+            logger.debug("Unsubscribed " + event);
             this.listeners[event] = [];
         };
     }

@@ -3,9 +3,11 @@ import TempGroupCommunicationService from "./communication/TempGroupCommunicatio
 import { LobbyService } from "./LobbyService";
 import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
-import { Logger } from "./misc/Logger";
+import { createLogger } from "./misc/Logger";
 import { ProfileService } from "./ProfileService";
 import { UIFacade } from "./ui-facade/UIFacade";
+
+const logger = createLogger("GameEngine");
 
 export class GameEngine {
     private static gameInstance: GameEngine;
@@ -22,7 +24,7 @@ export class GameEngine {
         this.uiFacade = new UIFacade();
         this.profileService = new ProfileService();
 
-        Logger.debug("Engine constructed");
+        logger.debug("Engine constructed");
     }
 
     initialize() {

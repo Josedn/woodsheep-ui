@@ -1,8 +1,10 @@
-import { Logger } from "../misc/Logger";
+import { createLogger } from "../misc/Logger";
 import { HandleSetCookie } from "./incoming/HandleSetCookie";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
+
+const logger = createLogger("CommunicationService");
 
 export default class CommunicationService implements IMessageHandler {
     client: WebSocketClient;
@@ -25,7 +27,7 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     connect(): Promise<void> {
-        Logger.debug("Connecting to " + this.url);
+        logger.debug("Connecting to " + this.url);
         return this.client.connect(this.url);
     }
 
@@ -37,20 +39,20 @@ export default class CommunicationService implements IMessageHandler {
         const message = new IncomingMessage(data);
         const handler = this.requestHandlers[message.requestType];
         if (handler != null) {
-            Logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name);
+            logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name);
             handler.handle(message);
         } else {
-            Logger.warn("No handler for requestType: " + message.requestType);
+            logger.warn("No handler for requestType: " + message.requestType);
         }
     }
 
     handleOpenConnection(): void {
-        Logger.info("Connection open");
+        logger.info("Connection open");
     }
     handleCloseConnection(): void {
-        Logger.info("Connection closed");
+        logger.info("Connection closed");
     }
     handleConnectionError(): void {
-        Logger.info("Connection error");
+        logger.info("Connection error");
     }
 }

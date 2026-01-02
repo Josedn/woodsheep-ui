@@ -1,6 +1,8 @@
 import type { GameEngine } from "../../GameEngine";
-import { Logger } from "../../misc/Logger";
+import { createLogger } from "../../misc/Logger";
 import type { GameCommand } from "../UIFacade";
+
+const logger = createLogger("SendChatMessage");
 
 class SendChatMessage implements GameCommand {
     private message: string;
@@ -9,6 +11,6 @@ class SendChatMessage implements GameCommand {
     }
 
     execute(game: GameEngine) {
-        Logger.debug("Executing command");
+        logger.debug("Executing command");
     }
 }
