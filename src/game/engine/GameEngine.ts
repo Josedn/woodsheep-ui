@@ -3,17 +3,21 @@ import { LobbyService } from "./LobbyService";
 import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
 import { Logger } from "./misc/Logger";
+import { UIFacade } from "./ui/UIFacade";
 
 export class GameEngine {
     private static gameInstance: GameEngine;
     private groupCommunicationService: CommunicationService;
     private gameCommunicationService: CommunicationService;
     public lobbyService: LobbyService;
+    public uiFacade: UIFacade;
 
     constructor() {
         this.groupCommunicationService = new CommunicationService();
         this.gameCommunicationService = new CommunicationService();
         this.lobbyService = new LobbyService();
+        this.uiFacade = new UIFacade();
+
         Logger.debug("Engine constructed");
     }
 

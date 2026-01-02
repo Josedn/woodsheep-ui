@@ -1,3 +1,5 @@
+import { GameEngine } from "./GameEngine";
+
 export class LobbyService {
     lobbies: GroupInfo[];
     // TODO: review limit
@@ -11,6 +13,8 @@ export class LobbyService {
     public handleLobbyUpdate(groups: GroupInfo[], atLimit: boolean) {
         this.lobbies = groups;
         this.atLimit = atLimit;
+
+        GameEngine.getGame().uiFacade.onLobbiesUpdate(groups, atLimit);
     }
 }
 

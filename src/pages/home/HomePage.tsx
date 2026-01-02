@@ -4,27 +4,37 @@ import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
 import "./home.scss";
 import { Sidebar } from "../components/Sidebar";
 import { PopUp } from "../components/popups/PopUp";
+import type { GroupInfo } from "../../game/engine/LobbyService";
+import type { VNode } from "preact";
+import { useEffect, useState } from "preact/hooks";
+import { GameEngine } from "../../game/engine/GameEngine";
 
-const LobbyTableRow = (props: { host: string; map: string }) => {
+const LobbyTableRow = (props: { name: string; map: string; currentSize: number; maxSize: number }) => {
+    const playerNodes: VNode[] = [];
+
+    for (let i = 0; i < props.maxSize; i++) {
+        const className = i < props.currentSize ? "lobby-list__table-player-img" : "lobby-list__table-player-img lobby-list__table-player-img--empty";
+        playerNodes.push(<img className={className} src={UI_ICONS.iconPlayer} />);
+    }
+
     return (
         <tr>
-            <td>{props.host}</td>
+            <td>{props.name}</td>
             <td>{props.map}</td>
             <td>30s</td>
 
             <td className="lobby-list__table-data-players">
-                <div className="lobby-list__table-data-player-count">
-                    <img className="lobby-list__table-player-img" src={UI_ICONS.iconPlayer} />
-                    <img className="lobby-list__table-player-img" src={UI_ICONS.iconPlayer} />
-                    <img className="lobby-list__table-player-img lobby-list__table-player-img--empty" src={UI_ICONS.iconPlayer} />
-                    <img className="lobby-list__table-player-img lobby-list__table-player-img--empty" src={UI_ICONS.iconPlayer} />
-                </div>
+                <div className="lobby-list__table-data-player-count">{playerNodes}</div>
             </td>
         </tr>
     );
 };
 
-const LobbyTable = () => {
+const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
+    const lobbiesRows = props.lobbies.map(lobbyInfo => {
+        const { id, maxSize, currentSize, groupName } = lobbyInfo.group;
+        return <LobbyTableRow key={id} name={groupName} maxSize={maxSize} currentSize={currentSize} map="Base" />;
+    });
     return (
         <table className="lobby-list__table">
             <thead>
@@ -43,25 +53,20 @@ const LobbyTable = () => {
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                <LobbyTableRow host="Bold" map="Base" />
-                <LobbyTableRow host="Lissi" map="Base" />
-                <LobbyTableRow host="Ester" map="Volcano" />
-                <LobbyTableRow host="Bold" map="Base" />
-                <LobbyTableRow host="Lissi" map="Base" />
-                <LobbyTableRow host="Ester" map="Volcano" />
-                <LobbyTableRow host="Bold" map="Base" />
-                <LobbyTableRow host="Lissi" map="Base" />
-                <LobbyTableRow host="Ester" map="Volcano" />
-                <LobbyTableRow host="Bold" map="Base" />
-                <LobbyTableRow host="Lissi" map="Base" />
-                <LobbyTableRow host="Ester" map="Volcano" />
-            </tbody>
+            <tbody>{lobbiesRows}</tbody>
         </table>
     );
 };
 
 const Home = () => {
+    const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
+
+    useEffect(() => {
+        GameEngine.getGame().uiFacade.onLobbiesUpdate = (groups: GroupInfo[], atLimit: boolean) => {
+            setLobbies(groups);
+        };
+    }, []);
+
     return (
         <div className="home">
             <div className="home__main-content">
@@ -78,7 +83,7 @@ const Home = () => {
                         <div className="lobby-list__scrollable">
                             <div className="lobby-list__header-background"></div>
                             <div className="lobby-list__table-container">
-                                <LobbyTable />
+                                <LobbyTable lobbies={lobbies} />
                             </div>
                         </div>
                     </div>
