@@ -13,6 +13,10 @@ export class LobbyService {
         this.inGame = false;
     }
 
+    public requestLobbyInfo() {
+        GameEngine.getGame().gameCommunicationService.connect();
+    }
+
     public pollLobbies() {
         GameEngine.getGame().groupCommunicationService.connect();
     }
@@ -47,7 +51,7 @@ export class LobbyService {
 
         this.stopPolling();
 
-        GameEngine.getGame().uiFacade.emit("navigate", { page: "lobby" });
+        GameEngine.getGame().uiFacade.emit("navigate", { page: `lobby/${groupId}` });
     }
 }
 

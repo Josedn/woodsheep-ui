@@ -1,5 +1,5 @@
-import type { GameEngine } from "../../GameEngine";
-import type { GameCommand } from "../UIFacade";
+import type { GameEngine } from "../../../GameEngine";
+import type { GameCommand } from "../../UIFacade";
 
 export class JoinExistingGame implements GameCommand {
     private groupId: string;

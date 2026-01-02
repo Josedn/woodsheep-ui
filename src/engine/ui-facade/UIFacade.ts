@@ -35,9 +35,9 @@ export class UIFacade {
     public on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
         this.listeners[event] ??= [];
         this.listeners[event]!.push(cb);
-        logger.debug("Subscribed " + event);
+        //logger.debug("Subscribed " + event);
         return () => {
-            logger.debug("Unsubscribed " + event);
+            //logger.debug("Unsubscribed " + event);
             this.listeners[event] = [];
         };
     }
