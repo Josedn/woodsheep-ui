@@ -1,15 +1,8 @@
-import { GameEngine } from "../GameEngine";
-import type { GroupInfo } from "../LobbyService";
 import { Logger } from "../misc/Logger";
 import { HandleSetCookie } from "./incoming/HandleSetCookie";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
-
-type GroupMessage = {
-    groups: GroupInfo[];
-    atLimit: boolean;
-};
 
 export default class CommunicationService implements IMessageHandler {
     client: WebSocketClient;
@@ -31,16 +24,7 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     handleMessage(data: string): void {
-        Logger.debug("Received " + data);
-        // TODO: refactor group
-        const parsed = JSON.parse(data);
         if (data == "HEARTBEAT") {
-            return;
-        }
-
-        if (parsed.atLimit != null && parsed.groups != null) {
-            const groupMessage = parsed as GroupMessage;
-            GameEngine.getGame().lobbyService.handleLobbyUpdate(groupMessage.groups, groupMessage.atLimit);
             return;
         }
 

@@ -1,4 +1,5 @@
 import CommunicationService from "./communication/CommunicationService";
+import TempGroupCommunicationService from "./communication/TempGroupCommunicationService";
 import { LobbyService } from "./LobbyService";
 import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
@@ -7,13 +8,13 @@ import { UIFacade } from "./ui/UIFacade";
 
 export class GameEngine {
     private static gameInstance: GameEngine;
-    private groupCommunicationService: CommunicationService;
+    private groupCommunicationService: TempGroupCommunicationService;
     private gameCommunicationService: CommunicationService;
     public lobbyService: LobbyService;
     public uiFacade: UIFacade;
 
     constructor() {
-        this.groupCommunicationService = new CommunicationService();
+        this.groupCommunicationService = new TempGroupCommunicationService();
         this.gameCommunicationService = new CommunicationService();
         this.lobbyService = new LobbyService();
         this.uiFacade = new UIFacade();
