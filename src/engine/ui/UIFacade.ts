@@ -1,3 +1,4 @@
+import { GameEngine } from "../GameEngine";
 import type { GroupInfo } from "../LobbyService";
 import { Logger } from "../misc/Logger";
 
@@ -11,12 +12,16 @@ export type UIGameEvents = {
 
 export type UIGameEventKey = keyof UIGameEvents;
 
+export interface GameCommand {
+    execute(game: GameEngine): void;
+}
+
 export class UIFacade {
     private listeners: {
         [K in keyof UIGameEvents]?: ((data: UIGameEvents[K]) => void)[];
     } = {};
 
-    on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
+    public on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
         this.listeners[event] ??= [];
         this.listeners[event]!.push(cb);
         Logger.debug("Subscribed " + event);
@@ -26,7 +31,11 @@ export class UIFacade {
         };
     }
 
-    emit<K extends keyof UIGameEvents>(event: K, data: UIGameEvents[K]) {
+    public emit<K extends keyof UIGameEvents>(event: K, data: UIGameEvents[K]) {
         this.listeners[event]?.forEach(cb => cb(data));
+    }
+
+    public dispatch(command: GameCommand) {
+        command.execute(GameEngine.getGame());
     }
 }
