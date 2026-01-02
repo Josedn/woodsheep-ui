@@ -1,9 +1,15 @@
 import type { GroupInfo } from "../LobbyService";
 import { Logger } from "../misc/Logger";
 
+export const UI_EVENTS = {
+    UPDATE_LOBBIES: "updateLobbies",
+} as const;
+
 export type UIGameEvents = {
     updateLobbies: { groups: GroupInfo[]; atLimit: boolean };
 };
+
+export type UIGameEventKey = keyof UIGameEvents;
 
 export class UIFacade {
     private listeners: {

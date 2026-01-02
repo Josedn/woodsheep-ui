@@ -1,13 +1,12 @@
-import { Header } from "../components/Header";
-import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
-
 import "./home.scss";
+import { Header } from "../components/Header";
+import { UI_ICONS } from "../../assets/images";
 import { Sidebar } from "../components/Sidebar";
-import { PopUp } from "../components/popups/PopUp";
-import type { GroupInfo } from "../../game/engine/LobbyService";
+import type { GroupInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
-import { useEffect, useState } from "preact/hooks";
-import { GameEngine } from "../../game/engine/GameEngine";
+import { useState } from "preact/hooks";
+import { UI_EVENTS } from "../../engine/ui/UIFacade";
+import { useGameEvent } from "../hooks/useGameEvent";
 
 const LobbyTableRow = (props: { name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
@@ -61,11 +60,9 @@ const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
 const Home = () => {
     const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
 
-    useEffect(() => {
-        return GameEngine.getGame().uiFacade.on("updateLobbies", payload => {
-            setLobbies(payload.groups);
-        });
-    }, []);
+    useGameEvent(UI_EVENTS.UPDATE_LOBBIES, ({ groups }) => {
+        setLobbies(groups);
+    });
 
     return (
         <div className="home">
