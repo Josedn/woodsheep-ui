@@ -62,9 +62,9 @@ const Home = () => {
     const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
 
     useEffect(() => {
-        GameEngine.getGame().uiFacade.onLobbiesUpdate = (groups: GroupInfo[], atLimit: boolean) => {
-            setLobbies(groups);
-        };
+        return GameEngine.getGame().uiFacade.on("updateLobbies", payload => {
+            setLobbies(payload.groups);
+        });
     }, []);
 
     return (

@@ -14,7 +14,7 @@ export class LobbyService {
         this.lobbies = groups;
         this.atLimit = atLimit;
 
-        GameEngine.getGame().uiFacade.onLobbiesUpdate(groups, atLimit);
+        GameEngine.getGame().uiFacade.emit("updateLobbies", { groups, atLimit });
     }
 }
 

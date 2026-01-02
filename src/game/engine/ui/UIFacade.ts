@@ -1,6 +1,26 @@
 import type { GroupInfo } from "../LobbyService";
+import { Logger } from "../misc/Logger";
+
+export type UIGameEvents = {
+    updateLobbies: { groups: GroupInfo[]; atLimit: boolean };
+};
 
 export class UIFacade {
-    //Lobby
-    onLobbiesUpdate: (groups: GroupInfo[], atLimit: boolean) => void = () => {};
+    private listeners: {
+        [K in keyof UIGameEvents]?: ((data: UIGameEvents[K]) => void)[];
+    } = {};
+
+    on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
+        this.listeners[event] ??= [];
+        this.listeners[event]!.push(cb);
+        Logger.debug("Subscribed " + event);
+        return () => {
+            Logger.debug("Unsubscribed " + event);
+            this.listeners[event] = [];
+        };
+    }
+
+    emit<K extends keyof UIGameEvents>(event: K, data: UIGameEvents[K]) {
+        this.listeners[event]?.forEach(cb => cb(data));
+    }
 }
