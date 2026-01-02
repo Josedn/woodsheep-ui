@@ -5,13 +5,13 @@ import { Sidebar } from "../components/Sidebar";
 import type { GroupInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { UI_EVENTS } from "../../engine/ui/UIFacade";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { Navigator } from "../components/Navigator";
 import { useGameCommand } from "../hooks/useGameCommand";
-import { JoinExistingGame } from "../../engine/ui/commands/lobbies/JoinExistingGame";
-import { PollLobbies } from "../../engine/ui/commands/lobbies/PollLobbies";
-import { StopPollLobbies } from "../../engine/ui/commands/lobbies/StopPollLobbies";
+import { JoinExistingGame } from "../../engine/ui-facade/commands/lobbies/JoinExistingGame";
+import { PollLobbies } from "../../engine/ui-facade/commands/lobbies/PollLobbies";
+import { StopPollLobbies } from "../../engine/ui-facade/commands/lobbies/StopPollLobbies";
 
 const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];

@@ -5,7 +5,7 @@ import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
 import { Logger } from "./misc/Logger";
 import { ProfileService } from "./ProfileService";
-import { UIFacade } from "./ui/UIFacade";
+import { UIFacade } from "./ui-facade/UIFacade";
 
 export class GameEngine {
     private static gameInstance: GameEngine;

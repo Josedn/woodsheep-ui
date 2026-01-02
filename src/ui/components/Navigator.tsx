@@ -1,6 +1,6 @@
 import { useLocation } from "preact-iso";
 import { useGameEvent } from "../hooks/useGameEvent";
-import { UI_EVENTS } from "../../engine/ui/UIFacade";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 
 export const Navigator = () => {
     const location = useLocation();

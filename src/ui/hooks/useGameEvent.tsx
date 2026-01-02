@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import type { UIGameEventKey, UIGameEvents } from "../../engine/ui/UIFacade";
+import type { UIGameEventKey, UIGameEvents } from "../../engine/ui-facade/UIFacade";
 import { GameEngine } from "../../engine/GameEngine";
 
 export function useGameEvent<K extends UIGameEventKey>(event: K, handler: (payload: UIGameEvents[K]) => void) {
