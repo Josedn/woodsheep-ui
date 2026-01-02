@@ -1,7 +1,9 @@
-import { Header, Sidebar } from "./components/GenericPage";
-import { UI_ICONS, GAME_TINTED_ICONS } from "../assets/images";
+import { Header } from "../components/Header";
+import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
 
 import "./home.scss";
+import { Sidebar } from "../components/Sidebar";
+import { PopUp } from "../components/popups/PopUp";
 
 const LobbyTableRow = (props: { host: string; map: string }) => {
     return (
@@ -91,45 +93,12 @@ const Home = () => {
     );
 };
 
-const PopUp = () => {
-    return (
-        <div className="popup">
-            <div className="popup__content">
-                <div className="popup__header">
-                    <div className="popup__heading">Edit Profile</div>
-                    <img class="popup__close" src={UI_ICONS.iconCross} />
-                </div>
-                <div className="popup__body">
-                    <div className="edit-profile">
-                        <div className="edit-profile__container">
-                            <img className="edit-profile__avatar" src={UI_ICONS.iconPlayer} />
-                            <h2 className="edit-profile__username">Bold</h2>
-                        </div>
-                        <img className="edit-profile__edit-icon" src={UI_ICONS.iconPencil} />
-                    </div>
-                    <div className="edit-profile__selector-container">
-                        <div className="edit-profile__selector-grid">
-                            <img className="edit-profile__selector-grid-item edit-profile__selector-grid-item--selected" src={GAME_TINTED_ICONS.settlementRed} />
-                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementBlue} />
-                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementOrange} />
-                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementGreen} />
-                            <img className="edit-profile__selector-grid-item" src={GAME_TINTED_ICONS.settlementBlack} />
-                        </div>
-                    </div>
-                </div>
-                <div className="popup__footer"></div>
-            </div>
-        </div>
-    );
-};
-
 export const HomePage = () => {
     return (
         <div className="layout">
             <Sidebar />
             <Header />
             <Home />
-            <PopUp />
         </div>
     );
 };

@@ -1,8 +1,8 @@
 import { render } from "preact";
 import { LocationProvider, ErrorBoundary, Router, Route } from "preact-iso";
-import { LobbyPage } from "./pages/LobbyPage.tsx";
-import { GameUI } from "./pages/GameUI.tsx";
-import { HomePage } from "./pages/HomePage.tsx";
+import { LobbyPage } from "./pages/lobby/LobbyPage.tsx";
+import { GameUI } from "./pages/game/GameUI.tsx";
+import { HomePage } from "./pages/home/HomePage.tsx";
 import "./assets/fonts/fonts.css";
 import "./main.scss";
 import { GameEngine } from "./game/engine/GameEngine.ts";
