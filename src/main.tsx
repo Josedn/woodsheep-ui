@@ -7,7 +7,8 @@ import "./assets/fonts/fonts.css";
 import "./main.scss";
 import { GameEngine } from "./game/engine/GameEngine.ts";
 
-const game = GameEngine.initialize();
+const game = GameEngine.getGame();
+game.initialize();
 
 // for debugging
 const win: any = window;

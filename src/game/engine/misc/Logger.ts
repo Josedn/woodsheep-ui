@@ -1,10 +1,12 @@
-const isDev = import.meta.env.MODE === "development";
+import { env } from "./env";
 
 type LogMeta = Record<string, unknown>;
 
 export const Logger = {
     debug(message: string, meta?: LogMeta) {
-        if (isDev) console.debug(message, meta);
+        if (env.environment == "development") {
+            console.debug(message, meta);
+        }
     },
 
     info(message: string, meta?: LogMeta) {

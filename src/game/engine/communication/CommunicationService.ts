@@ -1,26 +1,66 @@
+import { GameEngine } from "../GameEngine";
+import type { GroupInfo } from "../LobbyService";
+import { Logger } from "../misc/Logger";
+import { HandleSetCookie } from "./incoming/HandleSetCookie";
+import type { IncomingEvent } from "./protocol/IncomingEvent";
+import { IncomingMessage } from "./protocol/IncomingMessage";
 import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
+
+type GroupMessage = {
+    groups: GroupInfo[];
+    atLimit: boolean;
+};
 
 export default class CommunicationService implements IMessageHandler {
     client: WebSocketClient;
+    requestHandlers: { [requestType: string]: IncomingEvent };
 
     constructor() {
         this.client = new WebSocketClient(this);
+        this.requestHandlers = {};
+        this.registerRequests();
+    }
+
+    private registerRequests() {
+        this.requestHandlers[HandleSetCookie.getRequestType()] = new HandleSetCookie();
     }
 
     connect(connectionURL: string): Promise<void> {
+        Logger.debug("Connecting to " + connectionURL);
         return this.client.connect(connectionURL);
     }
 
-    handleMessage(message: string): void {
-        throw new Error("Method not implemented.");
+    handleMessage(data: string): void {
+        Logger.debug("Received " + data);
+        // TODO: refactor group
+        const parsed = JSON.parse(data);
+        if (data == "HEARTBEAT") {
+            return;
+        }
+
+        if (parsed.atLimit != null && parsed.groups != null) {
+            const groupMessage = parsed as GroupMessage;
+            GameEngine.getGame().lobbyService.handleLobbyUpdate(groupMessage.groups, groupMessage.atLimit);
+            return;
+        }
+
+        const message = new IncomingMessage(data);
+        const handler = this.requestHandlers[message.requestType];
+        if (handler != null) {
+            Logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name);
+            handler.handle(message);
+        } else {
+            Logger.warn("No handler for requestType: " + message.requestType);
+        }
     }
+
     handleOpenConnection(): void {
-        throw new Error("Method not implemented.");
+        Logger.info("Connection open");
     }
     handleCloseConnection(): void {
-        throw new Error("Method not implemented.");
+        Logger.info("Connection closed");
     }
     handleConnectionError(): void {
-        throw new Error("Method not implemented.");
+        Logger.info("Connection error");
     }
 }
