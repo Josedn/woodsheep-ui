@@ -1,4 +1,5 @@
 import { setCookie } from "../../misc/CookieUtils";
+import { Logger } from "../../misc/Logger";
 import type { IncomingEvent } from "../protocol/IncomingEvent";
 import type { IncomingMessage } from "../protocol/IncomingMessage";
 
@@ -9,7 +10,7 @@ export class HandleSetCookie implements IncomingEvent {
             if (data.cookies[i].name == "USER_ID") {
                 const cook = data.cookies[i];
                 setCookie(cook.name, cook.value);
-                console.log("Cookies set to :" + document.cookie);
+                Logger.debug("Cookies set to :" + document.cookie);
                 //sendGetGameStateAction();
             }
         }

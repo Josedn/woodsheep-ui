@@ -7,8 +7,10 @@ import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
 export default class CommunicationService implements IMessageHandler {
     client: WebSocketClient;
     requestHandlers: { [requestType: string]: IncomingEvent };
+    url: string;
 
-    constructor() {
+    constructor(url: string) {
+        this.url = url;
         this.client = new WebSocketClient(this);
         this.requestHandlers = {};
         this.registerRequests();
@@ -18,9 +20,13 @@ export default class CommunicationService implements IMessageHandler {
         this.requestHandlers[HandleSetCookie.getRequestType()] = new HandleSetCookie();
     }
 
-    connect(connectionURL: string): Promise<void> {
-        Logger.debug("Connecting to " + connectionURL);
-        return this.client.connect(connectionURL);
+    disconnect() {
+        this.client.disconnect();
+    }
+
+    connect(): Promise<void> {
+        Logger.debug("Connecting to " + this.url);
+        return this.client.connect(this.url);
     }
 
     handleMessage(data: string): void {

@@ -13,6 +13,10 @@ export class WebSocketClient {
         }
     }
 
+    disconnect() {
+        this.ws?.close();
+    }
+
     connect(connectionURL: string): Promise<void> {
         return new Promise((resolve, reject) => {
             this.ws = new WebSocket(connectionURL);

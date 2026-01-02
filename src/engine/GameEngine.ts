@@ -4,6 +4,7 @@ import { LobbyService } from "./LobbyService";
 import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
 import { Logger } from "./misc/Logger";
+import { ProfileService } from "./ProfileService";
 import { UIFacade } from "./ui/UIFacade";
 
 export class GameEngine {
@@ -12,23 +13,24 @@ export class GameEngine {
     private gameCommunicationService: CommunicationService;
     public lobbyService: LobbyService;
     public uiFacade: UIFacade;
+    public profileService: ProfileService;
 
     constructor() {
-        this.groupCommunicationService = new TempGroupCommunicationService();
-        this.gameCommunicationService = new CommunicationService();
+        this.groupCommunicationService = new TempGroupCommunicationService(env.wsBaseUrl + "/groups/");
+        this.gameCommunicationService = new CommunicationService(env.wsBaseUrl + "/action/");
         this.lobbyService = new LobbyService();
         this.uiFacade = new UIFacade();
+        this.profileService = new ProfileService();
 
         Logger.debug("Engine constructed");
     }
 
-    initialize(): Promise<void> {
+    initialize() {
         //TODO: review
         const href = window.location.pathname;
         if (href == "/") {
             deleteCookie("desiredGroupId");
         }
-        return this.groupCommunicationService.connect(env.wsBaseUrl + "/groups/");
     }
 
     static getGame(): GameEngine {

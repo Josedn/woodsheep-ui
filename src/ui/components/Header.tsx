@@ -1,6 +1,24 @@
+import { useEffect, useState } from "preact/hooks";
 import { UI_ICONS } from "../../assets/images";
+import type { UserInfo } from "../../engine/ProfileService";
+import { useGameEvent } from "../hooks/useGameEvent";
+import { UI_EVENTS } from "../../engine/ui/UIFacade";
+import { useGameCommand } from "../hooks/useGameCommand";
+import { GetUserInfo } from "../../engine/ui/commands/GetUserInfo";
 
 export const Header = () => {
+    const [userInfo, setUserInfo] = useState<UserInfo>();
+
+    useGameEvent(UI_EVENTS.UPDATE_USER_INFO, ({ userInfo }) => {
+        setUserInfo(userInfo);
+    });
+
+    useEffect(() => {
+        useGameCommand(new GetUserInfo());
+    }, []);
+
+    const userName = userInfo?.userName ?? "";
+
     return (
         <header className="header">
             <div className="header__left">
@@ -10,7 +28,7 @@ export const Header = () => {
                             <img className="header__profile-avatar-image" src={UI_ICONS.iconPlayer} alt="User" />
                         </div>
                         <div>
-                            <p className="header__profile-username">Bold</p>
+                            <p className="header__profile-username">{userName}</p>
                             <p className="header__profile-karma">Karma: 20/20</p>
                         </div>
                     </div>
@@ -21,7 +39,7 @@ export const Header = () => {
                     <div className="header__notifications-icon">
                         <img className="header__notifications-image" src={UI_ICONS.iconBell} alt="Notification Icon" />
                         <div className="header__notifications-count-container">
-                            <span className="header__notifications-count">16</span>
+                            <span className="header__notifications-count">1</span>
                         </div>
                     </div>
                 </div>

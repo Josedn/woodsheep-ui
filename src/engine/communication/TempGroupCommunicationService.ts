@@ -10,13 +10,20 @@ type GroupMessage = {
 
 export default class TempGroupCommunicationService implements IMessageHandler {
     client: WebSocketClient;
-    constructor() {
+    url: string;
+
+    constructor(url: string) {
+        this.url = url;
         this.client = new WebSocketClient(this);
     }
 
-    connect(connectionURL: string): Promise<void> {
-        Logger.debug("Connecting to " + connectionURL);
-        return this.client.connect(connectionURL);
+    disconnect() {
+        this.client.disconnect();
+    }
+
+    connect(): Promise<void> {
+        Logger.debug("Connecting to " + this.url);
+        return this.client.connect(this.url);
     }
 
     handleMessage(data: string): void {
