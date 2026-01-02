@@ -6,6 +6,7 @@ import type { UserInfo } from "../ProfileService";
 export const UI_EVENTS = {
     UPDATE_LOBBIES: "updateLobbies",
     UPDATE_USER_INFO: "updateUserInfo",
+    NAVIGATE: "navigate",
 } as const;
 
 export type UIGameEvents = {
@@ -14,6 +15,8 @@ export type UIGameEvents = {
 
     //User
     updateUserInfo: { userInfo: UserInfo };
+
+    navigate: { page: string };
 };
 
 export type UIGameEventKey = keyof UIGameEvents;

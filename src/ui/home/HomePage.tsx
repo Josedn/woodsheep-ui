@@ -4,11 +4,16 @@ import { UI_ICONS } from "../../assets/images";
 import { Sidebar } from "../components/Sidebar";
 import type { GroupInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
+import { Navigator } from "../components/Navigator";
+import { useGameCommand } from "../hooks/useGameCommand";
+import { JoinExistingGame } from "../../engine/ui/commands/lobbies/JoinExistingGame";
+import { PollLobbies } from "../../engine/ui/commands/lobbies/PollLobbies";
+import { StopPollLobbies } from "../../engine/ui/commands/lobbies/StopPollLobbies";
 
-const LobbyTableRow = (props: { name: string; map: string; currentSize: number; maxSize: number }) => {
+const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
 
     for (let i = 0; i < props.maxSize; i++) {
@@ -16,8 +21,12 @@ const LobbyTableRow = (props: { name: string; map: string; currentSize: number; 
         playerNodes.push(<img className={className} src={UI_ICONS.iconPlayer} />);
     }
 
+    const joinLobby = () => {
+        useGameCommand(new JoinExistingGame(props.id));
+    };
+
     return (
-        <tr>
+        <tr onClick={joinLobby}>
             <td>{props.name}</td>
             <td>{props.map}</td>
             <td>30s</td>
@@ -32,7 +41,7 @@ const LobbyTableRow = (props: { name: string; map: string; currentSize: number; 
 const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
     const lobbiesRows = props.lobbies.map(lobbyInfo => {
         const { id, maxSize, currentSize, groupName } = lobbyInfo.group;
-        return <LobbyTableRow key={id} name={groupName} maxSize={maxSize} currentSize={currentSize} map="Base" />;
+        return <LobbyTableRow key={id} id={id} name={groupName} maxSize={maxSize} currentSize={currentSize} map="Base" />;
     });
     return (
         <table className="lobby-list__table">
@@ -59,6 +68,13 @@ const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
 
 const Home = () => {
     const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
+
+    useEffect(() => {
+        useGameCommand(new PollLobbies());
+        return () => {
+            useGameCommand(new StopPollLobbies());
+        };
+    }, []);
 
     useGameEvent(UI_EVENTS.UPDATE_LOBBIES, ({ groups }) => {
         setLobbies(groups);
@@ -98,6 +114,7 @@ const Home = () => {
 export const HomePage = () => {
     return (
         <div className="layout">
+            <Navigator />
             <Sidebar />
             <Header />
             <Home />

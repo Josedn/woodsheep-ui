@@ -9,8 +9,8 @@ import { UIFacade } from "./ui/UIFacade";
 
 export class GameEngine {
     private static gameInstance: GameEngine;
-    private groupCommunicationService: TempGroupCommunicationService;
-    private gameCommunicationService: CommunicationService;
+    public groupCommunicationService: TempGroupCommunicationService;
+    public gameCommunicationService: CommunicationService;
     public lobbyService: LobbyService;
     public uiFacade: UIFacade;
     public profileService: ProfileService;

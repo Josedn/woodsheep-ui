@@ -5,10 +5,20 @@ export class LobbyService {
     lobbies: GroupInfo[];
     // TODO: review limit
     atLimit: boolean;
+    inGame: boolean;
 
     constructor() {
         this.lobbies = [];
         this.atLimit = false;
+        this.inGame = false;
+    }
+
+    public pollLobbies() {
+        GameEngine.getGame().groupCommunicationService.connect();
+    }
+
+    public stopPolling() {
+        GameEngine.getGame().groupCommunicationService.disconnect();
     }
 
     public handleLobbyUpdate(groups: GroupInfo[], atLimit: boolean) {
@@ -18,15 +28,15 @@ export class LobbyService {
         GameEngine.getGame().uiFacade.emit("updateLobbies", { groups, atLimit });
     }
 
-    public joinExistingGame(groupId: number, maxSize: number) {
+    public joinExistingGame(groupId: string) {
         const userName = "preactUser";
-        const groupSize = maxSize;
+        const groupSize = 4;
         const victoryPoints = 10;
         const isDecimal = false;
         const isDynamic = false;
         const isStandard = false;
 
-        setCookie("desiredGroupId", groupId.toString());
+        setCookie("desiredGroupId", groupId);
         setCookie("userName", userName);
         setCookie("numPlayersDesired", groupSize.toString());
         setCookie("victoryPoints", victoryPoints.toString());
@@ -34,6 +44,10 @@ export class LobbyService {
         setCookie("isDynamic", isDynamic.toString());
         setCookie("isStandard", isStandard.toString());
         deleteCookie("USER_ID");
+
+        this.stopPolling();
+
+        GameEngine.getGame().uiFacade.emit("navigate", { page: "lobby" });
     }
 }
 
