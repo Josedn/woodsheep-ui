@@ -97,7 +97,6 @@ const Chat = () => {
 
     const handleInputChange = (evt: TargetedInputEvent<HTMLInputElement>) => {
         const value = evt.currentTarget.value;
-        console.log(evt);
         setInputMessage(value);
     };
 
