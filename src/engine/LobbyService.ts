@@ -83,6 +83,7 @@ export class LobbyService {
 
     public setGameState(gameState: GameState) {
         this.gameState = gameState;
+        GameEngine.getGame().uiFacade.emit("updateGameState", { gameState });
     }
 }
 
@@ -179,5 +180,12 @@ export type GameState = {
     stats: {
         rolls: number[];
         turn: number;
+    };
+    turnOrder?: number[];
+    followUp?: {
+        actionName: string;
+        actionData: {
+            message: string;
+        };
     };
 };

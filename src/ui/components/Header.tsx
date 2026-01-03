@@ -1,10 +1,11 @@
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { UI_ICONS } from "../../assets/images";
 import type { UserInfo } from "../../engine/ProfileService";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameCommand } from "../hooks/useGameCommand";
 import { GetUserInfo } from "../../engine/ui-facade/commands/GetUserInfo";
+import { useMountEffect } from "../hooks/useMountEffect";
 
 export const Header = () => {
     const [userInfo, setUserInfo] = useState<UserInfo>();
@@ -13,9 +14,9 @@ export const Header = () => {
         setUserInfo(userInfo);
     });
 
-    useEffect(() => {
+    useMountEffect(() => {
         useGameCommand(new GetUserInfo());
-    }, []);
+    });
 
     const userName = userInfo?.userName ?? "";
 

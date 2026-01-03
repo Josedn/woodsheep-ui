@@ -5,8 +5,11 @@ import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
 import { Navigator } from "../components/Navigator";
 import { useGameCommand } from "../hooks/useGameCommand";
 import { RequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/RequestLobbyInfo";
-import { useEffect } from "preact/hooks";
 import { useGameEvent } from "../hooks/useGameEvent";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
+import { useMountEffect } from "../hooks/useMountEffect";
+import { useState } from "preact/hooks";
+import type { BoardGamePlayer } from "../../engine/LobbyService";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -31,9 +34,11 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
             </div>
             <div className="lobby__player-status">
                 <div className="lobby__player-actions-container">
-                    <div className="lobby__player-action">
-                        <img className="lobby__player-action-image" alt="Edit" src={UI_ICONS.iconPencil} />
-                    </div>
+                    {props.canEdit && (
+                        <div className="lobby__player-action">
+                            <img className="lobby__player-action-image" alt="Edit" src={UI_ICONS.iconPencil} />
+                        </div>
+                    )}
                 </div>
                 <div className={"lobby__player-ready" + (props.ready ? " lobby__player-ready--ready" : "")}>
                     <div className="lobby__player-ready-label">{props.ready ? "READY" : "Not Ready"}</div>
@@ -43,22 +48,50 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
     );
 };
 
+const PlayerList = (props: { players: BoardGamePlayer[]; maxPlayers: number }) => {
+    const loggedPlayers = props.players.map(player => {
+        return <LobbyPlayerInfo key={player.id} username={player.name} color="red" ready />;
+    });
+    const placeHolders = [];
+    for (let i = props.players.length; i < props.maxPlayers; i++) {
+        placeHolders.push(<LobbyPlayerInfoPlaceholder />);
+    }
+    return (
+        <div className="lobby__left">
+            <h2 className="lobby__heading">
+                Players ({props.players.length}/{props.maxPlayers})
+            </h2>
+            <div className="lobby__player-list">
+                {loggedPlayers}
+                {placeHolders}
+            </div>
+        </div>
+    );
+};
+
+type LobbyStatus = {
+    players: BoardGamePlayer[];
+    maxPlayers: number;
+};
+
 const Lobby = () => {
-    useEffect(() => {
+    useMountEffect(() => {
         useGameCommand(new RequestLobbyInfo());
+    });
+
+    const [lobbyStatus, setLobbyStatus] = useState<LobbyStatus>({ players: [], maxPlayers: 4 });
+
+    useGameEvent(UI_EVENTS.UPDATE_GAME_STATE, ({ gameState }) => {
+        const maxPlayers = gameState.settings.numPlayers;
+        const players = gameState.players;
+        const currentTurn = gameState.currentTurn;
+
+        setLobbyStatus({ players, maxPlayers });
     });
 
     return (
         <div className="lobby">
-            <div className="lobby__left">
-                <h2 className="lobby__heading">Players (2/4)</h2>
-                <div className="lobby__player-list">
-                    <LobbyPlayerInfo username="Bold" color="red" ready canEdit />
-                    <LobbyPlayerInfo username="Lissi" color="green" />
-                    <LobbyPlayerInfoPlaceholder />
-                    <LobbyPlayerInfoPlaceholder />
-                </div>
-            </div>
+            <PlayerList players={lobbyStatus.players} maxPlayers={lobbyStatus.maxPlayers} />
             <div className="lobby__middle">
                 <div className="lobby__info-header">
                     <img className="lobby__info-exit-image" alt="Exit" src={UI_ICONS.iconCross} />

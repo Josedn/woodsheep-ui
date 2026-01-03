@@ -4,7 +4,7 @@ import { UI_ICONS } from "../../assets/images";
 import { Sidebar } from "../components/Sidebar";
 import type { GroupInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { Navigator } from "../components/Navigator";
@@ -12,6 +12,7 @@ import { useGameCommand } from "../hooks/useGameCommand";
 import { JoinExistingGame } from "../../engine/ui-facade/commands/lobbies/JoinExistingGame";
 import { PollLobbies } from "../../engine/ui-facade/commands/lobbies/PollLobbies";
 import { StopPollLobbies } from "../../engine/ui-facade/commands/lobbies/StopPollLobbies";
+import { useMountEffect } from "../hooks/useMountEffect";
 
 const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
@@ -69,12 +70,12 @@ const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
 const Home = () => {
     const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
 
-    useEffect(() => {
+    useMountEffect(() => {
         useGameCommand(new PollLobbies());
         return () => {
             useGameCommand(new StopPollLobbies());
         };
-    }, []);
+    });
 
     useGameEvent(UI_EVENTS.UPDATE_LOBBIES, ({ groups }) => {
         setLobbies(groups);
