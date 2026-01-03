@@ -9,6 +9,7 @@ export const UI_EVENTS = {
     UPDATE_LOBBIES: "updateLobbies",
     UPDATE_USER_INFO: "updateUserInfo",
     NAVIGATE: "navigate",
+    UPDATE_LOBBY_USERS: "updateLobbyUsers",
 } as const;
 
 export type UIGameEvents = {

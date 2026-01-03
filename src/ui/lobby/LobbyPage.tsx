@@ -2,6 +2,11 @@ import "./lobby.scss";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
+import { Navigator } from "../components/Navigator";
+import { useGameCommand } from "../hooks/useGameCommand";
+import { RequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/RequestLobbyInfo";
+import { useEffect } from "preact/hooks";
+import { useGameEvent } from "../hooks/useGameEvent";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -39,6 +44,10 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
 };
 
 const Lobby = () => {
+    useEffect(() => {
+        useGameCommand(new RequestLobbyInfo());
+    });
+
     return (
         <div className="lobby">
             <div className="lobby__left">
@@ -197,6 +206,7 @@ const Lobby = () => {
 export const LobbyPage = () => {
     return (
         <div className="layout">
+            <Navigator />
             <Sidebar />
             <Header />
             <Lobby />

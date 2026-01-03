@@ -1,7 +1,10 @@
 import { createLogger } from "../misc/Logger";
+import { HandleError } from "./incoming/HandleError";
+import { HandleGameState } from "./incoming/HandleGameState";
 import { HandleSetCookie } from "./incoming/HandleSetCookie";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
+import type { OutgoingMessage } from "./protocol/OutgoingMessage";
 import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
 
 const logger = createLogger("CommunicationService");
@@ -20,6 +23,14 @@ export default class CommunicationService implements IMessageHandler {
 
     private registerRequests() {
         this.requestHandlers[HandleSetCookie.getRequestType()] = new HandleSetCookie();
+        this.requestHandlers[HandleError.getRequestType()] = new HandleError();
+        this.requestHandlers[HandleGameState.getRequestType()] = new HandleGameState();
+    }
+
+    send(message: OutgoingMessage) {
+        if (this.client.connected) {
+            this.client.send(message.stringify());
+        }
     }
 
     disconnect() {
@@ -27,8 +38,11 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     connect(): Promise<void> {
-        logger.debug("Connecting to " + this.url);
-        return this.client.connect(this.url);
+        if (!this.client.connected) {
+            logger.debug("Connecting to " + this.url);
+            return this.client.connect(this.url);
+        }
+        return Promise.resolve();
     }
 
     handleMessage(data: string): void {
@@ -42,7 +56,7 @@ export default class CommunicationService implements IMessageHandler {
             logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name);
             handler.handle(message);
         } else {
-            logger.warn("No handler for requestType: " + message.requestType);
+            logger.warn("No handler for requestType: " + message.requestType, { request: message });
         }
     }
 

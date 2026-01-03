@@ -9,7 +9,7 @@ const getRandomArbitrary = (min: number, max: number) => {
 };
 
 export class ProfileService {
-    private currentUser: UserInfo;
+    public currentUser: UserInfo;
 
     constructor() {
         const userName = "PreactUser#" + getRandomArbitrary(111, 999).toString();
