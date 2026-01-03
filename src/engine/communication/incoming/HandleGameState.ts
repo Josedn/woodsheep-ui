@@ -8,7 +8,7 @@ export class HandleGameState implements IncomingEvent {
         const data = request.body as GameState;
         GameEngine.getGame().lobbyService.setGameState(data);
     }
-    public static getRequestType(): string {
+    getRequestType(): string {
         return "getGameState";
     }
 }

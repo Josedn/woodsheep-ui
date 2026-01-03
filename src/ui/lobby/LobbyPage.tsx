@@ -9,7 +9,9 @@ import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { useState } from "preact/hooks";
-import type { BoardGamePlayer } from "../../engine/LobbyService";
+import type { BoardGamePlayer, ChatMessageReceived } from "../../engine/LobbyService";
+import { SendChatMessage } from "../../engine/ui-facade/commands/SendChatMessage";
+import type { ButtonHTMLAttributes, FormHTMLAttributes, MouseEventHandler, SubmitEventHandler, TargetedInputEvent, TargetedSubmitEvent } from "preact";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -65,6 +67,52 @@ const PlayerList = (props: { players: BoardGamePlayer[]; maxPlayers: number }) =
                 {loggedPlayers}
                 {placeHolders}
             </div>
+        </div>
+    );
+};
+
+const Chat = () => {
+    const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>([]);
+    const [inputMessage, setInputMessage] = useState("");
+    useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
+        console.log("aaaa");
+        setChatMessages([...chatMessages]);
+    });
+
+    const chatNodes = chatMessages.map((message, index) => {
+        return (
+            <div key={index} className="lobby__message">
+                <img className="lobby__message-avatar" alt="User" src={UI_ICONS.iconPlayer} />
+                <span className="lobby__message-username">{message.sender}: </span>
+                {message.content}
+            </div>
+        );
+    });
+
+    const handleChatSubmit = (evt: Event) => {
+        evt.preventDefault();
+        useGameCommand(new SendChatMessage(inputMessage));
+        setInputMessage("");
+    };
+
+    const handleInputChange = (evt: TargetedInputEvent<HTMLInputElement>) => {
+        const value = evt.currentTarget.value;
+        console.log(evt);
+        setInputMessage(value);
+    };
+
+    return (
+        <div className="lobby__right">
+            <div className="lobby__right-header">
+                <div className="lobby__right-heading">Chat</div>
+            </div>
+            <div className="lobby__message-container">{chatNodes}</div>
+            <form className="lobby__message-form" onSubmit={handleChatSubmit}>
+                <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} value={inputMessage} onChange={handleInputChange} />
+                <button className="lobby__message-submit">
+                    <img className="lobby__message-submit-image" src={UI_ICONS.iconSend} />
+                </button>
+            </form>
         </div>
     );
 };
@@ -215,23 +263,7 @@ const Lobby = () => {
                     </div>
                 </div>
             </div>
-            <div className="lobby__right">
-                <div className="lobby__right-header">
-                    <div className="lobby__right-heading">Chat</div>
-                </div>
-                <div className="lobby__message-container">
-                    <div className="lobby__message">
-                        <img className="lobby__message-avatar" alt="User" src={UI_ICONS.iconPlayer} />
-                        <span className="lobby__message-username">Bold: </span>hello
-                    </div>
-                </div>
-                <form className="lobby__message-form">
-                    <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} />
-                    <button className="lobby__message-submit">
-                        <img className="lobby__message-submit-image" src={UI_ICONS.iconSend} />
-                    </button>
-                </form>
-            </div>
+            <Chat />
         </div>
     );
 };

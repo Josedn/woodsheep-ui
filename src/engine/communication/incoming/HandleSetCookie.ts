@@ -17,7 +17,7 @@ export class HandleSetCookie implements IncomingEvent {
             }
         }
     }
-    public static getRequestType(): string {
+    getRequestType(): string {
         return "setCookie";
     }
 }

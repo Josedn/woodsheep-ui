@@ -5,6 +5,7 @@ import { deleteCookie, setCookie } from "./misc/CookieUtils";
 import { createLogger } from "./misc/Logger";
 import type { Intersection } from "./catan/Intersection";
 import type { HexCoordinate } from "./catan/Tile";
+import { RequestSendChatMessage } from "./communication/outgoing/RequestSendChatMessage";
 
 const logger = createLogger("LobbyService");
 
@@ -13,10 +14,12 @@ export class LobbyService {
     // TODO: review limit
     atLimit: boolean;
     gameState?: GameState;
+    chatMessages: ChatMessageReceived[];
 
     constructor() {
         this.lobbies = [];
         this.atLimit = false;
+        this.chatMessages = [];
     }
 
     public resetEverythingAndGoHome() {
@@ -84,6 +87,20 @@ export class LobbyService {
     public setGameState(gameState: GameState) {
         this.gameState = gameState;
         GameEngine.getGame().uiFacade.emit("updateGameState", { gameState });
+    }
+
+    public addChatMessage(chatMessage: ChatMessageReceived) {
+        this.chatMessages.push(chatMessage);
+        GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
+    }
+
+    public setChatMessages(chatMessages: ChatMessageReceived[]) {
+        this.chatMessages = chatMessages;
+        GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
+    }
+
+    public sendChatMessage(message: string) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestSendChatMessage(message));
     }
 }
 
@@ -188,4 +205,11 @@ export type GameState = {
             message: string;
         };
     };
+};
+
+export type ChatMessageReceived = {
+    content: string;
+    sender: string;
+    timestamp: number;
+    userId: number;
 };

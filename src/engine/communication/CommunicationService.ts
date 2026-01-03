@@ -1,4 +1,5 @@
 import { createLogger } from "../misc/Logger";
+import { HandleChatMessage } from "./incoming/HandleChatMessage";
 import { HandleError } from "./incoming/HandleError";
 import { HandleGameState } from "./incoming/HandleGameState";
 import { HandleSetCookie } from "./incoming/HandleSetCookie";
@@ -22,9 +23,18 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     private registerRequests() {
-        this.requestHandlers[HandleSetCookie.getRequestType()] = new HandleSetCookie();
-        this.requestHandlers[HandleError.getRequestType()] = new HandleError();
-        this.requestHandlers[HandleGameState.getRequestType()] = new HandleGameState();
+        this.addHandler(new HandleSetCookie());
+        this.addHandler(new HandleError());
+        this.addHandler(new HandleGameState());
+        this.addHandler(new HandleChatMessage());
+    }
+
+    private addHandler(incomingEvent: IncomingEvent) {
+        if (this.requestHandlers[incomingEvent.getRequestType()] == null) {
+            this.requestHandlers[incomingEvent.getRequestType()] = incomingEvent;
+        } else {
+            logger.warn("Handler already registered " + incomingEvent.getRequestType());
+        }
     }
 
     send(message: OutgoingMessage) {

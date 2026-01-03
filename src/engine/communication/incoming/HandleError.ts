@@ -22,7 +22,7 @@ export class HandleError implements IncomingEvent {
                 console.log(data.description);
         }
     }
-    public static getRequestType(): string {
+    getRequestType(): string {
         return "ERROR";
     }
 }
