@@ -5,6 +5,8 @@ import type { Intersection } from "./catan/Intersection";
 import type { HexCoordinate } from "./catan/Tile";
 import { RequestSendChatMessage } from "./communication/outgoing/RequestSendChatMessage";
 import { UI_EVENTS } from "./ui-facade/UIFacade";
+import { RequestRoomList } from "./communication/outgoing/RequestRoomList";
+import { RequestCreateRoom } from "./communication/outgoing/RequestCreateRoom";
 
 const logger = createLogger("LobbyService");
 
@@ -40,7 +42,9 @@ export class LobbyService {
         }
     }
 
-    public async pollLobbies() {}
+    public pollLobbies() {
+        GameEngine.getGame().gameCommunicationService.send(new RequestRoomList());
+    }
 
     public stopPolling() {}
 
@@ -49,6 +53,10 @@ export class LobbyService {
         this.atLimit = atLimit;
 
         GameEngine.getGame().uiFacade.emit("updateLobbies", { groups, atLimit });
+    }
+
+    public requestCreateRoom() {
+        GameEngine.getGame().gameCommunicationService.send(new RequestCreateRoom());
     }
 
     public joinExistingGame(groupId: string) {

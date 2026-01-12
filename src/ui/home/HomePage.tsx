@@ -11,6 +11,7 @@ import { PollLobbies } from "../../engine/ui-facade/commands/lobbies/PollLobbies
 import { StopPollLobbies } from "../../engine/ui-facade/commands/lobbies/StopPollLobbies";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { Layout } from "../components/Layout";
+import { CreateRoom } from "../../engine/ui-facade/commands/lobbies/CreateRoom";
 
 const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
@@ -79,6 +80,10 @@ const Home = () => {
         setLobbies(groups);
     });
 
+    const handleCreateRoom = () => {
+        useGameCommand(new CreateRoom());
+    };
+
     return (
         <div className="home">
             <div className="home__main-content">
@@ -100,7 +105,9 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="lobby-list__actions">
-                        <div className="lobby-list__action">Create Room</div>
+                        <div onClick={handleCreateRoom} className="lobby-list__action">
+                            Create Room
+                        </div>
                         <div className="lobby-list__action lobby-list__action--alternative">Join Room</div>
                     </div>
                 </div>
