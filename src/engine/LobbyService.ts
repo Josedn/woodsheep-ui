@@ -6,28 +6,54 @@ import { RequestSendChatMessage } from "./communication/outgoing/RequestSendChat
 import { UI_EVENTS } from "./ui-facade/UIFacade";
 import { RequestRoomList } from "./communication/outgoing/RequestRoomList";
 import { RequestCreateRoom } from "./communication/outgoing/RequestCreateRoom";
+import { RequestJoinRoom } from "./communication/outgoing/RequestJoinRoom";
 
 const logger = createLogger("LobbyService");
 
 export class LobbyService {
-    lobbies: RoomInfo[];
+    lobbies: ShortRoomInfo[] = [];
     gameState?: GameState;
-    chatMessages: ChatMessageReceived[];
+    chatMessages: ChatMessageReceived[] = [];
+    roomInfo?: CurrentRoomInfo;
+    roomUsers: { [id: string]: RoomUserData } = {};
 
-    constructor() {
-        this.lobbies = [];
-        this.chatMessages = [];
+    // Joining room and room info
+    public requestLobbyInfo(roomId: string) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestJoinRoom(roomId));
     }
 
-    public requestLobbyInfo() {}
+    public handleRoomInfo(roomInfo: CurrentRoomInfo) {
+        this.roomInfo = roomInfo;
+        GameEngine.getGame().uiFacade.emit("navigate", { page: `lobby/${roomInfo.roomId}` });
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_INFO, { roomInfo });
+    }
 
+    public addUsersToRoom(roomUsers: RoomUserData[]) {
+        roomUsers.forEach(roomUser => {
+            this.roomUsers[roomUser.virtualId] = roomUser;
+        });
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_PLAYERS, { players: Object.values(this.roomUsers) });
+    }
+
+    // Messenger
+    public addChatMessage(senderVirtualId: number, message: string) {
+        const senderRoomUser = this.roomUsers[senderVirtualId];
+        if (senderRoomUser != null) {
+            this.chatMessages.push({ sender: senderRoomUser.username, content: message });
+            GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
+        }
+    }
+
+    public sendChatMessage(message: string) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestSendChatMessage(message));
+    }
+
+    // Home page
     public pollLobbies() {
         GameEngine.getGame().gameCommunicationService.send(new RequestRoomList());
     }
 
-    public stopPolling() {}
-
-    public handleLobbyUpdate(rooms: RoomInfo[]) {
+    public handleRoomList(rooms: ShortRoomInfo[]) {
         this.lobbies = rooms;
         GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBIES_LIST, { rooms });
     }
@@ -35,37 +61,30 @@ export class LobbyService {
     public requestCreateRoom() {
         GameEngine.getGame().gameCommunicationService.send(new RequestCreateRoom());
     }
-
-    public joinExistingRoom(roomId: string) {
-        this.stopPolling();
-        GameEngine.getGame().uiFacade.emit("navigate", { page: `lobby/${roomId}` });
-    }
-
-    public setGameState(gameState: GameState) {
-        this.gameState = gameState;
-        GameEngine.getGame().uiFacade.emit("updateGameState", { gameState });
-    }
-
-    public addChatMessage(senderVirtualId: number, message: string) {
-        this.chatMessages.push({ sender: "", content: message });
-        GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
-    }
-
-    public sendChatMessage(message: string) {
-        GameEngine.getGame().gameCommunicationService.send(new RequestSendChatMessage(message));
-    }
+    // End home page
 }
 
-export type ConnectedUser = {
-    userName: string;
-    id: number;
+export type RoomUserData = {
+    virtualId: number;
+    username: string;
 };
 
-export type RoomInfo = {
+export type ShortRoomInfo = {
     roomId: string;
     name: string;
     maxPlayers: number;
     currentPlayers: number;
+};
+
+export type CurrentRoomInfo = {
+    roomId: string;
+    map: string;
+    hideBankCards: boolean;
+    privateGame: boolean;
+    maxPlayers: number;
+    turnTimer: number;
+    cardDiscardLimit: number;
+    pointsToWin: number;
 };
 
 export type BoardGamePlayer = {

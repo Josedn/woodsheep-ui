@@ -1,6 +1,6 @@
 import "./home.scss";
 import { UI_ICONS } from "../../assets/images";
-import type { RoomInfo } from "../../engine/LobbyService";
+import type { ShortRoomInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
 import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
@@ -8,7 +8,6 @@ import { useGameEvent } from "../hooks/useGameEvent";
 import { useGameCommand } from "../hooks/useGameCommand";
 import { CommandJoinExistingGame } from "../../engine/ui-facade/commands/lobbies/CommandJoinExistingGame";
 import { CommandPollLobbies } from "../../engine/ui-facade/commands/lobbies/CommandPollLobbies";
-import { CommandStopPollLobbies } from "../../engine/ui-facade/commands/lobbies/CommandStopPollLobbies";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { Layout } from "../components/Layout";
 import { CommandCreateRoom } from "../../engine/ui-facade/commands/lobbies/CommandCreateRoom";
@@ -38,7 +37,7 @@ const LobbyTableRow = (props: { id: string; name: string; map: string; currentSi
     );
 };
 
-const LobbyTable = (props: { lobbies: RoomInfo[] }) => {
+const LobbyTable = (props: { lobbies: ShortRoomInfo[] }) => {
     const lobbiesRows = props.lobbies.map(lobbyInfo => {
         const { roomId, maxPlayers, currentPlayers, name } = lobbyInfo;
         return <LobbyTableRow key={roomId} id={roomId} name={name} maxSize={maxPlayers} currentSize={currentPlayers} map="Base" />;
@@ -67,13 +66,10 @@ const LobbyTable = (props: { lobbies: RoomInfo[] }) => {
 };
 
 const Home = () => {
-    const [lobbies, setLobbies] = useState<RoomInfo[]>([]);
+    const [lobbies, setLobbies] = useState<ShortRoomInfo[]>([]);
 
     useMountEffect(() => {
         useGameCommand(new CommandPollLobbies());
-        return () => {
-            useGameCommand(new CommandStopPollLobbies());
-        };
     });
 
     useGameEvent(UI_EVENTS.UPDATE_LOBBIES_LIST, ({ rooms }) => {

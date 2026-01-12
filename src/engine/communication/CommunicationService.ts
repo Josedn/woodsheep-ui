@@ -1,9 +1,9 @@
 import { GameEngine } from "../GameEngine";
 import { createLogger } from "../misc/Logger";
+import { HandleAddUserToRoomMessage } from "./incoming/HandleAddUserToRoom";
 import { HandleChatMessage } from "./incoming/HandleChatMessage";
-import { HandleGameState } from "./incoming/HandleGameState";
 import { HandleLoginOk } from "./incoming/HandleLoginOk";
-import { HandlePrepareRoom } from "./incoming/HandlePrepareRoom";
+import { HandleRoomInfo } from "./incoming/HandleRoomInfo";
 import { HandleRoomList } from "./incoming/HandleRoomList";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
@@ -25,11 +25,11 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     private registerRequests() {
-        this.addHandler(new HandleGameState());
         this.addHandler(new HandleLoginOk());
         this.addHandler(new HandleChatMessage());
-        this.addHandler(new HandlePrepareRoom());
+        this.addHandler(new HandleRoomInfo());
         this.addHandler(new HandleRoomList());
+        this.addHandler(new HandleAddUserToRoomMessage());
     }
 
     private addHandler(incomingEvent: IncomingEvent) {
@@ -42,6 +42,7 @@ export default class CommunicationService implements IMessageHandler {
 
     send(message: OutgoingMessage) {
         if (this.client.connected) {
+            logger.debug("Sent", { message });
             this.client.send(message.stringify());
         }
     }

@@ -1,5 +1,5 @@
 import { GameEngine } from "../GameEngine";
-import type { ChatMessageReceived, GameState, RoomInfo } from "../LobbyService";
+import type { ChatMessageReceived, CurrentRoomInfo, RoomUserData, ShortRoomInfo } from "../LobbyService";
 import { createLogger } from "../misc/Logger";
 import type { UserInfo } from "../ProfileService";
 
@@ -9,17 +9,18 @@ export const UI_EVENTS = {
     UPDATE_LOBBIES_LIST: "updateLobbiesList",
     UPDATE_USER_INFO: "updateUserInfo",
     NAVIGATE: "navigate",
-    UPDATE_LOBBY_USERS: "updateLobbyUsers",
-    UPDATE_GAME_STATE: "updateGameState",
+    UPDATE_LOBBY_PLAYERS: "updateLobbyPlayers",
+    UPDATE_LOBBY_INFO: "updateLobbyInfo",
     UPDATE_CHAT_MESSAGES: "updateChatMessages",
     HANDLE_ERROR: "handleError",
 } as const;
 
 export type UIGameEvents = {
     //Lobby
-    updateLobbiesList: { rooms: RoomInfo[] };
-    updateGameState: { gameState: GameState };
+    updateLobbiesList: { rooms: ShortRoomInfo[] };
+    updateLobbyInfo: { roomInfo: CurrentRoomInfo };
     updateChatMessages: { chatMessages: ChatMessageReceived[] };
+    updateLobbyPlayers: { players: RoomUserData[] };
 
     //User
     updateUserInfo: { userInfo: UserInfo };

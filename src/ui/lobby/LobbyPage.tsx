@@ -6,10 +6,11 @@ import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { useState } from "preact/hooks";
-import type { BoardGamePlayer, ChatMessageReceived } from "../../engine/LobbyService";
+import type { BoardGamePlayer, ChatMessageReceived, CurrentRoomInfo, RoomUserData } from "../../engine/LobbyService";
 import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
 import type { TargetedInputEvent } from "preact";
 import { Layout } from "../components/Layout";
+import { useRoute } from "preact-iso";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -48,9 +49,9 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
     );
 };
 
-const PlayerList = (props: { players: BoardGamePlayer[]; maxPlayers: number }) => {
+const PlayerList = (props: { players: RoomUserData[]; maxPlayers: number }) => {
     const loggedPlayers = props.players.map(player => {
-        return <LobbyPlayerInfo key={player.id} username={player.name} color="red" ready />;
+        return <LobbyPlayerInfo key={player.virtualId} username={player.username} color="red" ready />;
     });
     const placeHolders = [];
     for (let i = props.players.length; i < props.maxPlayers; i++) {
@@ -73,7 +74,6 @@ const Chat = () => {
     const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>([]);
     const [inputMessage, setInputMessage] = useState("");
     useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
-        console.log("aaaa");
         setChatMessages([...chatMessages]);
     });
 
@@ -114,29 +114,39 @@ const Chat = () => {
     );
 };
 
-type LobbyStatus = {
-    players: BoardGamePlayer[];
-    maxPlayers: number;
-};
-
 const Lobby = () => {
+    const route = useRoute();
     useMountEffect(() => {
-        useGameCommand(new CommandRequestLobbyInfo());
+        const roomId = route.params.id;
+        if (roomId != null) {
+            useGameCommand(new CommandRequestLobbyInfo(roomId));
+        }
     });
 
-    const [lobbyStatus, setLobbyStatus] = useState<LobbyStatus>({ players: [], maxPlayers: 4 });
+    const [lobbyStatus, setLobbyStatus] = useState<CurrentRoomInfo>({
+        roomId: "",
+        map: "base",
+        hideBankCards: false,
+        privateGame: false,
+        maxPlayers: 4,
+        turnTimer: 0,
+        cardDiscardLimit: 0,
+        pointsToWin: 0,
+    });
 
-    useGameEvent(UI_EVENTS.UPDATE_GAME_STATE, ({ gameState }) => {
-        const maxPlayers = gameState.settings.numPlayers;
-        const players = gameState.players;
-        const currentTurn = gameState.currentTurn;
+    const [players, setPlayers] = useState<RoomUserData[]>([]);
 
-        setLobbyStatus({ players, maxPlayers });
+    useGameEvent(UI_EVENTS.UPDATE_LOBBY_INFO, ({ roomInfo }) => {
+        setLobbyStatus(roomInfo);
+    });
+
+    useGameEvent(UI_EVENTS.UPDATE_LOBBY_PLAYERS, ({ players }) => {
+        setPlayers(players);
     });
 
     return (
         <div className="lobby">
-            <PlayerList players={lobbyStatus.players} maxPlayers={lobbyStatus.maxPlayers} />
+            <PlayerList players={players} maxPlayers={lobbyStatus.maxPlayers} />
             <div className="lobby__middle">
                 <div className="lobby__info-header">
                     <img className="lobby__info-exit-image" alt="Exit" src={UI_ICONS.iconCross} />

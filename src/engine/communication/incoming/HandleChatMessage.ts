@@ -13,6 +13,6 @@ export class HandleChatMessage implements IncomingEvent {
         GameEngine.getGame().lobbyService.addChatMessage(virtualId, message);
     }
     getRequestType(): string {
-        return "loginOk";
+        return "chatMessage";
     }
 }

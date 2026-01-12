@@ -1,6 +1,5 @@
 import CommunicationService from "./communication/CommunicationService";
 import { LobbyService } from "./LobbyService";
-import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
 import { createLogger } from "./misc/Logger";
 import { ProfileService } from "./ProfileService";

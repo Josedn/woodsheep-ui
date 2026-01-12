@@ -3,13 +3,14 @@ import { Sidebar } from "./Sidebar";
 import { Navigator } from "./Navigator";
 import type { ComponentChildren } from "preact";
 import { ErrorPopUp } from "./popups/ErrorPopUp";
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { GameEngine } from "../../engine/GameEngine";
+import { useMountEffect } from "../hooks/useMountEffect";
 
 export const Layout = (props: { children?: ComponentChildren }) => {
     const [loadedGame, setLoadedGame] = useState(false);
 
-    useEffect(() => {
+    useMountEffect(() => {
         const game = GameEngine.getGame();
 
         // for debugging
@@ -22,7 +23,7 @@ export const Layout = (props: { children?: ComponentChildren }) => {
             .finally(() => {
                 setLoadedGame(true);
             });
-    }, []);
+    });
 
     return (
         <>

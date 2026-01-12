@@ -1,15 +1,11 @@
 import { GameEngine } from "../../GameEngine";
+import type { CurrentRoomInfo } from "../../LobbyService";
 import type { IncomingEvent } from "../protocol/IncomingEvent";
 import type { IncomingMessage } from "../protocol/IncomingMessage";
 
-type PrepareRoomData = {
-    roomId: string;
-};
-
-export class HandlePrepareRoom implements IncomingEvent {
+export class HandleRoomInfo implements IncomingEvent {
     handle(request: IncomingMessage): void {
-        const { roomId } = request.payload as PrepareRoomData;
-        GameEngine.getGame().lobbyService.joinExistingRoom(roomId);
+        GameEngine.getGame().lobbyService.handleRoomInfo(request.payload as CurrentRoomInfo);
     }
     getRequestType(): string {
         return "prepareRoom";
