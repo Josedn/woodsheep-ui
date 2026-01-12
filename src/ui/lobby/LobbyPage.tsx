@@ -1,13 +1,13 @@
 import "./lobby.scss";
 import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
 import { useGameCommand } from "../hooks/useGameCommand";
-import { RequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/RequestLobbyInfo";
+import { CommandRequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/CommandRequestLobbyInfo";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { useState } from "preact/hooks";
 import type { BoardGamePlayer, ChatMessageReceived } from "../../engine/LobbyService";
-import { SendChatMessage } from "../../engine/ui-facade/commands/SendChatMessage";
+import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
 import type { TargetedInputEvent } from "preact";
 import { Layout } from "../components/Layout";
 
@@ -89,7 +89,7 @@ const Chat = () => {
 
     const handleChatSubmit = (evt: Event) => {
         evt.preventDefault();
-        useGameCommand(new SendChatMessage(inputMessage));
+        useGameCommand(new CommandSendChatMessage(inputMessage));
         setInputMessage("");
     };
 
@@ -121,7 +121,7 @@ type LobbyStatus = {
 
 const Lobby = () => {
     useMountEffect(() => {
-        useGameCommand(new RequestLobbyInfo());
+        useGameCommand(new CommandRequestLobbyInfo());
     });
 
     const [lobbyStatus, setLobbyStatus] = useState<LobbyStatus>({ players: [], maxPlayers: 4 });

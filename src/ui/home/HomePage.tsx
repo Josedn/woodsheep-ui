@@ -6,12 +6,12 @@ import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { useGameCommand } from "../hooks/useGameCommand";
-import { JoinExistingGame } from "../../engine/ui-facade/commands/lobbies/JoinExistingGame";
-import { PollLobbies } from "../../engine/ui-facade/commands/lobbies/PollLobbies";
-import { StopPollLobbies } from "../../engine/ui-facade/commands/lobbies/StopPollLobbies";
+import { CommandJoinExistingGame } from "../../engine/ui-facade/commands/lobbies/CommandJoinExistingGame";
+import { CommandPollLobbies } from "../../engine/ui-facade/commands/lobbies/CommandPollLobbies";
+import { CommandStopPollLobbies } from "../../engine/ui-facade/commands/lobbies/CommandStopPollLobbies";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { Layout } from "../components/Layout";
-import { CreateRoom } from "../../engine/ui-facade/commands/lobbies/CreateRoom";
+import { CommandCreateRoom } from "../../engine/ui-facade/commands/lobbies/CommandCreateRoom";
 
 const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
@@ -22,7 +22,7 @@ const LobbyTableRow = (props: { id: string; name: string; map: string; currentSi
     }
 
     const joinLobby = () => {
-        useGameCommand(new JoinExistingGame(props.id));
+        useGameCommand(new CommandJoinExistingGame(props.id));
     };
 
     return (
@@ -70,9 +70,9 @@ const Home = () => {
     const [lobbies, setLobbies] = useState<RoomInfo[]>([]);
 
     useMountEffect(() => {
-        useGameCommand(new PollLobbies());
+        useGameCommand(new CommandPollLobbies());
         return () => {
-            useGameCommand(new StopPollLobbies());
+            useGameCommand(new CommandStopPollLobbies());
         };
     });
 
@@ -81,7 +81,7 @@ const Home = () => {
     });
 
     const handleCreateRoom = () => {
-        useGameCommand(new CreateRoom());
+        useGameCommand(new CommandCreateRoom());
     };
 
     return (

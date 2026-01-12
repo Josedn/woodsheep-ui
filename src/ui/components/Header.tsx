@@ -4,7 +4,7 @@ import type { UserInfo } from "../../engine/ProfileService";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameCommand } from "../hooks/useGameCommand";
-import { GetUserInfo } from "../../engine/ui-facade/commands/GetUserInfo";
+import { CommandGetUserInfo } from "../../engine/ui-facade/commands/CommandGetUserInfo";
 import { useMountEffect } from "../hooks/useMountEffect";
 
 export const Header = () => {
@@ -15,7 +15,7 @@ export const Header = () => {
     });
 
     useMountEffect(() => {
-        useGameCommand(new GetUserInfo());
+        useGameCommand(new CommandGetUserInfo());
     });
 
     const userName = userInfo?.username ?? "";
