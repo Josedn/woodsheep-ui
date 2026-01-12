@@ -8,6 +8,6 @@ export class JoinExistingGame implements GameCommand {
     }
 
     execute(game: GameEngine) {
-        game.lobbyService.joinExistingGame(this.groupId);
+        //game.lobbyService.joinExistingGame(this.groupId);
     }
 }

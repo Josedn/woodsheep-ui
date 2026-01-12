@@ -1,12 +1,12 @@
 import { GameEngine } from "../GameEngine";
-import type { ChatMessageReceived, GameState, GroupInfo } from "../LobbyService";
+import type { ChatMessageReceived, GameState, RoomInfo } from "../LobbyService";
 import { createLogger } from "../misc/Logger";
 import type { UserInfo } from "../ProfileService";
 
 const logger = createLogger("UIFacade");
 
 export const UI_EVENTS = {
-    UPDATE_LOBBIES: "updateLobbies",
+    UPDATE_LOBBIES_LIST: "updateLobbiesList",
     UPDATE_USER_INFO: "updateUserInfo",
     NAVIGATE: "navigate",
     UPDATE_LOBBY_USERS: "updateLobbyUsers",
@@ -17,7 +17,7 @@ export const UI_EVENTS = {
 
 export type UIGameEvents = {
     //Lobby
-    updateLobbies: { groups: GroupInfo[]; atLimit: boolean };
+    updateLobbiesList: { rooms: RoomInfo[] };
     updateGameState: { gameState: GameState };
     updateChatMessages: { chatMessages: ChatMessageReceived[] };
 

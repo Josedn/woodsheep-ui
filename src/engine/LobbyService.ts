@@ -1,5 +1,4 @@
 import { GameEngine } from "./GameEngine";
-import { deleteCookie, setCookie } from "./misc/CookieUtils";
 import { createLogger } from "./misc/Logger";
 import type { Intersection } from "./catan/Intersection";
 import type { HexCoordinate } from "./catan/Tile";
@@ -11,36 +10,16 @@ import { RequestCreateRoom } from "./communication/outgoing/RequestCreateRoom";
 const logger = createLogger("LobbyService");
 
 export class LobbyService {
-    lobbies: GroupInfo[];
-    // TODO: review limit
-    atLimit: boolean;
+    lobbies: RoomInfo[];
     gameState?: GameState;
     chatMessages: ChatMessageReceived[];
 
     constructor() {
         this.lobbies = [];
-        this.atLimit = false;
         this.chatMessages = [];
     }
 
-    public resetEverythingAndGoHome() {
-        deleteCookie("USER_ID");
-        deleteCookie("desiredGroupId");
-        deleteCookie("groupName");
-        deleteCookie("numPlayersDesired");
-        GameEngine.getGame().uiFacade.emit(UI_EVENTS.NAVIGATE, { page: `home` });
-        const { gameCommunicationService } = GameEngine.getGame();
-        gameCommunicationService.disconnect();
-    }
-
-    public async requestLobbyInfo() {
-        const { gameCommunicationService } = GameEngine.getGame();
-        try {
-            await gameCommunicationService.connect();
-        } catch (error) {
-            logger.warn("Can't connect ws :", { error });
-        }
-    }
+    public requestLobbyInfo() {}
 
     public pollLobbies() {
         GameEngine.getGame().gameCommunicationService.send(new RequestRoomList());
@@ -48,37 +27,18 @@ export class LobbyService {
 
     public stopPolling() {}
 
-    public handleLobbyUpdate(groups: GroupInfo[], atLimit: boolean) {
-        this.lobbies = groups;
-        this.atLimit = atLimit;
-
-        GameEngine.getGame().uiFacade.emit("updateLobbies", { groups, atLimit });
+    public handleLobbyUpdate(rooms: RoomInfo[]) {
+        this.lobbies = rooms;
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBIES_LIST, { rooms });
     }
 
     public requestCreateRoom() {
         GameEngine.getGame().gameCommunicationService.send(new RequestCreateRoom());
     }
 
-    public joinExistingGame(groupId: string) {
-        const userName = GameEngine.getGame().profileService.currentUser.username;
-        const groupSize = 4;
-        const victoryPoints = 10;
-        const isDecimal = false;
-        const isDynamic = false;
-        const isStandard = false;
-
-        setCookie("desiredGroupId", groupId);
-        setCookie("userName", userName);
-        setCookie("numPlayersDesired", groupSize.toString());
-        setCookie("victoryPoints", victoryPoints.toString());
-        setCookie("isDecimal", isDecimal.toString());
-        setCookie("isDynamic", isDynamic.toString());
-        setCookie("isStandard", isStandard.toString());
-        deleteCookie("USER_ID");
-
+    public joinExistingRoom(roomId: string) {
         this.stopPolling();
-
-        GameEngine.getGame().uiFacade.emit("navigate", { page: `lobby/${groupId}` });
+        GameEngine.getGame().uiFacade.emit("navigate", { page: `lobby/${roomId}` });
     }
 
     public setGameState(gameState: GameState) {
@@ -86,13 +46,8 @@ export class LobbyService {
         GameEngine.getGame().uiFacade.emit("updateGameState", { gameState });
     }
 
-    public addChatMessage(chatMessage: ChatMessageReceived) {
-        this.chatMessages.push(chatMessage);
-        GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
-    }
-
-    public setChatMessages(chatMessages: ChatMessageReceived[]) {
-        this.chatMessages = chatMessages;
+    public addChatMessage(senderVirtualId: number, message: string) {
+        this.chatMessages.push({ sender: "", content: message });
         GameEngine.getGame().uiFacade.emit("updateChatMessages", { chatMessages: this.chatMessages });
     }
 
@@ -105,14 +60,12 @@ export type ConnectedUser = {
     userName: string;
     id: number;
 };
-export type GroupInfo = {
-    group: {
-        id: string;
-        maxSize: number;
-        currentSize: number;
-        groupName: string;
-        connectedUsers: ConnectedUser[];
-    };
+
+export type RoomInfo = {
+    roomId: string;
+    name: string;
+    maxPlayers: number;
+    currentPlayers: number;
 };
 
 export type BoardGamePlayer = {
@@ -207,6 +160,4 @@ export type GameState = {
 export type ChatMessageReceived = {
     content: string;
     sender: string;
-    timestamp: number;
-    userId: number;
 };

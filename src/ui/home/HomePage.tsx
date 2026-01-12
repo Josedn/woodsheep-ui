@@ -1,6 +1,6 @@
 import "./home.scss";
 import { UI_ICONS } from "../../assets/images";
-import type { GroupInfo } from "../../engine/LobbyService";
+import type { RoomInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
 import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
@@ -38,10 +38,10 @@ const LobbyTableRow = (props: { id: string; name: string; map: string; currentSi
     );
 };
 
-const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
+const LobbyTable = (props: { lobbies: RoomInfo[] }) => {
     const lobbiesRows = props.lobbies.map(lobbyInfo => {
-        const { id, maxSize, currentSize, groupName } = lobbyInfo.group;
-        return <LobbyTableRow key={id} id={id} name={groupName} maxSize={maxSize} currentSize={currentSize} map="Base" />;
+        const { roomId, maxPlayers, currentPlayers, name } = lobbyInfo;
+        return <LobbyTableRow key={roomId} id={roomId} name={name} maxSize={maxPlayers} currentSize={currentPlayers} map="Base" />;
     });
     return (
         <table className="lobby-list__table">
@@ -67,7 +67,7 @@ const LobbyTable = (props: { lobbies: GroupInfo[] }) => {
 };
 
 const Home = () => {
-    const [lobbies, setLobbies] = useState<GroupInfo[]>([]);
+    const [lobbies, setLobbies] = useState<RoomInfo[]>([]);
 
     useMountEffect(() => {
         useGameCommand(new PollLobbies());
@@ -76,8 +76,8 @@ const Home = () => {
         };
     });
 
-    useGameEvent(UI_EVENTS.UPDATE_LOBBIES, ({ groups }) => {
-        setLobbies(groups);
+    useGameEvent(UI_EVENTS.UPDATE_LOBBIES_LIST, ({ rooms }) => {
+        setLobbies(rooms);
     });
 
     const handleCreateRoom = () => {
