@@ -7,7 +7,7 @@ export class RequestSendChatMessage extends OutgoingMessage {
         this.message = message;
     }
 
-    getBody() {
+    getPayload() {
         return { message: this.message };
     }
 }

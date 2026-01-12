@@ -1,5 +1,7 @@
+import { GameEngine } from "../GameEngine";
 import { createLogger } from "../misc/Logger";
 import { HandleGameState } from "./incoming/HandleGameState";
+import { HandleLoginOk } from "./incoming/HandleLoginOk";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import type { OutgoingMessage } from "./protocol/OutgoingMessage";
@@ -21,6 +23,7 @@ export default class CommunicationService implements IMessageHandler {
 
     private registerRequests() {
         this.addHandler(new HandleGameState());
+        this.addHandler(new HandleLoginOk());
     }
 
     private addHandler(incomingEvent: IncomingEvent) {
@@ -69,6 +72,7 @@ export default class CommunicationService implements IMessageHandler {
     }
     handleCloseConnection(): void {
         logger.info("Connection closed");
+        GameEngine.getGame().die("Connection closed");
     }
     handleConnectionError(): void {
         logger.info("Connection error");

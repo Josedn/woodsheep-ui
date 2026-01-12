@@ -5,12 +5,12 @@ export class OutgoingMessage {
         this.requestType = requestType;
     }
 
-    public getBody(): object {
+    public getPayload(): object {
         return {};
     }
 
     public stringify(): string {
-        const merged = { requestType: this.requestType, ...this.getBody() };
+        const merged = { requestType: this.requestType, payload: this.getPayload() };
         return JSON.stringify(merged);
     }
 }

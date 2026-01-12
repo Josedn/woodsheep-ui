@@ -7,13 +7,6 @@ import "./assets/fonts/fonts.css";
 import "./main.scss";
 import { GameEngine } from "./engine/GameEngine.ts";
 
-const game = GameEngine.getGame();
-game.initialize();
-
-// for debugging
-const win: any = window;
-win.game = game;
-
 const App = () => {
     return (
         <LocationProvider>

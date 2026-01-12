@@ -5,7 +5,7 @@ import type { IncomingMessage } from "../protocol/IncomingMessage";
 
 export class HandleGameState implements IncomingEvent {
     handle(request: IncomingMessage): void {
-        const data = request.body as GameState;
+        const data = request.payload as GameState;
         GameEngine.getGame().lobbyService.setGameState(data);
     }
     getRequestType(): string {

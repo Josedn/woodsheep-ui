@@ -1,19 +1,23 @@
+import { RequestHandshake } from "./communication/outgoing/RequestHandshake";
 import { GameEngine } from "./GameEngine";
+import { UI_EVENTS } from "./ui-facade/UIFacade";
 
 export type UserInfo = {
-    userName: string;
-};
-
-const getRandomArbitrary = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min) + min);
+    userId: string;
+    username: string;
 };
 
 export class ProfileService {
     public currentUser: UserInfo;
 
     constructor() {
-        const userName = "PreactUser#" + getRandomArbitrary(111, 999).toString();
-        this.currentUser = { userName };
+        this.currentUser = { username: "", userId: "" };
+    }
+
+    public loadUser() {
+        const { storeService } = GameEngine.getGame();
+        const sso = storeService.get("sso") ?? "";
+        GameEngine.getGame().gameCommunicationService.send(new RequestHandshake(sso));
     }
 
     public setUser(userInfo: UserInfo) {
@@ -22,6 +26,6 @@ export class ProfileService {
     }
 
     public emitUserUpdate() {
-        GameEngine.getGame().uiFacade.emit("updateUserInfo", { userInfo: this.currentUser });
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_USER_INFO, { userInfo: this.currentUser });
     }
 }

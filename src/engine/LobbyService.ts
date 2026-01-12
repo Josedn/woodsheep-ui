@@ -4,6 +4,7 @@ import { createLogger } from "./misc/Logger";
 import type { Intersection } from "./catan/Intersection";
 import type { HexCoordinate } from "./catan/Tile";
 import { RequestSendChatMessage } from "./communication/outgoing/RequestSendChatMessage";
+import { UI_EVENTS } from "./ui-facade/UIFacade";
 
 const logger = createLogger("LobbyService");
 
@@ -25,7 +26,7 @@ export class LobbyService {
         deleteCookie("desiredGroupId");
         deleteCookie("groupName");
         deleteCookie("numPlayersDesired");
-        GameEngine.getGame().uiFacade.emit("navigate", { page: `home` });
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.NAVIGATE, { page: `home` });
         const { gameCommunicationService } = GameEngine.getGame();
         gameCommunicationService.disconnect();
     }
@@ -51,7 +52,7 @@ export class LobbyService {
     }
 
     public joinExistingGame(groupId: string) {
-        const userName = GameEngine.getGame().profileService.currentUser.userName;
+        const userName = GameEngine.getGame().profileService.currentUser.username;
         const groupSize = 4;
         const victoryPoints = 10;
         const isDecimal = false;

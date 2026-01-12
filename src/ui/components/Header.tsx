@@ -18,7 +18,7 @@ export const Header = () => {
         useGameCommand(new GetUserInfo());
     });
 
-    const userName = userInfo?.userName ?? "";
+    const userName = userInfo?.username ?? "";
 
     return (
         <header className="header">
