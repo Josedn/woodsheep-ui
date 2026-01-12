@@ -1,8 +1,5 @@
 import { createLogger } from "../misc/Logger";
-import { HandleChatMessage } from "./incoming/HandleChatMessage";
-import { HandleError } from "./incoming/HandleError";
 import { HandleGameState } from "./incoming/HandleGameState";
-import { HandleSetCookie } from "./incoming/HandleSetCookie";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import type { OutgoingMessage } from "./protocol/OutgoingMessage";
@@ -23,10 +20,7 @@ export default class CommunicationService implements IMessageHandler {
     }
 
     private registerRequests() {
-        this.addHandler(new HandleSetCookie());
-        this.addHandler(new HandleError());
         this.addHandler(new HandleGameState());
-        this.addHandler(new HandleChatMessage());
     }
 
     private addHandler(incomingEvent: IncomingEvent) {

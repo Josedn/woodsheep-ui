@@ -1,5 +1,4 @@
 import CommunicationService from "./communication/CommunicationService";
-import TempGroupCommunicationService from "./communication/TempGroupCommunicationService";
 import { LobbyService } from "./LobbyService";
 import { deleteCookie } from "./misc/CookieUtils";
 import { env } from "./misc/env";
@@ -11,14 +10,12 @@ const logger = createLogger("GameEngine");
 
 export class GameEngine {
     private static gameInstance: GameEngine;
-    public groupCommunicationService: TempGroupCommunicationService;
     public gameCommunicationService: CommunicationService;
     public lobbyService: LobbyService;
     public uiFacade: UIFacade;
     public profileService: ProfileService;
 
     constructor() {
-        this.groupCommunicationService = new TempGroupCommunicationService(env.wsBaseUrl + "/groups/");
         this.gameCommunicationService = new CommunicationService(env.wsBaseUrl + "/action/");
         this.lobbyService = new LobbyService();
         this.uiFacade = new UIFacade();

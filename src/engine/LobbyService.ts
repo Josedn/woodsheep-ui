@@ -1,5 +1,3 @@
-import { RequestChatReload } from "./communication/outgoing/RequestChatReload";
-import { RequestLobbyState } from "./communication/outgoing/RequestLobbyState";
 import { GameEngine } from "./GameEngine";
 import { deleteCookie, setCookie } from "./misc/CookieUtils";
 import { createLogger } from "./misc/Logger";
@@ -36,24 +34,14 @@ export class LobbyService {
         const { gameCommunicationService } = GameEngine.getGame();
         try {
             await gameCommunicationService.connect();
-            gameCommunicationService.send(new RequestLobbyState());
-            gameCommunicationService.send(new RequestChatReload());
         } catch (error) {
             logger.warn("Can't connect ws :", { error });
         }
     }
 
-    public async pollLobbies() {
-        try {
-            await GameEngine.getGame().groupCommunicationService.connect();
-        } catch (error) {
-            logger.warn("Can't connect ws :", { error });
-        }
-    }
+    public async pollLobbies() {}
 
-    public stopPolling() {
-        GameEngine.getGame().groupCommunicationService.disconnect();
-    }
+    public stopPolling() {}
 
     public handleLobbyUpdate(groups: GroupInfo[], atLimit: boolean) {
         this.lobbies = groups;

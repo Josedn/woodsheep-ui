@@ -5,6 +5,6 @@ export class IncomingMessage {
     constructor(data: string) {
         const parsed = JSON.parse(data);
         this.requestType = parsed.requestType;
-        this.body = parsed;
+        this.body = parsed.body;
     }
 }
