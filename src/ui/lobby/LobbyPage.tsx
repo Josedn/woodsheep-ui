@@ -1,8 +1,5 @@
 import "./lobby.scss";
-import { Header } from "../components/Header";
-import { Sidebar } from "../components/Sidebar";
 import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
-import { Navigator } from "../components/Navigator";
 import { useGameCommand } from "../hooks/useGameCommand";
 import { RequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/RequestLobbyInfo";
 import { useGameEvent } from "../hooks/useGameEvent";
@@ -11,7 +8,8 @@ import { useMountEffect } from "../hooks/useMountEffect";
 import { useState } from "preact/hooks";
 import type { BoardGamePlayer, ChatMessageReceived } from "../../engine/LobbyService";
 import { SendChatMessage } from "../../engine/ui-facade/commands/SendChatMessage";
-import type { ButtonHTMLAttributes, FormHTMLAttributes, MouseEventHandler, SubmitEventHandler, TargetedInputEvent, TargetedSubmitEvent } from "preact";
+import type { TargetedInputEvent } from "preact";
+import { Layout } from "../components/Layout";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -269,11 +267,8 @@ const Lobby = () => {
 
 export const LobbyPage = () => {
     return (
-        <div className="layout">
-            <Navigator />
-            <Sidebar />
-            <Header />
+        <Layout>
             <Lobby />
-        </div>
+        </Layout>
     );
 };

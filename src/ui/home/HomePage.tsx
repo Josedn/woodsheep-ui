@@ -1,18 +1,16 @@
 import "./home.scss";
-import { Header } from "../components/Header";
 import { UI_ICONS } from "../../assets/images";
-import { Sidebar } from "../components/Sidebar";
 import type { GroupInfo } from "../../engine/LobbyService";
 import type { VNode } from "preact";
 import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
-import { Navigator } from "../components/Navigator";
 import { useGameCommand } from "../hooks/useGameCommand";
 import { JoinExistingGame } from "../../engine/ui-facade/commands/lobbies/JoinExistingGame";
 import { PollLobbies } from "../../engine/ui-facade/commands/lobbies/PollLobbies";
 import { StopPollLobbies } from "../../engine/ui-facade/commands/lobbies/StopPollLobbies";
 import { useMountEffect } from "../hooks/useMountEffect";
+import { Layout } from "../components/Layout";
 
 const LobbyTableRow = (props: { id: string; name: string; map: string; currentSize: number; maxSize: number }) => {
     const playerNodes: VNode[] = [];
@@ -114,11 +112,8 @@ const Home = () => {
 
 export const HomePage = () => {
     return (
-        <div className="layout">
-            <Navigator />
-            <Sidebar />
-            <Header />
+        <Layout>
             <Home />
-        </div>
+        </Layout>
     );
 };

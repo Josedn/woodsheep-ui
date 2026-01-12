@@ -2,7 +2,7 @@ import { GAME_TINTED_ICONS, UI_ICONS } from "../../../assets/images";
 import { PopUp } from "./PopUp";
 import "./edit-profile.scss";
 
-const EditProfile = () => {
+export const EditProfile = () => {
     return (
         <PopUp title="Edit Profile">
             <div className="edit-profile">

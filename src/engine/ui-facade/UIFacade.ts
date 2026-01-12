@@ -12,6 +12,7 @@ export const UI_EVENTS = {
     UPDATE_LOBBY_USERS: "updateLobbyUsers",
     UPDATE_GAME_STATE: "updateGameState",
     UPDATE_CHAT_MESSAGES: "updateChatMessages",
+    HANDLE_ERROR: "handleError",
 } as const;
 
 export type UIGameEvents = {
@@ -24,6 +25,9 @@ export type UIGameEvents = {
     updateUserInfo: { userInfo: UserInfo };
 
     navigate: { page: string };
+
+    //Misc
+    handleError: { errorMessage: string };
 };
 
 export type UIGameEventKey = keyof UIGameEvents;
@@ -52,6 +56,7 @@ export class UIFacade {
     }
 
     public dispatch(command: GameCommand) {
+        logger.debug("Dispatching", { command });
         command.execute(GameEngine.getGame());
     }
 }
