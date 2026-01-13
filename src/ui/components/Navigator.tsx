@@ -1,0 +1,15 @@
+import { useLocation } from "preact-iso";
+import { useGameEvent } from "../hooks/useGameEvent";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
+
+export const Navigator = () => {
+    const location = useLocation();
+
+    useGameEvent(UI_EVENTS.NAVIGATE, ({ page }) => {
+        if (location.url != "/" + page) {
+            location.route("/" + page);
+        }
+    });
+
+    return <></>;
+};

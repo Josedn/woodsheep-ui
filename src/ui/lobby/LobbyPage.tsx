@@ -1,6 +1,16 @@
 import "./lobby.scss";
-import { Header, Sidebar } from "./components/GenericPage";
-import { GAME_TINTED_ICONS, UI_ICONS } from "../assets/images";
+import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
+import { useGameCommand } from "../hooks/useGameCommand";
+import { CommandRequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/CommandRequestLobbyInfo";
+import { useGameEvent } from "../hooks/useGameEvent";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
+import { useMountEffect } from "../hooks/useMountEffect";
+import { useState } from "preact/hooks";
+import type { BoardGamePlayer, ChatMessageReceived, CurrentRoomInfo, RoomUserData } from "../../engine/LobbyService";
+import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
+import type { TargetedInputEvent } from "preact";
+import { Layout } from "../components/Layout";
+import { useLocation, useRoute } from "preact-iso";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -25,9 +35,11 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
             </div>
             <div className="lobby__player-status">
                 <div className="lobby__player-actions-container">
-                    <div className="lobby__player-action">
-                        <img className="lobby__player-action-image" alt="Edit" src={UI_ICONS.iconPencil} />
-                    </div>
+                    {props.canEdit && (
+                        <div className="lobby__player-action">
+                            <img className="lobby__player-action-image" alt="Edit" src={UI_ICONS.iconPencil} />
+                        </div>
+                    )}
                 </div>
                 <div className={"lobby__player-ready" + (props.ready ? " lobby__player-ready--ready" : "")}>
                     <div className="lobby__player-ready-label">{props.ready ? "READY" : "Not Ready"}</div>
@@ -37,22 +49,111 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
     );
 };
 
+const PlayerList = (props: { players: RoomUserData[]; maxPlayers: number }) => {
+    const loggedPlayers = props.players.map(player => {
+        return <LobbyPlayerInfo key={player.virtualId} username={player.username} color="red" ready />;
+    });
+    const placeHolders = [];
+    for (let i = props.players.length; i < props.maxPlayers; i++) {
+        placeHolders.push(<LobbyPlayerInfoPlaceholder />);
+    }
+    return (
+        <div className="lobby__left">
+            <h2 className="lobby__heading">
+                Players ({props.players.length}/{props.maxPlayers})
+            </h2>
+            <div className="lobby__player-list">
+                {loggedPlayers}
+                {placeHolders}
+            </div>
+        </div>
+    );
+};
+
+const Chat = () => {
+    const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>([]);
+    const [inputMessage, setInputMessage] = useState("");
+    useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
+        setChatMessages([...chatMessages]);
+    });
+
+    const chatNodes = chatMessages.map((message, index) => {
+        return (
+            <div key={index} className="lobby__message">
+                <img className="lobby__message-avatar" alt="User" src={UI_ICONS.iconPlayer} />
+                <span className="lobby__message-username">{message.sender}: </span>
+                {message.content}
+            </div>
+        );
+    });
+
+    const handleChatSubmit = (evt: Event) => {
+        evt.preventDefault();
+        useGameCommand(new CommandSendChatMessage(inputMessage));
+        setInputMessage("");
+    };
+
+    const handleInputChange = (evt: TargetedInputEvent<HTMLInputElement>) => {
+        const value = evt.currentTarget.value;
+        setInputMessage(value);
+    };
+
+    return (
+        <div className="lobby__right">
+            <div className="lobby__right-header">
+                <div className="lobby__right-heading">Chat</div>
+            </div>
+            <div className="lobby__message-container">{chatNodes}</div>
+            <form className="lobby__message-form" onSubmit={handleChatSubmit}>
+                <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} value={inputMessage} onChange={handleInputChange} />
+                <button className="lobby__message-submit">
+                    <img className="lobby__message-submit-image" src={UI_ICONS.iconSend} />
+                </button>
+            </form>
+        </div>
+    );
+};
+
 const Lobby = () => {
+    const route = useRoute();
+    const { url } = useLocation();
+    const fullUrl = window.location.protocol + '//' + window.location.host + url;
+
+    const [lobbyStatus, setLobbyStatus] = useState<CurrentRoomInfo>({
+        roomId: "",
+        map: "base",
+        hideBankCards: false,
+        privateGame: false,
+        maxPlayers: 4,
+        turnTimer: 0,
+        cardDiscardLimit: 0,
+        pointsToWin: 0,
+    });
+
+    const [players, setPlayers] = useState<RoomUserData[]>([]);
+
+    useGameEvent(UI_EVENTS.UPDATE_LOBBY_INFO, ({ roomInfo }) => {
+        setLobbyStatus(roomInfo);
+    });
+
+    useGameEvent(UI_EVENTS.UPDATE_LOBBY_PLAYERS, ({ players }) => {
+        setPlayers(players);
+    });
+
+    useMountEffect(() => {
+        const roomId = route.params.id;
+        if (roomId != null) {
+            useGameCommand(new CommandRequestLobbyInfo(roomId));
+        }
+    });
+    
     return (
         <div className="lobby">
-            <div className="lobby__left">
-                <h2 className="lobby__heading">Players (2/4)</h2>
-                <div className="lobby__player-list">
-                    <LobbyPlayerInfo username="Bold" color="red" ready canEdit />
-                    <LobbyPlayerInfo username="Lissi" color="green" />
-                    <LobbyPlayerInfoPlaceholder />
-                    <LobbyPlayerInfoPlaceholder />
-                </div>
-            </div>
+            <PlayerList players={players} maxPlayers={lobbyStatus.maxPlayers} />
             <div className="lobby__middle">
                 <div className="lobby__info-header">
                     <img className="lobby__info-exit-image" alt="Exit" src={UI_ICONS.iconCross} />
-                    <h2 className="lobby__heading">Room ID: sail6736</h2>
+                    <h2 className="lobby__heading">Room ID: {lobbyStatus.roomId}</h2>
                 </div>
                 <div className="lobby__info-scroller">
                     <div className="lobby__invite">
@@ -61,7 +162,7 @@ const Lobby = () => {
                             <img className="lobby__invite-title-image" src={UI_ICONS.iconInfo} />
                         </div>
                         <div className="lobby__invite-body">
-                            <div className="lobby__invite-body-link">tbd</div>
+                            <div className="lobby__invite-body-link">{fullUrl}</div>
                             <a className="lobby__invite-body-button">Copy</a>
                         </div>
                     </div>
@@ -100,12 +201,12 @@ const Lobby = () => {
                             <div className="lobby__options-body">
                                 <div className="lobby__options-scroller">
                                     <div className="lobby__options-scroller-wrapper lobby__options-scroller-wrapper--no-scroll">
-                                        <div className="lobby__options-cell lobby__options-cell--selected">
+                                        <div className={"lobby__options-cell" + (lobbyStatus.privateGame ? " lobby__options-cell--selected" : "") }>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconSunglasses} />
                                             <p className="lobby__options-cell-label">Private Game</p>
                                         </div>
 
-                                        <div className="lobby__options-cell">
+                                        <div className={"lobby__options-cell" + (lobbyStatus.hideBankCards ? " lobby__options-cell--selected" : "") }>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconHideCard} />
                                             <p className="lobby__options-cell-label">Hide Bank Cards</p>
                                         </div>
@@ -125,7 +226,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">120s</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.turnTimer}s</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -135,7 +236,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">4/4</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.maxPlayers}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -147,7 +248,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">10</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.pointsToWin}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -157,7 +258,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">7</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.cardDiscardLimit}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -172,33 +273,15 @@ const Lobby = () => {
                     </div>
                 </div>
             </div>
-            <div className="lobby__right">
-                <div className="lobby__right-header">
-                    <div className="lobby__right-heading">Chat</div>
-                </div>
-                <div className="lobby__message-container">
-                    <div className="lobby__message">
-                        <img className="lobby__message-avatar" alt="User" src={UI_ICONS.iconPlayer} />
-                        <span className="lobby__message-username">Bold: </span>hello
-                    </div>
-                </div>
-                <form className="lobby__message-form">
-                    <input className="lobby__message-input" type="text" placeholder="Send a message" maxLength={200} />
-                    <button className="lobby__message-submit">
-                        <img className="lobby__message-submit-image" src={UI_ICONS.iconSend} />
-                    </button>
-                </form>
-            </div>
+            <Chat />
         </div>
     );
 };
 
 export const LobbyPage = () => {
     return (
-        <div className="layout">
-            <Sidebar />
-            <Header />
+        <Layout>
             <Lobby />
-        </div>
+        </Layout>
     );
 };
