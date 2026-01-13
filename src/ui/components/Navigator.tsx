@@ -6,7 +6,9 @@ export const Navigator = () => {
     const location = useLocation();
 
     useGameEvent(UI_EVENTS.NAVIGATE, ({ page }) => {
-        location.route("/" + page);
+        if (location.url != "/" + page) {
+            location.route("/" + page);
+        }
     });
 
     return <></>;

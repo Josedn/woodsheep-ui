@@ -28,10 +28,20 @@ export class LobbyService {
         GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_INFO, { roomInfo });
     }
 
+    public handleRoomRejected(reason: string) {
+        GameEngine.getGame().uiFacade.emit("navigate", { page: `` });
+        logger.debug("Room rejected", { reason});
+    }
+
     public addUsersToRoom(roomUsers: RoomUserData[]) {
         roomUsers.forEach(roomUser => {
             this.roomUsers[roomUser.virtualId] = roomUser;
         });
+        GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_PLAYERS, { players: Object.values(this.roomUsers) });
+    }
+
+    public removeUserFromRoom(virtualId: number) {
+        delete(this.roomUsers[virtualId]);
         GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_PLAYERS, { players: Object.values(this.roomUsers) });
     }
 

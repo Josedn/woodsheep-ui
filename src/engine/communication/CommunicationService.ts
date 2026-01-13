@@ -3,8 +3,10 @@ import { createLogger } from "../misc/Logger";
 import { HandleAddUserToRoomMessage } from "./incoming/HandleAddUserToRoom";
 import { HandleChatMessage } from "./incoming/HandleChatMessage";
 import { HandleLoginOk } from "./incoming/HandleLoginOk";
+import { HandleRemoveUserFromRoom } from "./incoming/HandleRemoveUserFromRoom";
 import { HandleRoomInfo } from "./incoming/HandleRoomInfo";
 import { HandleRoomList } from "./incoming/HandleRoomList";
+import { HandleRoomRejected } from "./incoming/HandleRoomRejected";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import type { OutgoingMessage } from "./protocol/OutgoingMessage";
@@ -30,6 +32,8 @@ export default class CommunicationService implements IMessageHandler {
         this.addHandler(new HandleRoomInfo());
         this.addHandler(new HandleRoomList());
         this.addHandler(new HandleAddUserToRoomMessage());
+        this.addHandler(new HandleRemoveUserFromRoom());
+        this.addHandler(new HandleRoomRejected());
     }
 
     private addHandler(incomingEvent: IncomingEvent) {
@@ -67,7 +71,7 @@ export default class CommunicationService implements IMessageHandler {
         const message = new IncomingMessage(data);
         const handler = this.requestHandlers[message.requestType];
         if (handler != null) {
-            logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name);
+            logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name, {message});
             handler.handle(message);
         } else {
             logger.warn("No handler for requestType: " + message.requestType, { request: message });

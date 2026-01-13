@@ -10,7 +10,7 @@ import type { BoardGamePlayer, ChatMessageReceived, CurrentRoomInfo, RoomUserDat
 import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
 import type { TargetedInputEvent } from "preact";
 import { Layout } from "../components/Layout";
-import { useRoute } from "preact-iso";
+import { useLocation, useRoute } from "preact-iso";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -116,12 +116,8 @@ const Chat = () => {
 
 const Lobby = () => {
     const route = useRoute();
-    useMountEffect(() => {
-        const roomId = route.params.id;
-        if (roomId != null) {
-            useGameCommand(new CommandRequestLobbyInfo(roomId));
-        }
-    });
+    const { url } = useLocation();
+    const fullUrl = window.location.protocol + '//' + window.location.host + url;
 
     const [lobbyStatus, setLobbyStatus] = useState<CurrentRoomInfo>({
         roomId: "",
@@ -144,13 +140,20 @@ const Lobby = () => {
         setPlayers(players);
     });
 
+    useMountEffect(() => {
+        const roomId = route.params.id;
+        if (roomId != null) {
+            useGameCommand(new CommandRequestLobbyInfo(roomId));
+        }
+    });
+    
     return (
         <div className="lobby">
             <PlayerList players={players} maxPlayers={lobbyStatus.maxPlayers} />
             <div className="lobby__middle">
                 <div className="lobby__info-header">
                     <img className="lobby__info-exit-image" alt="Exit" src={UI_ICONS.iconCross} />
-                    <h2 className="lobby__heading">Room ID: sail6736</h2>
+                    <h2 className="lobby__heading">Room ID: {lobbyStatus.roomId}</h2>
                 </div>
                 <div className="lobby__info-scroller">
                     <div className="lobby__invite">
@@ -159,7 +162,7 @@ const Lobby = () => {
                             <img className="lobby__invite-title-image" src={UI_ICONS.iconInfo} />
                         </div>
                         <div className="lobby__invite-body">
-                            <div className="lobby__invite-body-link">tbd</div>
+                            <div className="lobby__invite-body-link">{fullUrl}</div>
                             <a className="lobby__invite-body-button">Copy</a>
                         </div>
                     </div>
@@ -198,12 +201,12 @@ const Lobby = () => {
                             <div className="lobby__options-body">
                                 <div className="lobby__options-scroller">
                                     <div className="lobby__options-scroller-wrapper lobby__options-scroller-wrapper--no-scroll">
-                                        <div className="lobby__options-cell lobby__options-cell--selected">
+                                        <div className={"lobby__options-cell" + (lobbyStatus.privateGame ? " lobby__options-cell--selected" : "") }>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconSunglasses} />
                                             <p className="lobby__options-cell-label">Private Game</p>
                                         </div>
 
-                                        <div className="lobby__options-cell">
+                                        <div className={"lobby__options-cell" + (lobbyStatus.hideBankCards ? " lobby__options-cell--selected" : "") }>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconHideCard} />
                                             <p className="lobby__options-cell-label">Hide Bank Cards</p>
                                         </div>
@@ -223,7 +226,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">120s</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.turnTimer}s</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -233,7 +236,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">4/4</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.maxPlayers}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -245,7 +248,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">10</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.pointsToWin}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
@@ -255,7 +258,7 @@ const Lobby = () => {
                                 </div>
                                 <div className="lobby__options-body">
                                     <img class="lobby__options-arrow-selector" src={UI_ICONS.iconArrow} />
-                                    <h3 className="lobby__options-range-input">7</h3>
+                                    <h3 className="lobby__options-range-input">{lobbyStatus.cardDiscardLimit}</h3>
                                     <img class="lobby__options-arrow-selector lobby__options-arrow-selector--rotated180" src={UI_ICONS.iconArrow} />
                                 </div>
                             </div>
