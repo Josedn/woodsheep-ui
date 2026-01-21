@@ -48,6 +48,7 @@ export class UIFacade {
     public on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
         this.listeners[event] ??= [];
         this.listeners[event]!.push(cb);
+        //logger.debug("Subscribed " + event);
         // Flush any queued events that were emitted before listeners existed
         const queued = this.queue[event];
         if (queued && queued.length) {
@@ -58,6 +59,7 @@ export class UIFacade {
             this.queue[event] = [];
         }
         return () => {
+            //logger.debug("Unsubscribed " + event);
             const arr = this.listeners[event];
             if (arr) {
                 this.listeners[event] = arr.filter(l => l !== cb) as any;
