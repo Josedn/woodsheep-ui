@@ -117,7 +117,7 @@ const Chat = () => {
 const Lobby = () => {
     const route = useRoute();
     const { url } = useLocation();
-    const fullUrl = window.location.protocol + '//' + window.location.host + url;
+    const fullUrl = window.location.protocol + "//" + window.location.host + url;
 
     const [lobbyStatus, setLobbyStatus] = useState<CurrentRoomInfo>({
         roomId: "",
@@ -146,7 +146,7 @@ const Lobby = () => {
             useGameCommand(new CommandRequestLobbyInfo(roomId));
         }
     });
-    
+
     return (
         <div className="lobby">
             <PlayerList players={players} maxPlayers={lobbyStatus.maxPlayers} />
@@ -201,12 +201,12 @@ const Lobby = () => {
                             <div className="lobby__options-body">
                                 <div className="lobby__options-scroller">
                                     <div className="lobby__options-scroller-wrapper lobby__options-scroller-wrapper--no-scroll">
-                                        <div className={"lobby__options-cell" + (lobbyStatus.privateGame ? " lobby__options-cell--selected" : "") }>
+                                        <div className={"lobby__options-cell" + (lobbyStatus.privateGame ? " lobby__options-cell--selected" : "")}>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconSunglasses} />
                                             <p className="lobby__options-cell-label">Private Game</p>
                                         </div>
 
-                                        <div className={"lobby__options-cell" + (lobbyStatus.hideBankCards ? " lobby__options-cell--selected" : "") }>
+                                        <div className={"lobby__options-cell" + (lobbyStatus.hideBankCards ? " lobby__options-cell--selected" : "")}>
                                             <img className="lobby__options-cell-image" src={UI_ICONS.iconHideCard} />
                                             <p className="lobby__options-cell-label">Hide Bank Cards</p>
                                         </div>

@@ -30,7 +30,7 @@ export class LobbyService {
 
     public handleRoomRejected(reason: string) {
         GameEngine.getGame().uiFacade.emit("navigate", { page: `` });
-        logger.debug("Room rejected", { reason});
+        logger.debug("Room rejected", { reason });
     }
 
     public addUsersToRoom(roomUsers: RoomUserData[]) {
@@ -41,7 +41,7 @@ export class LobbyService {
     }
 
     public removeUserFromRoom(virtualId: number) {
-        delete(this.roomUsers[virtualId]);
+        delete this.roomUsers[virtualId];
         GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_PLAYERS, { players: Object.values(this.roomUsers) });
     }
 

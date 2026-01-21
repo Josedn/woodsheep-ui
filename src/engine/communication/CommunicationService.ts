@@ -71,7 +71,7 @@ export default class CommunicationService implements IMessageHandler {
         const message = new IncomingMessage(data);
         const handler = this.requestHandlers[message.requestType];
         if (handler != null) {
-            logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name, {message});
+            logger.debug("Handled [" + message.requestType + "]: " + handler.constructor.name, { message });
             handler.handle(message);
         } else {
             logger.warn("No handler for requestType: " + message.requestType, { request: message });

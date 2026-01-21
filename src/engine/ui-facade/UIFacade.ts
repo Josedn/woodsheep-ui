@@ -41,19 +41,39 @@ export class UIFacade {
     private listeners: {
         [K in keyof UIGameEvents]?: ((data: UIGameEvents[K]) => void)[];
     } = {};
+    private queue: {
+        [K in keyof UIGameEvents]?: UIGameEvents[K][];
+    } = {};
 
     public on<K extends keyof UIGameEvents>(event: K, cb: (data: UIGameEvents[K]) => void) {
         this.listeners[event] ??= [];
         this.listeners[event]!.push(cb);
-        //logger.debug("Subscribed " + event);
+        // Flush any queued events that were emitted before listeners existed
+        const queued = this.queue[event];
+        if (queued && queued.length) {
+            // deliver to all current listeners in order
+            queued.forEach(payload => {
+                this.listeners[event]!.forEach(l => l(payload as any));
+            });
+            this.queue[event] = [];
+        }
         return () => {
-            //logger.debug("Unsubscribed " + event);
-            this.listeners[event] = [];
+            const arr = this.listeners[event];
+            if (arr) {
+                this.listeners[event] = arr.filter(l => l !== cb) as any;
+            }
         };
     }
 
     public emit<K extends keyof UIGameEvents>(event: K, data: UIGameEvents[K]) {
-        this.listeners[event]?.forEach(cb => cb(data));
+        const arr = this.listeners[event];
+        if (arr && arr.length) {
+            arr.forEach(cb => cb(data));
+        } else {
+            // No listeners yet; queue the event
+            this.queue[event] ??= [] as any;
+            (this.queue[event] as UIGameEvents[K][]).push(data);
+        }
     }
 
     public dispatch(command: GameCommand) {
