@@ -1,39 +1,16 @@
-import { Tile, TileType, degToRad, findCenter, findCenter2c, type CartesianCoordinate, type HexCoordinate } from "../../../engine/catan/Tile";
+import { Tile, TileType, degToRad, findCenter, findCenter2c, hexToCartesian, type CartesianCoordinate, type HexCoordinate } from "../../../engine/catan/Tile";
 import { Path } from "../../../engine/catan/Path";
 import { Intersection } from "../../../engine/catan/Intersection";
 import { GAME_ICONS, GAME_TINTED_ICONS } from "../../../assets/images";
 import "./game-board.scss";
 
-const HEX_SCALE = 10 * Math.cos(degToRad(30)) * 0.99; // 10em * hex width / height * arbitrary adjustment
+const HEX_SCALE = 5 * 0.99; // 10em * hex width / height * arbitrary adjustment
 
 export const GameBoard = () => {
     const transX2 = 40;
     const transY2 = 28;
-
-    return (
-        <>
-            <div className="board-viewport">
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 0 }, 2, TileType.ORE)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: -1 }, -1, TileType.DESERT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 0 }, 4, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 1 }, 5, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: -1, z: 0 }, 6, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 0, z: 0 }, 8, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 0, z: 0 }, 9, TileType.ORE)} />
-                <TileHex faded transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 1, z: 0 }, 10, TileType.GOLD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -1, z: 0 }, 11, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: -2 }, 4, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: -3, z: -1 }, 5, TileType.ORE)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: -3, z: -1 }, 4, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -3, y: -3, z: -1 }, 6, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 1 }, 12, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 1, z: 1 }, 5, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 2, z: 1 }, 2, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: 0 }, 3, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 3, z: 1 }, 11, TileType.ORE)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: -2 }, 12, TileType.WHEAT)} />
-
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
+    /*
+<TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
                 <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore1} coord={{ x: -2, y: 1, z: -2 }} />
                 <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -2, y: 1, z: -1 }} />
                 <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -3, y: 0, z: -1 }} />
@@ -70,6 +47,30 @@ export const GameBoard = () => {
                 {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_TINTED_ICONS.settlementRed)}
                 {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_TINTED_ICONS.cityRed)}
                 {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_TINTED_ICONS.settlementBlue)}
+    */
+
+    return (
+        <>
+            <div className="board-viewport">
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 0 }, 11, TileType.WHEAT)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -1, z: 0 }, 3, TileType.BRICK)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: -1, z: 1 }, 6, TileType.BRICK)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 1 }, 5, TileType.WHEAT)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 1, z: 0 }, 4, TileType.WOOD)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: -1 }, 9, TileType.ORE)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 0, z: -1 }, 10, TileType.WHEAT)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: -2, z: 0 }, 8, TileType.SHEEP)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -2, z: 1 }, 0, TileType.DESERT)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: -2, z: 2 }, 4, TileType.ORE)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: -1, z: 2 }, 11, TileType.WOOD)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 0, z: 2 }, 12, TileType.WHEAT)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 1, z: 1 }, 9, TileType.BRICK)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 2, z: 0 }, 10, TileType.SHEEP)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 2, z: -1 }, 8, TileType.WOOD)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 2, z: -2 }, 3, TileType.SHEEP)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 1, z: -2 }, 6, TileType.WOOD)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 0, z: -2 }, 2, TileType.SHEEP)} />
+                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: -1, z: -1 }, 5, TileType.ORE)} />
             </div>
         </>
     );
@@ -121,23 +122,8 @@ const calculateTileSprite = (tileType: TileType): string => {
     return "";
 };
 
-/*
- * Converts a hex coordinate into a cartesian coordinate
- * @param hexCoordinates - the hex coordinate
- * @return the cartesian coordinate
- */
-const hexToCartesianPointyUp = (hexCoordinates: HexCoordinate): CartesianCoordinate => {
-    const X_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(60 + 30)), y: Math.cos(degToRad(60 + 30)) };
-    const Y_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(180 + 30)), y: Math.cos(degToRad(180 + 30)) };
-    const Z_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(300 + 30)), y: Math.cos(degToRad(300 + 30)) };
-
-    const x = X_UNIT_VEC.x * hexCoordinates.x + Y_UNIT_VEC.x * hexCoordinates.y + Z_UNIT_VEC.x * hexCoordinates.z;
-    const y = X_UNIT_VEC.y * hexCoordinates.x + Y_UNIT_VEC.y * hexCoordinates.y + Z_UNIT_VEC.y * hexCoordinates.z;
-    return { x: x, y: y };
-};
-
 const getTranslationStyle = (transX: number, transY: number, coord: HexCoordinate, angle?: number) => {
-    const displacement = hexToCartesianPointyUp(coord);
+    const displacement = hexToCartesian(coord);
     const cartesianX = transX + displacement.x * HEX_SCALE;
     const cartesianY = transY + displacement.y * HEX_SCALE;
     const rotation = angle ? `rotateZ(${angle}rad)` : "";
@@ -213,8 +199,8 @@ const drawPath = (transX: number, transY: number, path: Path, sprite: string) =>
     const end = findCenter(path.end1, path.end2, path.end3);
     const center = findCenter2c(start, end);
 
-    const cartesianStart = hexToCartesianPointyUp(start);
-    const cartesianEnd = hexToCartesianPointyUp(end);
+    const cartesianStart = hexToCartesian(start);
+    const cartesianEnd = hexToCartesian(end);
     const deltaX = cartesianEnd.x - cartesianStart.x;
     const deltaY = cartesianEnd.y - cartesianStart.y;
     const angle = Math.atan(deltaY / deltaX) + Math.PI / 2;

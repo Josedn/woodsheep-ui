@@ -2,9 +2,9 @@ export const degToRad = (degrees: number): number => {
     return degrees * (Math.PI / 180);
 };
 
-const X_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(60)), y: Math.cos(degToRad(60)) };
-const Y_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(180)), y: Math.cos(degToRad(180)) };
-const Z_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(300)), y: Math.cos(degToRad(300)) };
+const X_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(300)), y: Math.cos(degToRad(300)) };
+const Y_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(60)), y: Math.cos(degToRad(60)) };
+const Z_UNIT_VEC: CartesianCoordinate = { x: Math.sin(degToRad(180)), y: Math.cos(degToRad(180)) };
 
 export interface HexCoordinate {
     x: number;
