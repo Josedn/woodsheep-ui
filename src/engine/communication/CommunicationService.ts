@@ -2,6 +2,7 @@ import { GameEngine } from "../GameEngine";
 import { createLogger } from "../misc/Logger";
 import { HandleAddUserToRoomMessage } from "./incoming/HandleAddUserToRoom";
 import { HandleChatMessage } from "./incoming/HandleChatMessage";
+import { HandleGameState } from "./incoming/HandleGameState";
 import { HandleLoginOk } from "./incoming/HandleLoginOk";
 import { HandleRemoveUserFromRoom } from "./incoming/HandleRemoveUserFromRoom";
 import { HandleRoomInfo } from "./incoming/HandleRoomInfo";
@@ -34,6 +35,7 @@ export default class CommunicationService implements IMessageHandler {
         this.addHandler(new HandleAddUserToRoomMessage());
         this.addHandler(new HandleRemoveUserFromRoom());
         this.addHandler(new HandleRoomRejected());
+        this.addHandler(new HandleGameState());
     }
 
     private addHandler(incomingEvent: IncomingEvent) {
