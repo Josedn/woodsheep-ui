@@ -7,6 +7,7 @@ import { UI_EVENTS } from "./ui-facade/UIFacade";
 import { RequestRoomList } from "./communication/outgoing/RequestRoomList";
 import { RequestCreateRoom } from "./communication/outgoing/RequestCreateRoom";
 import { RequestJoinRoom } from "./communication/outgoing/RequestJoinRoom";
+import { RequestStartGame } from "./communication/outgoing/RequestStartGame";
 
 const logger = createLogger("LobbyService");
 
@@ -43,6 +44,10 @@ export class LobbyService {
     public removeUserFromRoom(virtualId: number) {
         delete this.roomUsers[virtualId];
         GameEngine.getGame().uiFacade.emit(UI_EVENTS.UPDATE_LOBBY_PLAYERS, { players: Object.values(this.roomUsers) });
+    }
+
+    public requestStartGame() {
+        GameEngine.getGame().gameCommunicationService.send(new RequestStartGame());
     }
 
     // Messenger

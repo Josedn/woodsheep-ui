@@ -8,9 +8,10 @@ import { useMountEffect } from "../hooks/useMountEffect";
 import { useState } from "preact/hooks";
 import type { BoardGamePlayer, ChatMessageReceived, CurrentRoomInfo, RoomUserData } from "../../engine/LobbyService";
 import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
-import type { TargetedInputEvent } from "preact";
+import type { TargetedInputEvent, TargetedMouseEvent } from "preact";
 import { Layout } from "../components/Layout";
 import { useLocation, useRoute } from "preact-iso";
+import { CommandStartGame } from "../../engine/ui-facade/commands/lobbies/CommandStartGame";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -147,6 +148,10 @@ const Lobby = () => {
         }
     });
 
+    const submitStartGame = () => {
+        useGameCommand(new CommandStartGame());
+    };
+
     return (
         <div className="lobby">
             <PlayerList players={players} maxPlayers={lobbyStatus.maxPlayers} />
@@ -268,7 +273,9 @@ const Lobby = () => {
                 <div className="lobby__info-footer">
                     <div class="lobby__start-container">
                         <div class="lobby__start">
-                            <a class="lobby__start-button">Start Game</a>
+                            <a onClick={submitStartGame} class="lobby__start-button">
+                                Start Game
+                            </a>
                         </div>
                     </div>
                 </div>
