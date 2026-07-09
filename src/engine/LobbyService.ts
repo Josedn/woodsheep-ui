@@ -82,6 +82,7 @@ export class LobbyService {
 export type RoomUserData = {
     virtualId: number;
     username: string;
+    color: string;
 };
 
 export type ShortRoomInfo = {

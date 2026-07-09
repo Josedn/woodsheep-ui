@@ -17,7 +17,25 @@ const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
 };
 
+type ColorIcons = { road: string; settlement: string; city: string };
+
+const COLOR_ICONS: Record<string, ColorIcons> = {
+    red: { road: GAME_TINTED_ICONS.roadRed, settlement: GAME_TINTED_ICONS.settlementRed, city: GAME_TINTED_ICONS.cityRed },
+    blue: { road: GAME_TINTED_ICONS.roadBlue, settlement: GAME_TINTED_ICONS.settlementBlue, city: GAME_TINTED_ICONS.cityBlue },
+    orange: { road: GAME_TINTED_ICONS.roadOrange, settlement: GAME_TINTED_ICONS.settlementOrange, city: GAME_TINTED_ICONS.cityOrange },
+    green: { road: GAME_TINTED_ICONS.roadGreen, settlement: GAME_TINTED_ICONS.settlementGreen, city: GAME_TINTED_ICONS.cityGreen },
+    black: { road: GAME_TINTED_ICONS.roadBlack, settlement: GAME_TINTED_ICONS.settlementBlack, city: GAME_TINTED_ICONS.cityBlack },
+    bronze: { road: GAME_TINTED_ICONS.roadBronze, settlement: GAME_TINTED_ICONS.settlementBronze, city: GAME_TINTED_ICONS.cityBronze },
+    gold: { road: GAME_TINTED_ICONS.roadGold, settlement: GAME_TINTED_ICONS.settlementGold, city: GAME_TINTED_ICONS.cityGold },
+    mysticBlue: { road: GAME_TINTED_ICONS.roadMysticBlue, settlement: GAME_TINTED_ICONS.settlementMysticBlue, city: GAME_TINTED_ICONS.cityMysticBlue },
+    pink: { road: GAME_TINTED_ICONS.roadPink, settlement: GAME_TINTED_ICONS.settlementPink, city: GAME_TINTED_ICONS.cityPink },
+    purple: { road: GAME_TINTED_ICONS.roadPurple, settlement: GAME_TINTED_ICONS.settlementPurple, city: GAME_TINTED_ICONS.cityPurple },
+    silver: { road: GAME_TINTED_ICONS.roadSilver, settlement: GAME_TINTED_ICONS.settlementSilver, city: GAME_TINTED_ICONS.citySilver },
+    white: { road: GAME_TINTED_ICONS.roadWhite, settlement: GAME_TINTED_ICONS.settlementWhite, city: GAME_TINTED_ICONS.cityWhite },
+};
+
 const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boolean; canEdit?: boolean }) => {
+    const icons = COLOR_ICONS[props.color] ?? COLOR_ICONS.red;
     return (
         <div className="lobby__player">
             <div className="lobby__player-info">
@@ -29,9 +47,9 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
                     </div>
                 </div>
                 <div className={"lobby__player-color" + (props.canEdit ? " lobby__player-color--can-edit" : "")}>
-                    <img className="lobby__player-color-image" alt="Road" src={GAME_TINTED_ICONS.roadRed} />
-                    <img className="lobby__player-color-image" alt="Settlement" src={GAME_TINTED_ICONS.settlementRed} />
-                    <img className="lobby__player-color-image" alt="City" src={GAME_TINTED_ICONS.cityRed} />
+                    <img className="lobby__player-color-image" alt="Road" src={icons.road} />
+                    <img className="lobby__player-color-image" alt="Settlement" src={icons.settlement} />
+                    <img className="lobby__player-color-image" alt="City" src={icons.city} />
                 </div>
             </div>
             <div className="lobby__player-status">
@@ -52,7 +70,7 @@ const LobbyPlayerInfo = (props: { username: string; color: string; ready?: boole
 
 const PlayerList = (props: { players: RoomUserData[]; maxPlayers: number }) => {
     const loggedPlayers = props.players.map(player => {
-        return <LobbyPlayerInfo key={player.virtualId} username={player.username} color="red" ready />;
+        return <LobbyPlayerInfo key={player.virtualId} username={player.username} color={player.color} ready />;
     });
     const placeHolders = [];
     for (let i = props.players.length; i < props.maxPlayers; i++) {
