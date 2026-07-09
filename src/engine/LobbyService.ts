@@ -16,7 +16,7 @@ export class LobbyService {
     gameState?: GameState;
     chatMessages: ChatMessageReceived[] = [];
     roomInfo?: CurrentRoomInfo;
-    roomUsers: { [id: string]: RoomUserData } = {};
+    roomUsers: { [id: number]: RoomUserData } = {};
 
     // Joining room and room info
     public requestLobbyInfo(roomId: string) {
