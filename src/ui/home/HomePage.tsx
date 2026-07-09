@@ -5,7 +5,7 @@ import type { VNode } from "preact";
 import { useState } from "preact/hooks";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
 import { useGameEvent } from "../hooks/useGameEvent";
-import { useGameCommand } from "../hooks/useGameCommand";
+import { dispatchGameCommand } from "../hooks/dispatchGameCommand";
 import { CommandJoinExistingGame } from "../../engine/ui-facade/commands/lobbies/CommandJoinExistingGame";
 import { CommandPollLobbies } from "../../engine/ui-facade/commands/lobbies/CommandPollLobbies";
 import { useMountEffect } from "../hooks/useMountEffect";
@@ -21,7 +21,7 @@ const LobbyTableRow = (props: { id: string; name: string; map: string; currentSi
     }
 
     const joinLobby = () => {
-        useGameCommand(new CommandJoinExistingGame(props.id));
+        dispatchGameCommand(new CommandJoinExistingGame(props.id));
     };
 
     return (
@@ -69,7 +69,7 @@ const Home = () => {
     const [lobbies, setLobbies] = useState<ShortRoomInfo[]>([]);
 
     useMountEffect(() => {
-        useGameCommand(new CommandPollLobbies());
+        dispatchGameCommand(new CommandPollLobbies());
     });
 
     useGameEvent(UI_EVENTS.UPDATE_LOBBIES_LIST, ({ rooms }) => {
@@ -77,7 +77,7 @@ const Home = () => {
     });
 
     const handleCreateRoom = () => {
-        useGameCommand(new CommandCreateRoom());
+        dispatchGameCommand(new CommandCreateRoom());
     };
 
     return (

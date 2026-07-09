@@ -1,6 +1,6 @@
 import "./lobby.scss";
 import { GAME_TINTED_ICONS, UI_ICONS } from "../../assets/images";
-import { useGameCommand } from "../hooks/useGameCommand";
+import { dispatchGameCommand } from "../hooks/dispatchGameCommand";
 import { CommandRequestLobbyInfo } from "../../engine/ui-facade/commands/lobbies/CommandRequestLobbyInfo";
 import { useGameEvent } from "../hooks/useGameEvent";
 import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
@@ -90,7 +90,7 @@ const Chat = () => {
 
     const handleChatSubmit = (evt: Event) => {
         evt.preventDefault();
-        useGameCommand(new CommandSendChatMessage(inputMessage));
+        dispatchGameCommand(new CommandSendChatMessage(inputMessage));
         setInputMessage("");
     };
 
@@ -144,12 +144,12 @@ const Lobby = () => {
     useMountEffect(() => {
         const roomId = route.params.id;
         if (roomId != null) {
-            useGameCommand(new CommandRequestLobbyInfo(roomId));
+            dispatchGameCommand(new CommandRequestLobbyInfo(roomId));
         }
     });
 
     const submitStartGame = () => {
-        useGameCommand(new CommandStartGame());
+        dispatchGameCommand(new CommandStartGame());
     };
 
     return (
