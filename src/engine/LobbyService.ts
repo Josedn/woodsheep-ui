@@ -13,7 +13,6 @@ const logger = createLogger("LobbyService");
 
 export class LobbyService {
     lobbies: ShortRoomInfo[] = [];
-    gameState?: GameState;
     chatMessages: ChatMessageReceived[] = [];
     roomInfo?: CurrentRoomInfo;
     roomUsers: { [id: number]: RoomUserData } = {};
@@ -101,95 +100,6 @@ export type CurrentRoomInfo = {
     turnTimer: number;
     cardDiscardLimit: number;
     pointsToWin: number;
-};
-
-export type BoardGamePlayer = {
-    name: string;
-    id: number;
-    color: string;
-    numSettlements: boolean;
-    numCities: boolean;
-    numPlayedKnights: number;
-    numRoads: boolean;
-    longestRoad: boolean;
-    largestArmy: boolean;
-    victoryPoints: number;
-    numResourceCards: number;
-    numDevelopmentCards: number;
-    rates: {
-        ore: number;
-        wheat: number;
-        brick: number;
-        sheep: number;
-        wildcard: number;
-        wood: number;
-    };
-};
-
-export type BoardTile = {
-    hexCoordinate: HexCoordinate;
-    type: "WHEAT";
-    hasRobber: boolean;
-    number: number;
-    portLocations: Intersection[];
-};
-export type BoardIntersection = {
-    coordinate: Intersection;
-    canBuildSettlement: boolean;
-};
-export type BoardPath = {
-    start: Intersection;
-    end: Intersection;
-    canBuildRoad: boolean;
-};
-
-export type GameState = {
-    playerID: number;
-    resources: {
-        ore: number;
-        wheat: number;
-        brick: number;
-        sheep: number;
-        wildcard: number;
-        wood: number;
-    };
-    devCards: {
-        Knight: number;
-        "Road Building": number;
-        "Year of Plenty": number;
-        "Victory Point": number;
-        Monopoly: number;
-    };
-    canBuildRoad: boolean;
-    canBuildSettlement: boolean;
-    canBuildCity: boolean;
-    canBuyDevCard: boolean;
-    currentTurn: number;
-    board: {
-        tiles: BoardTile[];
-        intersections: BoardIntersection[];
-        paths: BoardPath[];
-    };
-    players: BoardGamePlayer[];
-    settings: {
-        numPlayers: number;
-        winningPointCount: number;
-        COLORS: string[];
-        isDecimal: boolean;
-        isDynamic: boolean;
-        isStandard: boolean;
-    };
-    stats: {
-        rolls: number[];
-        turn: number;
-    };
-    turnOrder?: number[];
-    followUp?: {
-        actionName: string;
-        actionData: {
-            message: string;
-        };
-    };
 };
 
 export type ChatMessageReceived = {

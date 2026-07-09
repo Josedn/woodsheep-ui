@@ -1,4 +1,5 @@
 import CommunicationService from "./communication/CommunicationService";
+import { GameService } from "./GameService";
 import { LobbyService } from "./LobbyService";
 import { env } from "./misc/env";
 import { createLogger } from "./misc/Logger";
@@ -10,6 +11,7 @@ const logger = createLogger("GameEngine");
 
 export class GameEngine {
     public gameCommunicationService = new CommunicationService(env.wsBaseUrl + "/ws/game");
+    public gameService = new GameService();
     public lobbyService = new LobbyService();
     public uiFacade = new UIFacade();
     public profileService = new ProfileService();
