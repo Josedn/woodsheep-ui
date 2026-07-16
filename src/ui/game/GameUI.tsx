@@ -3,6 +3,9 @@ import "./game-ui.scss";
 import type { ComponentChildren, VNode } from "preact";
 import { GameBoard } from "./game-board/GameBoard";
 import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
+import { GameLog } from "./game-log/GameLog";
+import { GameChat } from "./game-chat/GameChat";
+import { GameBank } from "./bank/GameBank";
 
 const generatePlayer = (
     username: string,
@@ -107,150 +110,6 @@ const PlayerList = () => {
                 {generateOpponentCard("Bold", false, 2, 2, 3, 0, 5, 4, true, false, "orange", false)}
             </div>
             {generatePlayer("Lissi", false, 2, 3, 2, 4, 2, 4, false, false, "blue", false, true)}
-        </div>
-    );
-};
-
-const generateCardStackBank = (count: number, imgSrc: string) => {
-    const lastItemClassName = "bank-container__card-wrapper" + (count == 0 ? " bank-container__card-wrapper--empty" : "");
-    return (
-        <div className="bank-container__card-stack">
-            {count >= 13 && (
-                <div className="bank-container__card-wrapper">
-                    <img className="bank-container__card-image" src={imgSrc} />
-                </div>
-            )}
-            {count >= 8 && (
-                <div className="bank-container__card-wrapper">
-                    <img className="bank-container__card-image" src={imgSrc} />
-                </div>
-            )}
-            <div className={lastItemClassName}>
-                <img className="bank-container__card-image" src={imgSrc}></img>
-                <div className="bank-container__count-container">
-                    <div className="bank-container__count">{count}</div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const Bank = () => {
-    return (
-        <div className="game-board__bank bank-container">
-            <img src={UI_ICONS.bankIcon} className="bank-container__icon"></img>
-            <div className="bank-container__card-row">
-                {generateCardStackBank(18, UI_ICONS.cardLumber)}
-                {generateCardStackBank(8, UI_ICONS.cardBrick)}
-                {generateCardStackBank(18, UI_ICONS.cardWool)}
-                {generateCardStackBank(0, UI_ICONS.cardGrain)}
-                {generateCardStackBank(18, UI_ICONS.cardOre)}
-                {generateCardStackBank(20, UI_ICONS.cardDevelopment)}
-            </div>
-        </div>
-    );
-};
-const generateLogItem = (username: string, color: string, isBot: boolean, action: string, images: string[]) => {
-    const imagesNodes = images.map((image, index) => {
-        return (
-            <>
-                <img key={index} className="chat-container__message-image" src={image}></img>{" "}
-            </>
-        );
-    });
-    return (
-        <div className="chat-container__message-wrapper">
-            <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
-            </div>
-            <span className="chat-container__message-content">
-                <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> {action} {imagesNodes}
-            </span>
-        </div>
-    );
-};
-
-const generateLogSeparator = () => {
-    return (
-        <div className="chat-container__message-wrapper">
-            <span className="chat-container__message-content">
-                <hr />
-            </span>
-        </div>
-    );
-};
-
-const generateWinItem = (username: string, color: string, isBot: boolean) => {
-    return (
-        <div className="chat-container__message-wrapper chat-container__message-wrapper--centered">
-            <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
-            </div>
-            <span className="chat-container__message-content">
-                <img className="chat-container__message-image" src={UI_ICONS.iconTrophy}></img> <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span> won the game!{" "}
-                <img className="chat-container__message-image" src={UI_ICONS.iconTrophy}></img>
-            </span>
-        </div>
-    );
-};
-
-const generateChatItem = (username: string, color: string, isBot: boolean, message: string) => {
-    return (
-        <div className="chat-container__message-wrapper">
-            <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
-            </div>
-            <span className="chat-container__message-content">
-                <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span>: {message}
-            </span>
-        </div>
-    );
-};
-
-const GameLog = () => {
-    return (
-        <div className="game-board__log">
-            <div className="chat-container__scroller">
-                {generateLogItem("Lissi", "blue", false, "bought", [UI_ICONS.cardDevelopment])}
-                {generateLogItem("Ester", "red", true, "got", [UI_ICONS.cardGrain])}
-                {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice1, UI_ICONS.dice2])}
-                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
-                {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice3, UI_ICONS.dice4])}
-                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
-                {generateLogSeparator()}
-                {generateLogItem("Joost", "green", false, "rolled", [UI_ICONS.dice5, UI_ICONS.dice6])}
-                {generateLogItem("Bold", "orange", false, "got", [UI_ICONS.cardLumber, UI_ICONS.cardOre])}
-                {generateLogSeparator()}
-                {generateLogItem("Lissi", "blue", false, "bought", [UI_ICONS.cardDevelopment])}
-                {generateLogItem("Ester", "red", true, "got", [UI_ICONS.cardGrain])}
-                {generateLogSeparator()}
-                {generateWinItem("Ester", "red", true)}
-            </div>
-        </div>
-    );
-};
-
-const GameChat = () => {
-    return (
-        <div className="game-board__chat">
-            <div className="chat-container">
-                <div className="chat-container__scroller">
-                    {generateChatItem("Bold", "orange", false, "Hey everyone! Just trying to create a really long message. Does it work??")}
-                    {generateChatItem("Lissi", "blue", false, "Hmm sure dude")}
-                    {generateChatItem("Ester", "red", false, "Good luck!")}
-                    {generateChatItem("Joost", "green", false, "Anyone up for a trade?")}
-                </div>
-                <div className="chat-container__bottom">
-                    <form className="chat-container__form">
-                        <input type="text" placeholder="Send a message" maxlength={200} className="chat-container__input"></input>
-                        <button className="chat-container__submit">
-                            <img src={UI_ICONS.iconSend} className="chat-container__submit-image" />
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     );
 };
@@ -577,7 +436,6 @@ export const GameUI = () => {
                         <div className="trade-offers">
                             <TradeHeader colors={["blue", "red", "green"]} />
                             <TradeOffer sentByMe={true} counterOffer={false} />
-                            <TradeOffer sentByMe={false} counterOffer={true} />
                         </div>
                     </div>
                     <div className="game-board__bottom">
@@ -595,10 +453,10 @@ export const GameUI = () => {
                         </div>
                     </div>
                     <div className="game-board__responsive-log">
-                        <GameLog />
+                        <GameLog logs={[]} />
                         <GameChat />
                     </div>
-                    <Bank />
+                    <GameBank bankData={{lumber: 10, brick: 19, wool: 1, grain: 1, ore: 1, developent: 0, showAmounts: true}} />
                     <PlayerList />
                 </div>
             </div>
