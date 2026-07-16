@@ -1,4 +1,4 @@
-import { UI_ICONS } from "../../../assets/images";
+import { UI_ICONS } from "../../assets/images";
 
 const generateChatItem = (username: string, color: string, isBot: boolean, message: string) => {
     return (

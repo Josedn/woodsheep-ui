@@ -1,27 +1,28 @@
-import { UI_ICONS } from "../../../assets/images";
+import { UI_ICONS } from "../../assets/images";
 
 export type GameLogData = {
-    id: number, username: string, color: string, isBot: boolean, action: string, images: string[],
+    id: number;
+    username: string;
+    color: string;
+    isBot: boolean;
+    action: string;
+    images: string[];
 };
 
-export const GameLog = (props: {logs: GameLogData[]}) => {
-
+export const GameLog = (props: { logs: GameLogData[] }) => {
     const logNodes = props.logs.map(log => {
-        return (<LogItem logItem={log} />);
+        return <LogItem logItem={log} />;
     });
 
     return (
         <div className="game-board__log">
-            <div className="chat-container__scroller">
-                {logNodes}
-            </div>
+            <div className="chat-container__scroller">{logNodes}</div>
         </div>
     );
 };
 
-
-const LogItem = (props: {logItem: GameLogData}) => {
-    const {id, images, isBot, color, username, action} = props.logItem;
+const LogItem = (props: { logItem: GameLogData }) => {
+    const { id, images, isBot, color, username, action } = props.logItem;
 
     const imagesNodes = images.map((image, index) => {
         return (

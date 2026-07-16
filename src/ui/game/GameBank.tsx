@@ -1,4 +1,4 @@
-import { UI_ICONS } from "../../../assets/images";
+import { UI_ICONS } from "../../assets/images";
 
 const generateCardStackBank = (count: number, imgSrc: string) => {
     const lastItemClassName = "bank-container__card-wrapper" + (count == 0 ? " bank-container__card-wrapper--empty" : "");
@@ -25,18 +25,17 @@ const generateCardStackBank = (count: number, imgSrc: string) => {
 };
 
 type BankData = {
-    lumber: number,
-    brick: number,
-    wool: number,
-    grain: number,
-    ore: number,
-    developent: number,
-    showAmounts: boolean,
+    lumber: number;
+    brick: number;
+    wool: number;
+    grain: number;
+    ore: number;
+    developent: number;
+    showAmounts: boolean;
 };
 
-export const GameBank = (props: {bankData: BankData}) => {
-
-    const {bankData} = props;
+export const GameBank = (props: { bankData: BankData }) => {
+    const { bankData } = props;
     return (
         <div className="game-board__bank bank-container">
             <img src={UI_ICONS.bankIcon} className="bank-container__icon"></img>

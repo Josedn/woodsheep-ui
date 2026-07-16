@@ -10,7 +10,7 @@ export class GameService {
         this.gameStateData = {
             gameState: "WAITING",
             tiles: [],
-        }
+        };
     }
 
     public handleGameState(gameStateData: GameStateData) {

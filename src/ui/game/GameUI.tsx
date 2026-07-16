@@ -3,9 +3,9 @@ import "./game-ui.scss";
 import type { ComponentChildren, VNode } from "preact";
 import { GameBoard } from "./game-board/GameBoard";
 import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
-import { GameLog } from "./game-log/GameLog";
-import { GameChat } from "./game-chat/GameChat";
-import { GameBank } from "./bank/GameBank";
+import { GameBank } from "./GameBank";
+import { GameChat } from "./GameChat";
+import { GameLog } from "./GameLog";
 
 const generatePlayer = (
     username: string,
@@ -456,7 +456,7 @@ export const GameUI = () => {
                         <GameLog logs={[]} />
                         <GameChat />
                     </div>
-                    <GameBank bankData={{lumber: 10, brick: 19, wool: 1, grain: 1, ore: 1, developent: 0, showAmounts: true}} />
+                    <GameBank bankData={{ lumber: 10, brick: 19, wool: 1, grain: 1, ore: 1, developent: 0, showAmounts: true }} />
                     <PlayerList />
                 </div>
             </div>
