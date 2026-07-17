@@ -5,7 +5,10 @@ const required = (value: string | undefined, name: string): string => {
     return value;
 };
 
+const mockServer = import.meta.env.VITE_MOCK_SERVER === "true";
+
 export const env = {
-    wsBaseUrl: required(import.meta.env.VITE_WS_BASE_URL, "VITE_WS_BASE_URL"),
+    mockServer,
+    wsBaseUrl: mockServer ? "" : required(import.meta.env.VITE_WS_BASE_URL, "VITE_WS_BASE_URL"),
     environment: import.meta.env.VITE_ENV ?? "development",
 } as const;

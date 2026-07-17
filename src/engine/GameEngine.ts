@@ -1,4 +1,6 @@
 import CommunicationService from "./communication/CommunicationService";
+import type { ICommunicationService } from "./communication/ICommunicationService";
+import { MockCommunicationService } from "./communication/MockCommunicationService";
 import { GameService } from "./GameService";
 import { LobbyService } from "./LobbyService";
 import { env } from "./misc/env";
@@ -9,8 +11,16 @@ import { UI_EVENTS, UIFacade } from "./ui-facade/UIFacade";
 
 const logger = createLogger("GameEngine");
 
+function createCommunicationService(): ICommunicationService {
+    if (env.mockServer) {
+        logger.info("Using MockCommunicationService");
+        return new MockCommunicationService();
+    }
+    return new CommunicationService(env.wsBaseUrl + "/ws/game");
+}
+
 export class GameEngine {
-    public gameCommunicationService = new CommunicationService(env.wsBaseUrl + "/ws/game");
+    public gameCommunicationService: ICommunicationService = createCommunicationService();
     public gameService = new GameService();
     public lobbyService = new LobbyService();
     public uiFacade = new UIFacade();

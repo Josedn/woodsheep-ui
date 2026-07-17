@@ -8,6 +8,7 @@ import { HandleRemoveUserFromRoom } from "./incoming/HandleRemoveUserFromRoom";
 import { HandleRoomInfo } from "./incoming/HandleRoomInfo";
 import { HandleRoomList } from "./incoming/HandleRoomList";
 import { HandleRoomRejected } from "./incoming/HandleRoomRejected";
+import type { ICommunicationService } from "./ICommunicationService";
 import type { IncomingEvent } from "./protocol/IncomingEvent";
 import { IncomingMessage } from "./protocol/IncomingMessage";
 import type { OutgoingMessage } from "./protocol/OutgoingMessage";
@@ -15,7 +16,7 @@ import { WebSocketClient, type IMessageHandler } from "./WebSocketClient";
 
 const logger = createLogger("CommunicationService");
 
-export default class CommunicationService implements IMessageHandler {
+export default class CommunicationService implements ICommunicationService, IMessageHandler {
     client: WebSocketClient;
     requestHandlers: { [requestType: string]: IncomingEvent };
     url: string;
