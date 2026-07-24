@@ -99,7 +99,7 @@ export const GameUI = () => {
                     </div>
                     <div className="game-board__responsive-log">
                         <GameLog logs={[]} />
-                        <GameChat chats={[]} />
+                        <GameChat />
                     </div>
                     <GameBank bankData={{ lumber: 10, brick: 19, wool: 1, grain: 1, ore: 1, developent: 0, showAmounts: true }} />
                     <PlayerList />

@@ -1,34 +1,48 @@
+import { useState } from "preact/hooks";
+import type { TargetedInputEvent } from "preact";
 import { UI_ICONS } from "../../assets/images";
+import { useGameEvent } from "../hooks/useGameEvent";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
+import { dispatchGameCommand } from "../hooks/dispatchGameCommand";
+import { CommandSendChatMessage } from "../../engine/ui-facade/commands/CommandSendChatMessage";
+import type { ChatMessageReceived } from "../../engine/LobbyService";
 
-export type GameChatData = { id: string; username: string; color: string; isBot: boolean; message: string };
+export const GameChat = () => {
+    const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>([]);
+    const [inputMessage, setInputMessage] = useState("");
 
-const ChatItem = (props: { chatItem: GameChatData }) => {
-    const { id, username, color, isBot, message } = props.chatItem;
+    useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
+        setChatMessages([...chatMessages]);
+    });
 
-    return (
-        <div key={id} className="chat-container__message-wrapper">
+    const handleSubmit = (evt: Event) => {
+        evt.preventDefault();
+        dispatchGameCommand(new CommandSendChatMessage(inputMessage));
+        setInputMessage("");
+    };
+
+    const handleInputChange = (evt: TargetedInputEvent<HTMLInputElement>) => {
+        setInputMessage(evt.currentTarget.value);
+    };
+
+    const chatNodes = chatMessages.map((message, index) => (
+        <div key={index} className="chat-container__message-wrapper">
             <div className="chat-container__icon">
-                <img className="chat-container__icon-image" src={isBot ? UI_ICONS.iconBot : UI_ICONS.iconPlayer}></img>
+                <img className="chat-container__icon-image" src={UI_ICONS.iconPlayer} />
             </div>
             <span className="chat-container__message-content">
-                <span className={`chat-container__message-content--bold chat-container__message-content--${color}`}>{username}</span>: {message}
+                <span className="chat-container__message-content--bold">{message.sender}</span>: {message.content}
             </span>
         </div>
-    );
-};
-
-export const GameChat = (props: { chats: GameChatData[] }) => {
-    const chatNodes = props.chats.map(chat => {
-        return <ChatItem chatItem={chat} />;
-    });
+    ));
 
     return (
         <div className="game-board__chat">
             <div className="chat-container">
                 <div className="chat-container__scroller">{chatNodes}</div>
                 <div className="chat-container__bottom">
-                    <form className="chat-container__form">
-                        <input type="text" placeholder="Send a message" maxlength={200} className="chat-container__input"></input>
+                    <form className="chat-container__form" onSubmit={handleSubmit}>
+                        <input type="text" placeholder="Send a message" maxLength={200} className="chat-container__input" value={inputMessage} onChange={handleInputChange} />
                         <button className="chat-container__submit">
                             <img src={UI_ICONS.iconSend} className="chat-container__submit-image" />
                         </button>
