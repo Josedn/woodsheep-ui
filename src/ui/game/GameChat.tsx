@@ -12,13 +12,17 @@ export const GameChat = () => {
     const [inputMessage, setInputMessage] = useState("");
     const scrollerRef = useRef<HTMLDivElement>(null);
 
+    const wasAtBottomRef = useRef(true);
+
     useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
+        const el = scrollerRef.current;
+        wasAtBottomRef.current = !el || el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
         setChatMessages([...chatMessages]);
     });
 
     useEffect(() => {
         const el = scrollerRef.current;
-        if (el) el.scrollTop = el.scrollHeight;
+        if (el && wasAtBottomRef.current) el.scrollTop = el.scrollHeight;
     }, [chatMessages]);
 
     const handleSubmit = (evt: Event) => {
