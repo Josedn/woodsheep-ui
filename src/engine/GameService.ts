@@ -15,9 +15,7 @@ export class GameService {
 
     public handleGameState(gameStateData: GameStateData) {
         this.gameStateData = gameStateData;
-        if (this.gameStateData.gameState === "IN_GAME") {
-            GameEngine.getGame().uiFacade.emit("navigate", { page: `game/missing-id` });
-        }
+        GameEngine.getGame().uiFacade.emit("gameStateUpdated", { gameState: gameStateData.gameState });
     }
 }
 

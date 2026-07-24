@@ -13,6 +13,7 @@ export const UI_EVENTS = {
     UPDATE_LOBBY_INFO: "updateLobbyInfo",
     UPDATE_CHAT_MESSAGES: "updateChatMessages",
     HANDLE_ERROR: "handleError",
+    GAME_STATE_UPDATED: "gameStateUpdated",
 } as const;
 
 export type UIGameEvents = {
@@ -26,6 +27,8 @@ export type UIGameEvents = {
     updateUserInfo: { userInfo: UserInfo };
 
     navigate: { page: string };
+
+    gameStateUpdated: { gameState: string };
 
     //Misc
     handleError: { errorMessage: string };

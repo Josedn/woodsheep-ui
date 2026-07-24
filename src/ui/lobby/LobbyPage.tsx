@@ -12,6 +12,7 @@ import type { TargetedInputEvent } from "preact";
 import { Layout } from "../components/Layout";
 import { useLocation, useRoute } from "preact-iso";
 import { CommandStartGame } from "../../engine/ui-facade/commands/lobbies/CommandStartGame";
+import { GameUI } from "../game/GameUI";
 
 const LobbyPlayerInfoPlaceholder = () => {
     return <div className="lobby__player"></div>;
@@ -304,6 +305,18 @@ const Lobby = () => {
 };
 
 export const LobbyPage = () => {
+    const [inGame, setInGame] = useState(false);
+
+    useGameEvent(UI_EVENTS.GAME_STATE_UPDATED, ({ gameState }) => {
+        if (gameState === "IN_GAME") {
+            setInGame(true);
+        }
+    });
+
+    if (inGame) {
+        return <GameUI />;
+    }
+
     return (
         <Layout>
             <Lobby />
