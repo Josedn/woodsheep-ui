@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import type { TargetedInputEvent } from "preact";
 import { UI_ICONS } from "../../assets/images";
 import { useGameEvent } from "../hooks/useGameEvent";
@@ -10,10 +10,16 @@ import type { ChatMessageReceived } from "../../engine/LobbyService";
 export const GameChat = () => {
     const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>([]);
     const [inputMessage, setInputMessage] = useState("");
+    const scrollerRef = useRef<HTMLDivElement>(null);
 
     useGameEvent(UI_EVENTS.UPDATE_CHAT_MESSAGES, ({ chatMessages }) => {
         setChatMessages([...chatMessages]);
     });
+
+    useEffect(() => {
+        const el = scrollerRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
+    }, [chatMessages]);
 
     const handleSubmit = (evt: Event) => {
         evt.preventDefault();
@@ -39,7 +45,9 @@ export const GameChat = () => {
     return (
         <div className="game-board__chat">
             <div className="chat-container">
-                <div className="chat-container__scroller">{chatNodes}</div>
+                <div className="chat-container__scroller" ref={scrollerRef}>
+                    {chatNodes}
+                </div>
                 <div className="chat-container__bottom">
                     <form className="chat-container__form" onSubmit={handleSubmit}>
                         <input type="text" placeholder="Send a message" maxLength={200} className="chat-container__input" value={inputMessage} onChange={handleInputChange} />
