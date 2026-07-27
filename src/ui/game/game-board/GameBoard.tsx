@@ -1,76 +1,55 @@
+import { useState } from "preact/hooks";
 import { Tile, TileType, degToRad, findCenter, findCenter2c, hexToCartesian, type CartesianCoordinate, type HexCoordinate } from "../../../engine/catan/Tile";
 import { Path } from "../../../engine/catan/Path";
 import { Intersection } from "../../../engine/catan/Intersection";
 import { GAME_ICONS, GAME_TINTED_ICONS } from "../../../assets/images";
+import { useGameEvent } from "../../hooks/useGameEvent";
+import { UI_EVENTS } from "../../../engine/ui-facade/UIFacade";
+import { GameEngine } from "../../../engine/GameEngine";
+import type { GameStateTile } from "../../../engine/GameService";
 import "./game-board.scss";
 
 const HEX_SCALE = 5 * 0.99; // 10em * hex width / height * arbitrary adjustment
 
+const tileTypeFromResource = (resource: string): TileType => {
+    switch (resource) {
+        case "BRICK":
+            return TileType.BRICK;
+        case "WOOD":
+            return TileType.WOOD;
+        case "ORE":
+            return TileType.ORE;
+        case "WHEAT":
+            return TileType.WHEAT;
+        case "SHEEP":
+            return TileType.SHEEP;
+        case "NONE":
+            return TileType.DESERT;
+        case "GOLD":
+            return TileType.GOLD;
+        default:
+            return TileType.DESERT;
+    }
+};
+
+const gameStateTilesToTiles = (stateTiles: GameStateTile[]): Tile[] => stateTiles.map(t => new Tile({ x: t.q, y: t.r, z: t.s }, t.number, tileTypeFromResource(t.resource)));
+
 export const GameBoard = () => {
     const transX2 = 40;
     const transY2 = 28;
-    /*
-<TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: -1, y: 1, z: -2 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore1} coord={{ x: -2, y: 1, z: -2 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -2, y: 1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore2} coord={{ x: -3, y: 0, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={60} sprite={GAME_ICONS.tileShore1} coord={{ x: -4, y: -1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore2} coord={{ x: -4, y: -2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore2} coord={{ x: -4, y: -3, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={0} sprite={GAME_ICONS.tileShore1} coord={{ x: -4, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore2} coord={{ x: -3, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore2} coord={{ x: -2, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={300} sprite={GAME_ICONS.tileShore1} coord={{ x: -1, y: -4, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore2} coord={{ x: -0, y: -3, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore2} coord={{ x: 1, y: -2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={240} sprite={GAME_ICONS.tileShore1} coord={{ x: 2, y: -1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore2} coord={{ x: 2, y: 0, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore2} coord={{ x: 2, y: 1, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={180} sprite={GAME_ICONS.tileShore1} coord={{ x: 2, y: 2, z: -1 }} />
-                <TileShore transX={transX2} transY={transY2} degreesRotation={120} sprite={GAME_ICONS.tileShore2} coord={{ x: 1, y: 2, z: -1 }} />
 
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: 1, z: -2 }} angle={0} sprite={GAME_ICONS.portLumber} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -3, y: 0, z: -1 }} angle={300} sprite={GAME_ICONS.port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -2, z: -1 }} angle={300} sprite={GAME_ICONS.portBrick} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -4, y: -4, z: -1 }} angle={240} sprite={GAME_ICONS.port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -2, y: -4, z: -1 }} angle={180} sprite={GAME_ICONS.portGrain} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: -0, y: -3, z: -1 }} angle={180} sprite={GAME_ICONS.port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: -1, z: -1 }} angle={120} sprite={GAME_ICONS.portWool} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 2, y: 1, z: -1 }} angle={60} sprite={GAME_ICONS.port} />
-                <PortPier transX={transX2} transY={transY2} coord={{ x: 1, y: 2, z: -1 }} angle={60} sprite={GAME_ICONS.portOre} />
+    const [tiles, setTiles] = useState<Tile[]>(() => gameStateTilesToTiles(GameEngine.getGame().gameService.gameStateData.tiles));
 
-                {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_TINTED_ICONS.roadBlue)}
-                {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_TINTED_ICONS.roadBlue)}
-                {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_TINTED_ICONS.roadRed)}
-                {drawPath(transX2, transY2, new Path({ x: 0, y: 2, z: 1 }, { x: -1, y: 0, z: 0 }, { x: -1, y: 1, z: 1 }, { x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_TINTED_ICONS.roadRed)}
-
-                {drawEntity(transX2, transY2, new Intersection({ x: -3, y: 0, z: -1 }, { x: 0, y: 2, z: 1 }, { x: -1, y: 1, z: 1 }), GAME_TINTED_ICONS.settlementRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: 0, y: 2, z: 1 }, { x: 0, y: 1, z: 0 }, { x: -1, y: 0, z: 0 }), GAME_TINTED_ICONS.cityRed)}
-                {drawEntity(transX2, transY2, new Intersection({ x: -1, y: 0, z: -2 }, { x: 0, y: 1, z: 0 }, { x: 1, y: 3, z: 1 }), GAME_TINTED_ICONS.settlementBlue)}
-    */
+    useGameEvent(UI_EVENTS.GAME_STATE_UPDATED, ({ tiles: stateTiles }) => {
+        setTiles(gameStateTilesToTiles(stateTiles));
+    });
 
     return (
         <>
             <div className="board-viewport">
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 0, z: 0 }, 11, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -1, z: 0 }, 3, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: -1, z: 1 }, 6, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 0, z: 1 }, 5, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 1, z: 0 }, 4, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 1, z: -1 }, 9, TileType.ORE)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 0, z: -1 }, 10, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: -2, z: 0 }, 8, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: -2, z: 1 }, 0, TileType.DESERT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: -2, z: 2 }, 4, TileType.ORE)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: -1, z: 2 }, 11, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 0, z: 2 }, 12, TileType.WHEAT)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 1, z: 1 }, 9, TileType.BRICK)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -2, y: 2, z: 0 }, 10, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: -1, y: 2, z: -1 }, 8, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 0, y: 2, z: -2 }, 3, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 1, y: 1, z: -2 }, 6, TileType.WOOD)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: 0, z: -2 }, 2, TileType.SHEEP)} />
-                <TileHex transX={transX2} transY={transY2} tile={new Tile({ x: 2, y: -1, z: -1 }, 5, TileType.ORE)} />
+                {tiles.map(tile => (
+                    <TileHex key={`${tile.coordinate.x},${tile.coordinate.y},${tile.coordinate.z}`} transX={transX2} transY={transY2} tile={tile} />
+                ))}
             </div>
         </>
     );

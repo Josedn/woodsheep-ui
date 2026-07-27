@@ -2,6 +2,7 @@ import { GameEngine } from "../GameEngine";
 import type { ChatMessageReceived, CurrentRoomInfo, RoomUserData, ShortRoomInfo } from "../LobbyService";
 import { createLogger } from "../misc/Logger";
 import type { UserInfo } from "../ProfileService";
+import type { GameStateTile } from "../GameService";
 
 const logger = createLogger("UIFacade");
 
@@ -28,7 +29,7 @@ export type UIGameEvents = {
 
     navigate: { page: string };
 
-    gameStateUpdated: { gameState: string };
+    gameStateUpdated: { gameState: string; tiles: GameStateTile[] };
 
     //Misc
     handleError: { errorMessage: string };

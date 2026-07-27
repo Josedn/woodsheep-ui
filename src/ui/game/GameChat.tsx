@@ -9,9 +9,7 @@ import type { ChatMessageReceived } from "../../engine/LobbyService";
 import { GameEngine } from "../../engine/GameEngine";
 
 export const GameChat = () => {
-    const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>(
-        () => [...GameEngine.getGame().lobbyService.chatMessages]
-    );
+    const [chatMessages, setChatMessages] = useState<ChatMessageReceived[]>(() => [...GameEngine.getGame().lobbyService.chatMessages]);
     const [inputMessage, setInputMessage] = useState("");
     const scrollerRef = useRef<HTMLDivElement>(null);
 
