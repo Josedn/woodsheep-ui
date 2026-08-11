@@ -1,5 +1,6 @@
 import "./game-ui.scss";
 
+import { useState } from "preact/hooks";
 import { GameBoard } from "./game-board/GameBoard";
 import { UI_ICONS, GAME_TINTED_ICONS } from "../../assets/images";
 import { GameBank } from "./GameBank";
@@ -9,23 +10,32 @@ import { GenericAvatar } from "./Avatar";
 import { TradeOffersSection } from "./Trade";
 import { InventorySection } from "./Inventory";
 import { PlayerList } from "./PlayerList";
+import { UI_EVENTS } from "../../engine/ui-facade/UIFacade";
+import { GameEngine } from "../../engine/GameEngine";
+import { useGameEvent } from "../hooks/useGameEvent";
+import { dispatchGameCommand } from "../hooks/dispatchGameCommand";
+import { CommandRollDice } from "../../engine/ui-facade/commands/game/CommandRollDice";
+import { CommandEndTurn } from "../../engine/ui-facade/commands/game/CommandEndTurn";
 
-const DiceContainer = () => {
+const DICE_ICONS = [UI_ICONS.dice1, UI_ICONS.dice2, UI_ICONS.dice3, UI_ICONS.dice4, UI_ICONS.dice5, UI_ICONS.dice6];
+
+const DiceContainer = (props: { diceRoll: [number, number] | null; canRoll: boolean }) => {
+    const [die1, die2] = props.diceRoll ?? [1, 3];
     return (
-        <div className="dice-container">
+        <div className="dice-container" onClick={() => props.canRoll && dispatchGameCommand(new CommandRollDice())}>
             <div className="dice-container__wrapper">
-                <img className="dice-container__image" src={UI_ICONS.dice1} />
+                <img className={"dice-container__image" + (props.diceRoll ? "" : " dice-container__image--inactive")} src={DICE_ICONS[die1 - 1]} />
             </div>
             <div className="dice-container__wrapper">
-                <img className="dice-container__image dice-container__image--inactive" src={UI_ICONS.dice3} />
+                <img className={"dice-container__image" + (props.diceRoll ? "" : " dice-container__image--inactive")} src={DICE_ICONS[die2 - 1]} />
             </div>
         </div>
     );
 };
 
-const generateActionButton = (className: string, iconSrc: string, enabled: boolean, count: number) => {
+const generateActionButton = (className: string, iconSrc: string, enabled: boolean, count: number, onClick?: () => void) => {
     return (
-        <div className={className}>
+        <div className={className} onClick={enabled ? onClick : undefined}>
             <div className="game-actions__action-button">
                 <img className="game-actions__button-background" src={UI_ICONS.bgButton} />
                 <div className={enabled ? "" : "game-actions__foreground-disabled"}>
@@ -41,13 +51,13 @@ const generateActionButton = (className: string, iconSrc: string, enabled: boole
     );
 };
 
-const ActionButtonsSection = () => {
+const ActionButtonsSection = (props: { isYourTurn: boolean; canEndTurn: boolean }) => {
     return (
         <div className="game-actions">
             <div className="game-actions__current-status">
                 <div className="game-actions__current-status-container">
                     <GenericAvatar className="game-actions__avatar" backgroundColor="red" iconSrc={UI_ICONS.iconPlayer} />
-                    <div className="game-actions__current-status-message">Answer Trade</div>
+                    <div className="game-actions__current-status-message">{props.isYourTurn ? "Your Turn" : "Waiting for other players"}</div>
                 </div>
             </div>
             <div className="game-actions__timer">
@@ -59,12 +69,20 @@ const ActionButtonsSection = () => {
             {generateActionButton("game-actions__road-button", GAME_TINTED_ICONS.roadRed, true, 14)}
             {generateActionButton("game-actions__settlement-button", GAME_TINTED_ICONS.settlementRed, false, 5)}
             {generateActionButton("game-actions__city-button", GAME_TINTED_ICONS.cityRed, false, 4)}
-            {generateActionButton("game-actions__turn-button", UI_ICONS.iconPassTurn, true, -1)}
+            {generateActionButton("game-actions__turn-button", UI_ICONS.iconPassTurn, props.canEndTurn, -1, () => dispatchGameCommand(new CommandEndTurn()))}
         </div>
     );
 };
 
 export const GameUI = () => {
+    const [gameState, setGameState] = useState(() => GameEngine.getGame().gameService.gameStateData);
+
+    useGameEvent(UI_EVENTS.GAME_STATE_UPDATED, data => setGameState(data));
+
+    const isYourTurn = gameState.currentColor != null && gameState.currentColor === gameState.yourColor;
+    const canRoll = isYourTurn && gameState.playableActionTypes.includes("AT.ROLL");
+    const canEndTurn = isYourTurn && gameState.playableActionTypes.includes("AT.END_TURN");
+
     return (
         <>
             <div className="main-wrapper">
@@ -92,8 +110,8 @@ export const GameUI = () => {
                                 </div>
                             </div>
                             <div className="game-inventory__actions">
-                                <DiceContainer />
-                                <ActionButtonsSection />
+                                <DiceContainer diceRoll={gameState.diceRoll} canRoll={canRoll} />
+                                <ActionButtonsSection isYourTurn={isYourTurn} canEndTurn={canEndTurn} />
                             </div>
                         </div>
                     </div>

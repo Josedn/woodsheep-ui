@@ -38,29 +38,48 @@ const MOCK_ROOM_USERS: RoomUserData[] = [
 ];
 
 const MOCK_TILES = [
-    { id: 0, resource: "Wheat", number: 11, q: 0, r: 0, s: 0 },
-    { id: 1, resource: "Brick", number: 3, q: 1, r: -1, s: 0 },
-    { id: 2, resource: "Brick", number: 6, q: 0, r: -1, s: 1 },
-    { id: 3, resource: "Wheat", number: 5, q: -1, r: 0, s: 1 },
-    { id: 4, resource: "Wood", number: 4, q: -1, r: 1, s: 0 },
-    { id: 5, resource: "Ore", number: 9, q: 0, r: 1, s: -1 },
-    { id: 6, resource: "Wheat", number: 10, q: 1, r: 0, s: -1 },
-    { id: 7, resource: "Sheep", number: 8, q: 2, r: -2, s: 0 },
-    { id: 8, resource: "Desert", number: 0, q: 1, r: -2, s: 1 },
-    { id: 9, resource: "Ore", number: 4, q: 0, r: -2, s: 2 },
-    { id: 10, resource: "Wood", number: 11, q: -1, r: -1, s: 2 },
-    { id: 11, resource: "Wheat", number: 12, q: -2, r: 0, s: 2 },
-    { id: 12, resource: "Brick", number: 9, q: -2, r: 1, s: 1 },
-    { id: 13, resource: "Sheep", number: 10, q: -2, r: 2, s: 0 },
-    { id: 14, resource: "Wood", number: 8, q: -1, r: 2, s: -1 },
-    { id: 15, resource: "Sheep", number: 3, q: 0, r: 2, s: -2 },
-    { id: 16, resource: "Wood", number: 6, q: 1, r: 1, s: -2 },
-    { id: 17, resource: "Sheep", number: 2, q: 2, r: 0, s: -2 },
+    { id: 0, resource: "WHEAT", number: 11, q: 0, r: 0, s: 0 },
+    { id: 1, resource: "BRICK", number: 3, q: 1, r: -1, s: 0 },
+    { id: 2, resource: "BRICK", number: 6, q: 0, r: -1, s: 1 },
+    { id: 3, resource: "WHEAT", number: 5, q: -1, r: 0, s: 1 },
+    { id: 4, resource: "WOOD", number: 4, q: -1, r: 1, s: 0 },
+    { id: 5, resource: "ORE", number: 9, q: 0, r: 1, s: -1 },
+    { id: 6, resource: "WHEAT", number: 10, q: 1, r: 0, s: -1 },
+    { id: 7, resource: "SHEEP", number: 8, q: 2, r: -2, s: 0 },
+    { id: 8, resource: "DESERT", number: 0, q: 1, r: -2, s: 1 },
+    { id: 9, resource: "ORE", number: 4, q: 0, r: -2, s: 2 },
+    { id: 10, resource: "WOOD", number: 11, q: -1, r: -1, s: 2 },
+    { id: 11, resource: "WHEAT", number: 12, q: -2, r: 0, s: 2 },
+    { id: 12, resource: "BRICK", number: 9, q: -2, r: 1, s: 1 },
+    { id: 13, resource: "SHEEP", number: 10, q: -2, r: 2, s: 0 },
+    { id: 14, resource: "WOOD", number: 8, q: -1, r: 2, s: -1 },
+    { id: 15, resource: "SHEEP", number: 3, q: 0, r: 2, s: -2 },
+    { id: 16, resource: "WOOD", number: 6, q: 1, r: 1, s: -2 },
+    { id: 17, resource: "SHEEP", number: 2, q: 2, r: 0, s: -2 },
     { id: 18, resource: "Ore", number: 5, q: 2, r: -1, s: -1 },
 ];
 
+const MOCK_COLOR = "C.RED";
+
+const baseMockGameState = () => ({
+    gameState: "IN_GAME",
+    tiles: MOCK_TILES,
+    currentColor: MOCK_COLOR,
+    currentTurnColor: MOCK_COLOR,
+    currentPrompt: "PLAY_TURN",
+    diceRoll: null as [number, number] | null,
+    players: [
+        { color: MOCK_COLOR, visibleVictoryPoints: 0, resourceCount: 0, devCardCount: 0, hasLongestRoad: false, hasLargestArmy: false },
+        { color: "C.BLUE", visibleVictoryPoints: 0, resourceCount: 0, devCardCount: 0, hasLongestRoad: false, hasLargestArmy: false },
+    ],
+    yourColor: MOCK_COLOR,
+    yourHand: { WOOD: 0, BRICK: 0, SHEEP: 0, WHEAT: 0, ORE: 0 },
+    playableActionTypes: ["AT.ROLL"],
+});
+
 export class MockCommunicationService implements ICommunicationService {
     private handlers: { [requestType: string]: IncomingEvent } = {};
+    private mockGameState = baseMockGameState();
 
     constructor() {
         [new HandleLoginOk(), new HandleChatMessage(), new HandleRoomInfo(), new HandleRoomList(), new HandleAddUserToRoomMessage(), new HandleRemoveUserFromRoom(), new HandleRoomRejected(), new HandleGameState()].forEach(h => {
@@ -100,7 +119,20 @@ export class MockCommunicationService implements ICommunicationService {
                 this.dispatch("chatMessage", { virtualId: 1, message: payload.message });
                 break;
             case "roomStartGame":
-                this.dispatch("gameState", { gameState: "IN_GAME", tiles: MOCK_TILES });
+                this.mockGameState = baseMockGameState();
+                this.dispatch("gameState", this.mockGameState);
+                break;
+            case "rollDice":
+                this.mockGameState = {
+                    ...this.mockGameState,
+                    diceRoll: [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)],
+                    playableActionTypes: ["AT.END_TURN"],
+                };
+                this.dispatch("gameState", this.mockGameState);
+                break;
+            case "endTurn":
+                this.mockGameState = { ...baseMockGameState(), diceRoll: null };
+                this.dispatch("gameState", this.mockGameState);
                 break;
             default:
                 logger.warn("No mock handler for requestType: " + message.requestType);
