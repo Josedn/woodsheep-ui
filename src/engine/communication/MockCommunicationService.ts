@@ -69,12 +69,14 @@ const baseMockGameState = () => ({
     currentPrompt: "PLAY_TURN",
     diceRoll: null as [number, number] | null,
     players: [
-        { color: MOCK_COLOR, visibleVictoryPoints: 0, resourceCount: 0, devCardCount: 0, hasLongestRoad: false, hasLargestArmy: false },
-        { color: "C.BLUE", visibleVictoryPoints: 0, resourceCount: 0, devCardCount: 0, hasLongestRoad: false, hasLargestArmy: false },
+        { color: MOCK_COLOR, username: "MockPlayer", isBot: false, visibleVictoryPoints: 2, realVictoryPoints: 2, resourceCount: 3, devCardCount: 1, armyCount: 0, roadLength: 2, hasLongestRoad: false, hasLargestArmy: false },
+        { color: "C.BLUE", username: "BotAlpha", isBot: true, visibleVictoryPoints: 3, realVictoryPoints: 3, resourceCount: 5, devCardCount: 0, armyCount: 1, roadLength: 4, hasLongestRoad: true, hasLargestArmy: false },
     ],
     yourColor: MOCK_COLOR,
     yourHand: { WOOD: 0, BRICK: 0, SHEEP: 0, WHEAT: 0, ORE: 0 },
     playableActionTypes: ["AT.ROLL"],
+    bankResources: { WOOD: 17, BRICK: 16, SHEEP: 19, WHEAT: 18, ORE: 15 },
+    bankDevCardCount: 22,
 });
 
 export class MockCommunicationService implements ICommunicationService {

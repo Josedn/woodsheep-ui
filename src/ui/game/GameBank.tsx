@@ -25,27 +25,22 @@ const generateCardStackBank = (count: number, imgSrc: string) => {
 };
 
 type BankData = {
-    lumber: number;
-    brick: number;
-    wool: number;
-    grain: number;
-    ore: number;
-    developent: number;
-    showAmounts: boolean;
+    resources: Record<string, number>;
+    developmentCards: number;
 };
 
 export const GameBank = (props: { bankData: BankData }) => {
-    const { bankData } = props;
+    const { resources, developmentCards } = props.bankData;
     return (
         <div className="game-board__bank bank-container">
             <img src={UI_ICONS.bankIcon} className="bank-container__icon"></img>
             <div className="bank-container__card-row">
-                {generateCardStackBank(bankData.lumber, UI_ICONS.cardLumber)}
-                {generateCardStackBank(bankData.brick, UI_ICONS.cardBrick)}
-                {generateCardStackBank(bankData.wool, UI_ICONS.cardWool)}
-                {generateCardStackBank(bankData.grain, UI_ICONS.cardGrain)}
-                {generateCardStackBank(bankData.wool, UI_ICONS.cardOre)}
-                {generateCardStackBank(bankData.developent, UI_ICONS.cardDevelopment)}
+                {generateCardStackBank(resources.WOOD ?? 0, UI_ICONS.cardLumber)}
+                {generateCardStackBank(resources.BRICK ?? 0, UI_ICONS.cardBrick)}
+                {generateCardStackBank(resources.SHEEP ?? 0, UI_ICONS.cardWool)}
+                {generateCardStackBank(resources.WHEAT ?? 0, UI_ICONS.cardGrain)}
+                {generateCardStackBank(resources.ORE ?? 0, UI_ICONS.cardOre)}
+                {generateCardStackBank(developmentCards, UI_ICONS.cardDevelopment)}
             </div>
         </div>
     );

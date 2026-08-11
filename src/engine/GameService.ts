@@ -21,6 +21,8 @@ export class GameService {
             yourColor: null,
             yourHand: null,
             playableActionTypes: [],
+            bankResources: {},
+            bankDevCardCount: 0,
         };
     }
 
@@ -49,9 +51,14 @@ export type GameStateTile = {
 
 export type GameStatePlayer = {
     color: string;
+    username: string;
+    isBot: boolean;
     visibleVictoryPoints: number;
+    realVictoryPoints: number;
     resourceCount: number;
     devCardCount: number;
+    armyCount: number;
+    roadLength: number;
     hasLongestRoad: boolean;
     hasLargestArmy: boolean;
 };
@@ -67,4 +74,6 @@ export type GameStateData = {
     yourColor: string | null;
     yourHand: Record<string, number> | null;
     playableActionTypes: string[];
+    bankResources: Record<string, number>;
+    bankDevCardCount: number;
 };

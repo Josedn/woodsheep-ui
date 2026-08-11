@@ -119,8 +119,8 @@ export const GameUI = () => {
                         <GameLog logs={[]} />
                         <GameChat />
                     </div>
-                    <GameBank bankData={{ lumber: 10, brick: 19, wool: 1, grain: 1, ore: 1, developent: 0, showAmounts: true }} />
-                    <PlayerList />
+                    <GameBank bankData={{ resources: gameState.bankResources, developmentCards: gameState.bankDevCardCount }} />
+                    <PlayerList players={gameState.players} yourColor={gameState.yourColor} currentTurnColor={gameState.currentTurnColor} />
                 </div>
             </div>
         </>
