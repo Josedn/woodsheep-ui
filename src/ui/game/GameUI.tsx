@@ -33,16 +33,16 @@ const DiceContainer = (props: { diceRoll: [number, number] | null; canRoll: bool
     );
 };
 
-const generateActionButton = (className: string, iconSrc: string, enabled: boolean, count: number, onClick?: () => void) => {
+const ActionButton = (props: { className: string; iconSrc: string; enabled: boolean; count: number; onClick?: () => void }) => {
     return (
-        <div className={className} onClick={enabled ? onClick : undefined}>
+        <div className={props.className} onClick={props.enabled ? props.onClick : undefined}>
             <div className="game-actions__action-button">
                 <img className="game-actions__button-background" src={UI_ICONS.bgButton} />
-                <div className={enabled ? "" : "game-actions__foreground-disabled"}>
-                    <img className="game-actions__icon-wrapper" src={iconSrc} />
-                    {count >= 0 && (
+                <div className={props.enabled ? "" : "game-actions__foreground-disabled"}>
+                    <img className="game-actions__icon-wrapper" src={props.iconSrc} />
+                    {props.count >= 0 && (
                         <div className="game-actions__count-container">
-                            <div className="game-actions__count">{count}</div>
+                            <div className="game-actions__count">{props.count}</div>
                         </div>
                     )}
                 </div>
@@ -64,12 +64,12 @@ const ActionButtonsSection = (props: { isYourTurn: boolean; canEndTurn: boolean 
                 <div className="game-actions__timer-text">03:02</div>
             </div>
 
-            {generateActionButton("game-actions__trade-button", UI_ICONS.iconCross, true, -1) /* iconTrade */}
-            {generateActionButton("game-actions__development-card-button", UI_ICONS.cardDevelopment, false, -1)}
-            {generateActionButton("game-actions__road-button", GAME_TINTED_ICONS.roadRed, true, 14)}
-            {generateActionButton("game-actions__settlement-button", GAME_TINTED_ICONS.settlementRed, false, 5)}
-            {generateActionButton("game-actions__city-button", GAME_TINTED_ICONS.cityRed, false, 4)}
-            {generateActionButton("game-actions__turn-button", UI_ICONS.iconPassTurn, props.canEndTurn, -1, () => dispatchGameCommand(new CommandEndTurn()))}
+            <ActionButton className="game-actions__trade-button" iconSrc={UI_ICONS.iconCross} enabled={true} count={-1} /* iconTrade */ />
+            <ActionButton className="game-actions__development-card-button" iconSrc={UI_ICONS.cardDevelopment} enabled={false} count={-1} />
+            <ActionButton className="game-actions__road-button" iconSrc={GAME_TINTED_ICONS.roadRed} enabled={true} count={14} />
+            <ActionButton className="game-actions__settlement-button" iconSrc={GAME_TINTED_ICONS.settlementRed} enabled={false} count={5} />
+            <ActionButton className="game-actions__city-button" iconSrc={GAME_TINTED_ICONS.cityRed} enabled={false} count={4} />
+            <ActionButton className="game-actions__turn-button" iconSrc={UI_ICONS.iconPassTurn} enabled={props.canEndTurn} count={-1} onClick={() => dispatchGameCommand(new CommandEndTurn())} />
         </div>
     );
 };
