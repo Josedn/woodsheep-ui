@@ -1,5 +1,8 @@
 import { GameEngine } from "./GameEngine";
 import { createLogger } from "./misc/Logger";
+import { RequestBuildCity } from "./communication/outgoing/RequestBuildCity";
+import { RequestBuildRoad } from "./communication/outgoing/RequestBuildRoad";
+import { RequestBuildSettlement } from "./communication/outgoing/RequestBuildSettlement";
 import { RequestEndTurn } from "./communication/outgoing/RequestEndTurn";
 import { RequestRollDice } from "./communication/outgoing/RequestRollDice";
 import { UI_EVENTS } from "./ui-facade/UIFacade";
@@ -13,6 +16,7 @@ export class GameService {
         this.gameStateData = {
             gameState: "WAITING",
             tiles: [],
+            ports: [],
             currentColor: null,
             currentTurnColor: null,
             currentPrompt: null,
@@ -23,6 +27,11 @@ export class GameService {
             playableActionTypes: [],
             bankResources: {},
             bankDevCardCount: 0,
+            buildings: [],
+            roads: [],
+            buildableSettlementNodeIds: [],
+            buildableCityNodeIds: [],
+            buildableRoadEdges: [],
         };
     }
 
@@ -38,6 +47,18 @@ export class GameService {
     public requestEndTurn() {
         GameEngine.getGame().gameCommunicationService.send(new RequestEndTurn());
     }
+
+    public requestBuildSettlement(nodeId: number) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestBuildSettlement(nodeId));
+    }
+
+    public requestBuildCity(nodeId: number) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestBuildCity(nodeId));
+    }
+
+    public requestBuildRoad(nodeA: number, nodeB: number) {
+        GameEngine.getGame().gameCommunicationService.send(new RequestBuildRoad(nodeA, nodeB));
+    }
 }
 
 export type GameStateTile = {
@@ -47,6 +68,30 @@ export type GameStateTile = {
     q: number;
     r: number;
     s: number;
+    nodes: Record<string, number>;
+};
+
+export type GameStatePort = {
+    id: number;
+    resource: string | null;
+    direction: string;
+    nodeA: number;
+    nodeB: number;
+    q: number;
+    r: number;
+    s: number;
+};
+
+export type GameStateBuilding = {
+    nodeId: number;
+    color: string;
+    type: string;
+};
+
+export type GameStateRoad = {
+    nodeA: number;
+    nodeB: number;
+    color: string;
 };
 
 export type GameStatePlayer = {
@@ -66,6 +111,7 @@ export type GameStatePlayer = {
 export type GameStateData = {
     gameState: string;
     tiles: GameStateTile[];
+    ports: GameStatePort[];
     currentColor: string | null;
     currentTurnColor: string | null;
     currentPrompt: string | null;
@@ -76,4 +122,14 @@ export type GameStateData = {
     playableActionTypes: string[];
     bankResources: Record<string, number>;
     bankDevCardCount: number;
+    buildings: GameStateBuilding[];
+    roads: GameStateRoad[];
+    buildableSettlementNodeIds: number[];
+    buildableCityNodeIds: number[];
+    buildableRoadEdges: GameStateRoadEdgeCandidate[];
+};
+
+export type GameStateRoadEdgeCandidate = {
+    nodeA: number;
+    nodeB: number;
 };
